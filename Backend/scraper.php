@@ -19,7 +19,7 @@
 	function getRowsOfSubpage($link){
 		$subpage = file_get_html($link); //get content of subpage
 		if(!$subpage){
-				echo 'ERROR: link'; //too much invalid html, the page can't be parsed
+				echo 'ERROR: link' . $link . '<br/>'; //too much invalid html, the page can't be parsed
 		}
 		else{
 			foreach($subpage->find('table') as $main){ //find the main table
