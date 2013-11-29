@@ -4,7 +4,8 @@
 	$mysqli = new mysqli("localhost", "root", "", "iolab_ass5");
 	if($mysqli->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
 	
-	$html = file_get_html('http://www.nuforc.org/webreports/ndxevent.html');
+	//$html = file_get_html('http://www.nuforc.org/webreports/ndxevent.html');
+	$html = ""; //removed for safety reasons, only run this script once!
 	
 	// Find all images
 	foreach($html->find('table') as $main){ //find the main table
@@ -19,7 +20,7 @@
 	function getRowsOfSubpage($link){
 		$subpage = file_get_html($link); //get content of subpage
 		if(!$subpage){
-				echo 'ERROR: link' . $link . '<br/>'; //too much invalid html, the page can't be parsed
+				echo 'ERROR: link' . $link . '<br/>'; //the page is too big for the parser, you have to parse it manually
 		}
 		else{
 			foreach($subpage->find('table') as $main){ //find the main table
