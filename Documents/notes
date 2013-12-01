@@ -1,0 +1,6 @@
+Notes for backend
+1. Mailed nuforc.org to get data
+2. was denied
+3. wrote crawler to get all the ~100.000 entries they show on their website
+4. format the date so it is searchable
+5. output sigtings by year / month as json to client
