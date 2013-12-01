@@ -14,19 +14,20 @@ $year = "-1";
 $res = '[';
 while ($stmt->fetch()) {
 	$date = explode(" ", $date);
-	$elYear = $date[0];
-	$elMonth = $date[1];
+	$elYear = json_encode($date[0]);
+	$elMonth = json_encode($date[1]);
+	$elSightings = json_encode($sightings);
 	
 	if($year == "-1"){ //starting to build json, dont append stuff
-		$res .= '{"year":"' . $elYear . '", "months":[{ "month":"' . $elMonth . '", "sightings":"' . $sightings . '"';
+		$res .= '{"year":' . $elYear . ', "months":[{ "month":' . $elMonth . ', "sightings":' . $elSightings;
 		$year = $elYear;
 	}
 	elseif($elYear != $year){ //a new year
-		$res .= '}]},{"year":"' . $elYear . '", "months":[{ "month":"' . $elMonth . '", "sightings":"' . $sightings . '"';
+		$res .= '}]},{"year":' . $elYear . ', "months":[{ "month":' . $elMonth . ', "sightings":' . $elSightings;
 		$year = $elYear;
 	}
 	else{ //a extra month in the same year
-		$res .= '}, {"month":"' . $elMonth . '", "sightings":"' . $sightings . '"';
+		$res .= '}, {"month":' . $elMonth . ', "sightings":' . $elSightings;
 	}
 }
 $res .= '}]}]';
