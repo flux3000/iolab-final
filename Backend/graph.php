@@ -1,4 +1,6 @@
-<?php 
+<?php
+header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}"); //allow people to call API
+
 require_once 'constants.php';
 //Other interesting data:
 //SELECT `date`, COUNT(`date`) FROM `ufos` GROUP BY MONTH(`date`)
