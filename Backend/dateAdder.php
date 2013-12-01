@@ -4,7 +4,7 @@
 $mysqli = new mysqli("localhost", "root", "", "iolab_ass5");
 if($mysqli->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
 
-$stmt = $mysqli->prepare("SELECT `id`, `date`, `date_str` FROM  `ufos` WHERE  `date` = DATE(0000 -00 -00) && `id` > 43300");
+$stmt = $mysqli->prepare("SELECT `id`, `date`, `date_str` FROM  `ufos` WHERE  `date` = DATE(0000 -00 -00) && `id` > 40000");
 $stmt->execute();
 $stmt->bind_result($id, $date, $date_str);
 
@@ -17,7 +17,7 @@ while ($stmt->fetch()) {
 	$year = $rawDateArray[2];
 	
 	//NB will break after year 2030 ;)
-	if($year <= 30){ //we are in the 2000ies
+	if($year < 30){ //we are in the 2000ies
 		$year = "20" . $year;
 	}
 	else{ //we are in the 1900ies
