@@ -1,9 +1,10 @@
 <?php 
+require_once 'constants.php';
 //Other interesting data:
 //SELECT `date`, COUNT(`date`) FROM `ufos` GROUP BY MONTH(`date`)
 //SELECT `date`, COUNT(`date`) FROM `ufos` GROUP BY YEAR(`date`)
 
-$mysqli = new mysqli("localhost", "root", "", "iolab_ass5");
+$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 if($mysqli->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
 
 $stmt = $mysqli->prepare("SELECT DATE_FORMAT(`date`, '%Y %m') AS DATUM, COUNT(*) AS SIGHTINGS FROM `ufos` GROUP BY DATE_FORMAT(`date`, '%Y %m')");

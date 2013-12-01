@@ -1,9 +1,10 @@
 <?php
 	include_once 'simple_html_dom.php';
+	require_once 'constants.php';
 	
 	$file = 'errors/xxx'; //enter file here
 	
-	$mysqli = new mysqli("localhost", "root", "", "iolab_ass5");
+	$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 	if($mysqli->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
 	
 	$html = file_get_html($file);

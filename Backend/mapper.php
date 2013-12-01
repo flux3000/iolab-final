@@ -1,5 +1,6 @@
 <?php 
-$mysqli = new mysqli("localhost", "root", "", "iolab_ass5");
+require_once 'constants.php';
+$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 if($mysqli->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
 
 $stmt = $mysqli->prepare("SELECT `state`, COUNT(*) AS SIGHTINGS FROM `ufos` GROUP BY `state` ORDER BY COUNT(*) DESC");

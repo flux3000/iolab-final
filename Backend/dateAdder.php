@@ -1,10 +1,11 @@
 <?php
+require_once 'constants.php';
 //This script is run to add dates to the db entries
 
-$mysqli = new mysqli("localhost", "root", "", "iolab_ass5");
+$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 if($mysqli->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
 
-$stmt = $mysqli->prepare("SELECT `id`, `date`, `date_str` FROM  `ufos` WHERE  `date` = DATE(0000 -00 -00) && `id` > 40000");
+$stmt = $mysqli->prepare("SELECT `id`, `date`, `date_str` FROM  `ufos` WHERE  `date` = DATE(0000 -00 -00)");
 $stmt->execute();
 $stmt->bind_result($id, $date, $date_str);
 
@@ -34,7 +35,7 @@ while ($stmt->fetch()) {
 	$newDate = $year . "-" . $month . "-" . $day;
 	
 	
-	$mysqli2 = new mysqli("localhost", "root", "", "iolab_ass5");
+	$mysqli2 = new mysqli(HOST, USER, PASSWORD, DATABASE);
 	if($mysqli2->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
 	$stmt2 = $mysqli2->prepare("UPDATE ufos SET `date` = ? WHERE id = ?");
 	$stmt2->bind_param("ss", $newDate, $id);
