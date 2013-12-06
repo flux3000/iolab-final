@@ -47,7 +47,7 @@ function prepareData(data){
 				
 				if (thisPoint.year >= 1990 && thisPoint.year < 2013){
 					monthCount++;
-					console.log(monthCount + ". " + thisPoint.date + " : " + thisPoint.sightings);	
+					//console.log(monthCount + ". " + thisPoint.date + " : " + thisPoint.sightings);	
 					
 					// add this point into the myUFOs object. This object will contain all the data we are mapping to the chart.
 					
@@ -68,7 +68,7 @@ function graphData(data){
 	var numPoints = data.length;
 	// set up the svg 	
 	var w = 1000;
-	var h = 600;
+	var h = 400;
 	var svg = d3.select("#visualization");
 	svg.attr("width", w).attr("height", h);
 
@@ -90,8 +90,8 @@ function graphData(data){
 	var startDate = new Date(data[0].date);
 	var endDate = new Date(data[data.length - 1].date);
 
-	console.log("startdate:"+startDate);
-	console.log("enddate:"+endDate);
+	//console.log("startdate:"+startDate);
+	//console.log("enddate:"+endDate);
 
 	//xAxisScale and yAxisScale are for the axes
 	var xAxisScale = d3.time.scale()
