@@ -1,0 +1,126 @@
+/* reset */
+
+html, body, address, blockquote, del, div, h1, h2, h3, h4, h5, h6, hr, ins, noscript, p, pre, dl, dt, dd, li, ol, ul, table, caption, colgroup, col, thead, tfoot, tbody, tr, td, th, form, button, fieldset, legend, label, select, optgroup, option, textarea, a, bdo, br, img, map, area, object, param, q, script, span, sub, sup, abbr, acronym, cite, code, del, dfn, em, ins, kbd, samp, strong, var, b, big, i, small, tt{border:0;font-family:inherit;font-size:100%;font-style:inherit;font-weight:inherit;margin:0;outline:0;padding:0;vertical-align:baseline;}
+ol, ul{list-style:none;}
+th{text-align:left;}
+table{border-collapse:collapse;}
+
+
+/* global */
+
+body 												{background:#eee;}
+a:link,
+a:visited										    {}
+a:hover,
+a:visited:hover									    {}
+
+table td										    {}
+
+h1												    {}
+h2												    {}
+h3												    {}
+h4												    {}
+h5												    {}
+h6												    {}
+
+p												    {}
+span												{}
+hr													{}
+label												{}
+input[type=text]									{}
+input[type=text]:focus								{}
+input[type=submit]									{}
+textarea											{}
+
+::selection 										{}
+::-moz-selection 									{}
+
+
+
+/* container */
+
+#container											{margin:0 auto; width:1200px;}
+
+
+
+/* main */
+
+main												{background:#fff; width:1100px;}
+
+
+/* misc */
+
+strong											    {font-weight:bold;}
+em													{font-style:italic;}
+.cb													{clear:both;}          
+
+/* my styles */
+.axis path {
+	fill:none; 
+	stroke:#aaa; 
+	stroke-width:1px;
+}
+.tick text {
+	fill:#aaa; 
+	font-size:.75em; 
+	font-weight:normal;
+}
+.info {
+	position: absolute; 
+	background-color: #447cb8; 
+	padding: 0px 14px 0px 15px; 
+	line-height: 18px; 
+	color: white; 
+	font-weight: bold; 
+	font-family: monospace; 
+	border: 1px solid white;
+}
+main {
+	margin-top: 20px; 
+	border-radius: 10px; 
+	padding-top: 10px; 
+	border: 6px double #eee;
+}
+section {
+	position: relative
+}
+text {
+	cursor: default;
+}
+h1 {
+	font-size: 150%;
+	font-family: sans-serif;
+	font-weight: bold;
+	position: absolute; 
+	left: 130px; 
+	top: 15px; 
+	color: gray;
+	display: inline-block;
+	text-align: center;
+}
+h1 span {
+	display:block;
+	font-size: 60%;
+}
+.infoHeader {
+	position: absolute;
+	top: 66px;
+	left: 183px;
+	font-family:sans-serif; 
+	color: gray; 
+	font-size: 80%;
+}
+.infoHeader div span {
+	display: inline-block; 
+	width: 10px; 
+	height: 10px; 
+	margin-right: 4px;
+}
+.infoHeader div:nth-of-type(1) span {
+	background-color: #447cb8; 
+	margin-right: 17px;
+}
+.infoHeader div:nth-of-type(2) span {
+	background-color: red; 
+	border-radius: 10px;
+}
