@@ -39,13 +39,13 @@ textarea											{}
 
 /* container */
 
-#container											{margin:0 auto; width:1200px;}
+#container											{margin:0 auto; width:1250px;}
 
 
 
 /* main */
 
-main												{background:#fff; width:1100px;}
+main												{background:#fff; width:1200px;}
 
 
 /* misc */
@@ -55,11 +55,15 @@ em													{font-style:italic;}
 .cb													{clear:both;}          
 
 /* my styles */
-.axis path {
+
+.axis path,
+.axis line {
 	fill:none; 
 	stroke:#aaa; 
 	stroke-width:1px;
+    shape-rendering: crispEdges;
 }
+
 .tick text {
 	fill:#aaa; 
 	font-size:.75em; 
@@ -67,7 +71,7 @@ em													{font-style:italic;}
 }
 .info {
 	position: absolute; 
-	background-color: #447cb8; 
+	background-color: #888; 
 	padding: 0px 14px 0px 15px; 
 	line-height: 18px; 
 	color: white; 
