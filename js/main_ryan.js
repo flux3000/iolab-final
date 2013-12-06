@@ -22,8 +22,10 @@ function graphTest(data){
 
     for (var i = 0; i < 5; i++) {
 
-    	console.log(data[i]);
-    	
+    	var json = JSON.parse(data);
+
+    	console.log(json[i]);
+
     	var thisSighting = [];
     	thisSighting.year = data[i]["year"];
     	dataMonths = data[i]["months"];
