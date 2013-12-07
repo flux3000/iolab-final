@@ -1,4 +1,12 @@
+// Change this to adjust the date range we are using. Will need to change var BW (bar width) if the date range gets long enough.
+var startYear = 1981; 
+
 $(document).ready(function(){
+
+	google.maps.event.addDomListener(window, 'load', mapsInitialize("map-container"));
+
+	$("#start-year").text(startYear);
+
 	$.ajax({
 		url: "http://ufo.quast.li/backend/graph.php",
 		success: prepareData,
@@ -10,12 +18,13 @@ $(document).ready(function(){
 		success: mapData,
 		error: function(e){console.log("error: " + e);}
 	});
+
 });
 
 function prepareData(data){
 
     // Make JSON object that will contain all data points for our graph. Note that we must display a data point for every month, even if there were zero sightings that month. So, we must parse the JSON from the database and create a new object to account for this.
-	
+
 	myUFOs = [];
 	var monthCount = 0;
 	var json = JSON.parse(data);
@@ -45,7 +54,7 @@ function prepareData(data){
 					}
 				}    			
 				
-				if (thisPoint.year >= 1990 && thisPoint.year < 2013){
+				if (thisPoint.year >= startYear && thisPoint.year < 2013){
 					monthCount++;
 					//console.log(monthCount + ". " + thisPoint.date + " : " + thisPoint.sightings);	
 					
@@ -56,9 +65,7 @@ function prepareData(data){
 	    	}
 		}
     }
-
     graphData(myUFOs)
-
 }
 
 
@@ -67,8 +74,8 @@ function graphData(data){
 
 	var numPoints = data.length;
 	// set up the svg 	
-	var w = 1000;
-	var h = 400;
+	var w = 1190;
+	var h = 300;
 	var svg = d3.select("#visualization");
 	svg.attr("width", w).attr("height", h);
 
@@ -106,7 +113,7 @@ function graphData(data){
 	var yAxis = d3.svg.axis()
         .scale(yAxisScale)
         .orient("left")
-		.ticks(20);
+		.ticks(10);
 	svg.append("g")
 		.attr("class", "axis")
 		.attr("transform", "translate(40," + 10 + ")")
@@ -140,9 +147,13 @@ function graphData(data){
 				return h - 20 - yScale(d.sightings);
 			},
 			"desc": function(d, i) {
-				return d.year+"-"+d.month+": "+d.sightings;
+				var v = moment([d.year, d.month-1])
+				var displayDate = v.format("MMMM YYYY");
+				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
+
 			},
 			"fill" : function(d, i){
+				/*
 				if(i<(numPoints*.1)){return "#ff9d66";}
 				else if(i<(numPoints*.2)){return "#f6925a";}
 				else if(i<(numPoints*.3)){return "#ee884f";}
@@ -152,10 +163,35 @@ function graphData(data){
 				else if(i<(numPoints*.7)){return "#cc5f22";}
 				else if(i<(numPoints*.8)){return "#c35516";}
 				else if(i<(numPoints*.9)){return "#bb4b0b";}
-				else{return "#b34100"}; //Setting the colors (red gradient)
+				else {
+				*/
+				return "#b34100";
 			},
 			"class" : "bar"
-	    });
+		
+	    })
+		.on("click", function(d, i) {
+			// run when user clicks on a bar in the chart. 
+			//populate sidebar with details on this month's sightings.
+			var dataString = 'month='+d.month+'&year='+d.year;
+
+			$.ajax({
+				url: "http://ufo.quast.li/backend/ufoMapper.php",
+				data: dataString,
+				success: function(data) {
+					displayDetailsHeader(d.year, d.month, d.sightings); 
+					displayDetails(data);
+				},
+				error: function(e){console.log("error: " + e);}
+			});
+		});		    
+
+	//Changing color of the rect when clicked
+	$(".bar").click(function() {
+		$(this).siblings().attr("fill", "#b34100");
+		$(this).attr("fill", "#FFD573");
+		//$( this ).toggleClass("selected", addOrRemove); // doesn't work, because fill attribute overrides classes
+	});
 
 	//Animating the rects of the diagrams on hover
 	$(".bar").hover(
@@ -165,10 +201,9 @@ function graphData(data){
 			
 			//Setting the info-text
 			var txt = $(this).attr("desc");
-			var left = $(this).position().left - 25;
-			//var top = h - 125;
-			var top = h - 125;
-			$(".info").text(txt).css({"left" : left, "top" : top}).show();
+			var left = $(this).position().left - 60;
+			var top = h - 50;
+			$(".info").html(txt).css({"left" : left, "top" : top}).show();
 		}, 
 		function() {
 			var y = parseFloat($(this).attr("y")) - 0;
@@ -177,9 +212,59 @@ function graphData(data){
 		}
 	);
 
+}
+
+function displayDetailsHeader(year, month, sightings){
+	var thisMonth = parseInt(month)-1;
+	var a = moment([year, thisMonth])
+	var displayDate = a.format("MMMM YYYY");
+	$("#sighting-list").empty();
+	if (parseInt(sightings) > 1) {
+		var ufos = "UFOs";
+	} else {
+		var ufos = "UFO";
+	}
+	$("#sidebar-content-header").html(sightings+" "+ufos+" reported in "+displayDate).show();
+
+}
+
+function displayDetails(data){
+	var json = JSON.parse(data);
+	//console.log(json);
+	
+	for (var i = 0; i < json.length; i++) {
+		thisSightingDateArr = json[i]["date"].split("-");
+		thisSightingYear = thisSightingDateArr[0];
+		thisSightingMonth = thisSightingDateArr[1];
+		thisSightingDay = thisSightingDateArr[2];
+		var a = moment([thisSightingYear, thisSightingMonth-1, thisSightingDay-1])
+		var displayDate = a.format("D MMMM YYYY");
+
+		thisSightingHTML = "<div class='sighting-item'>";
+		thisSightingHTML += "<div class='title'>" + displayDate + " - " + json[i]["city"] + ", " + json[i]["state"] + "</div>";
+		thisSightingHTML += "<div class='description'><strong>Shape:</strong> " + json[i]["shape"] + "<br><strong>Duration:</strong> " + json[i]["duration"] + "<br><br>" + json[i]["summary"] + "</div>";
+		thisSightingHTML += "</div>";
+
+		$("#sighting-list").append("<li>"+thisSightingHTML+"</li>");
+
+	}
 
 }
 
 function mapData(data){
 	//console.log(data);
+}
+
+
+// google maps code
+var map;
+function mapsInitialize(targetID) {
+    var myLatlng = new google.maps.LatLng(41.850033, -87.6500523);
+    
+    var mapOptions = {
+        zoom: 4,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP   
+    };
+    map = new google.maps.Map(document.getElementById(targetID), mapOptions);
 }

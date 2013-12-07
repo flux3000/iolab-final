@@ -7,6 +7,8 @@
 	<script type="text/javascript" src="js/main_ryan.js"></script>
 	<!--<script type="text/javascript" src="js/main.js"></script>-->
 	<script type="text/javascript" src="js/d3.min.js"></script>
+	<script type="text/javascript" src="js/moment.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<link href='http://fonts.googleapis.com/css?family=Signika+Negative|Antic+Slab' rel='stylesheet' type='text/css'>
 </head>
@@ -17,19 +19,27 @@
 	</div>
 
 	<div id="chart">
-	<div class="info"></div>
+		<div class="info"></div>
+		<div id="chart-header">Reported UFO Sightings - <span id="start-year">1980</span>-2012</div>
 		<svg id="visualization" xmlns="http://www.w3.org/2000/svg" version="1.1">
 		</svg>
+		<div id="timeline">
+		</div>
+
 	</div>
 
 	<div id="sidebar">
-		Sighting Details
-		<div id="sidebar-content">
+		<div id="sidebar-content-header">Click on a bar above for details</div>
+		<div id="sidebar-content-container">
+			<div id="sidebar-content">
+				<ul id='sighting-list'></ul>
+			</div>
 		</div>
 	</div>
 
 	<div id="map">
 		Map
+		<div id="map-container"></div>
 	</div>
 
 	<div id="infobar">

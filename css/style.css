@@ -42,6 +42,7 @@ strong {font-weight:bold;}
 em {font-style:italic;}
 .cb	{clear:both;}
 
+
 /* main layout sections */
 
 main {
@@ -71,27 +72,44 @@ section {
 	font-weight: bold;
 }
 
+/* chart is the main bar chart with our results */
+
 #chart {
 	float: left;
 	width: 1220px;
 	background-color: #FFF;
 	margin: 10px 0px; 
 	border-radius: 6px; 
-	padding: 10px; 
+	padding: 6px; 
 	border: 4px double #eee;
 	box-shadow: 2px 2px 1px #c9c9c9;
 }
 
-#sidebar {
+#chart-header{
+	text-align: left;
+	font-weight: bold;
+	font-size: 12pt;
+	border-radius: 4px; 
+	padding: 10px;
+	margin-bottom: 8px;
+	background-color: #fcfcfc; 
+	border: 1px solid #f8f8f8;
+}
+
+/* timeline is displayed beneath bar chart */
+
+#timeline{
 	float: left;
-	width: 384px;
-	height: 500px;
-	background-color: #FFF;
-	margin-right: 8px; 
-	border-radius: 6px; 
-	padding: 10px; 
-	border: 4px double #eee;
-	box-shadow: 2px 2px 1px #c9c9c9;
+	font-weight: bold;	
+	width: 1140px;
+	height: 40px;
+	font-size: 8pt;
+	border-radius: 4px; 
+	padding: 10px;
+	margin-left: 48px;
+	margin-bottom: 8px;
+	background-color: #fcfcfc; 
+	border: 1px solid #f8f8f8;	
 }
 
 #map {
@@ -100,10 +118,12 @@ section {
 	height: 500px;
 	background-color: #FFF; 
 	border-radius: 6px; 
-	padding: 10px; 
+	padding: 6px; 
 	border: 4px double #eee;
 	box-shadow: 2px 2px 1px #c9c9c9;
 }
+
+/* infobar is at the bottom of the page beneath our results */
 
 #infobar {
 	float: left;
@@ -112,20 +132,75 @@ section {
 	background-color: #FFF;
 	margin: 10px 0px; 
 	border-radius: 6px; 
-	padding: 10px; 
+	padding: 6px; 
 	border: 4px double #eee;
 	box-shadow: 2px 2px 1px #c9c9c9;
 	/*display: none;*/
 }
 
-#sidebar-content{
-	width: 300px;
-	height: 450px;
-	overflow: scroll;
+/* sidebar contains month report details, displayed when user clicks on a bar */
+
+#sidebar {
+	float: left;
+	width: 393px;
+	height: 500px;
+	background-color: #FFF;
+	margin-right: 8px; 
+	border-radius: 6px; 
+	padding: 6px; 
+	border: 4px double #eee;
+	box-shadow: 2px 2px 1px #c9c9c9;
 }
 
+#sidebar-content-container{
+	padding: 4px;
+	border: 1px dotted #f0f0f0;
+	height: 442px;
+	overflow: scroll;
+	box-shadow: 1px 1px 2px #f8f8f8 inset;
+    -moz-box-shadow: 1px 1px 2px #f8f8f8 inset;
+    -webkit-box-shadow: 1px 1px 2px #f8f8f8 inset;
 
-/* page element styles */
+}
+
+#sidebar-content{
+	margin: 0px auto;
+	float: center;
+	width: 350px;
+	height: 432px;
+}
+
+#sidebar-content-header{
+	text-align: center;
+	font-weight: bold;
+	font-size: 12pt;
+	background: #ededed;
+	border-radius: 4px; 
+	padding: 10px;
+	margin-bottom: 8px; 
+	border: 1px solid #e3e3e3;
+}
+
+.sighting-list {
+}
+
+.sighting-item {
+	font-size: 10pt;
+	padding: 4px 0px;
+	border-bottom: 1px dotted #cfcfcf;
+	margin-bottom: 3px;
+}
+
+.sighting-item .title {
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.sighting-item .description {
+	font-size: 8pt;
+}
+
+/* svg styles */
 
 svg {
 	padding: 10px;
@@ -146,13 +221,25 @@ svg {
 }
 .info {
 	position: absolute; 
-	background-color: #888; 
-	padding: 0px 14px 0px 15px; 
-	line-height: 18px; 
-	color: white; 
-	font-weight: bold; 
-	font-family: 'Antic Slab', serif; 
-	border: 1px solid white;
+	text-align: center;
+	background-color:rgba(255,255,255,0.95);
+	width: 120px;
+	border-radius: 4px; 
+	padding: 6px;
+	margin-bottom: 8px; 
+	border: 1px solid #632400;
+	display: none;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);	
+}
+.info .title{
+	font-weight: bold;
+	font-size: 8pt;
+	margin-bottom: 4px;
+}
+.info .description{
+	font-size: 8pt;
 }
 
 text {
@@ -173,6 +260,16 @@ h1 span {
 	display:block;
 	font-size: 60%;
 }
+
+.bar {
+
+}
+
+.selected {
+	/* style for the bar in the chart that the user clicked on */
+	fill: red !important;
+}
+
 .infoHeader {
 	position: absolute;
 	top: 66px;
