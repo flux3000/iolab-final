@@ -93,7 +93,7 @@ section {
 	padding: 10px;
 	margin-bottom: 8px;
 	background-color: #fcfcfc; 
-	border: 1px solid #f8f8f8;
+	border: 1px solid #f8f8f8; /* #e3e3e3 */
 }
 
 /* timeline is displayed beneath bar chart */
@@ -102,14 +102,14 @@ section {
 	float: left;
 	font-weight: bold;	
 	width: 1140px;
-	height: 40px;
+	height: 25px;
 	font-size: 8pt;
 	border-radius: 4px; 
 	padding: 10px;
 	margin-left: 48px;
 	margin-bottom: 8px;
 	background-color: #fcfcfc; 
-	border: 1px solid #f8f8f8;	
+	border: 1px solid #e3e3e3;	
 }
 
 #map {
@@ -155,8 +155,9 @@ section {
 #sidebar-content-container{
 	padding: 4px;
 	border: 1px dotted #f0f0f0;
-	height: 442px;
+	height: 292px;
 	overflow: scroll;
+	border-radius: 4px;
 	box-shadow: 1px 1px 2px #f8f8f8 inset;
     -moz-box-shadow: 1px 1px 2px #f8f8f8 inset;
     -webkit-box-shadow: 1px 1px 2px #f8f8f8 inset;
@@ -174,11 +175,23 @@ section {
 	text-align: center;
 	font-weight: bold;
 	font-size: 12pt;
-	background: #ededed;
+	background: #fcfcfc;
 	border-radius: 4px; 
 	padding: 10px;
 	margin-bottom: 8px; 
 	border: 1px solid #e3e3e3;
+}
+
+#sidebar-month-visualization{
+	text-align: center;
+	font-weight: bold;
+	font-size: 10pt;
+	background: #fff;
+	border-radius: 4px; 
+	padding: 10px;
+	margin-bottom: 8px; 
+	border: 1px solid #e3e3e3;
+	height: 120px;
 }
 
 .sighting-list {
@@ -241,7 +254,28 @@ svg {
 .info .description{
 	font-size: 8pt;
 }
-
+.sidebar-info {
+	position: absolute; 
+	text-align: center;
+	background-color:rgba(255,255,255,0.95);
+	width: 80px;
+	border-radius: 2px; 
+	padding: 4px;
+	margin-bottom: 8px; 
+	border: 1px solid #632400;
+	display: none;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);	
+}
+.sidebar-info .title{
+	font-weight: bold;
+	font-size: 8pt;
+	margin-bottom: 4px;
+}
+.sidebar-info .description{
+	font-size: 8pt;
+}
 text {
 	cursor: default;
 }
