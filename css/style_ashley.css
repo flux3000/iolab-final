@@ -1,0 +1,343 @@
+/* reset */
+
+html, body, address, blockquote, del, div, h1, h2, h3, h4, h5, h6, hr, ins, noscript, p, pre, dl, dt, dd, li, ol, ul, table, caption, colgroup, col, thead, tfoot, tbody, tr, td, th, form, button, fieldset, legend, label, select, optgroup, option, textarea, a, bdo, br, img, map, area, object, param, q, script, span, sub, sup, abbr, acronym, cite, code, del, dfn, em, ins, kbd, samp, strong, var, b, big, i, small, tt{border:0;font-family:inherit;font-size:100%;font-style:inherit;font-weight:inherit;margin:0;outline:0;padding:0;vertical-align:baseline;}
+ol, ul{list-style:none;}
+th{text-align:left;}
+table{border-collapse:collapse;}
+
+
+/* global */
+
+body {
+	background:#eee;
+}
+a:link,
+a:visited {}
+a:hover,
+a:visited:hover {}
+table td {}
+
+h1 {}
+h2 {}
+h3 {}
+h4 {}
+h5 {}
+h6 {}
+
+p {}
+span {}
+hr {}
+label {}
+input[type=text] {}
+input[type=text]:focus {}
+input[type=submit] {}
+textarea {}
+
+::selection {}
+::-moz-selection {}
+
+/* misc */
+
+strong {font-weight:bold;}
+em {font-style:italic;}
+.cb	{clear:both;}
+
+
+/* main layout sections */
+
+main {
+	background:#fff; 
+	width:1250px;
+	margin:0 auto;
+	/*font-family: 'Signika Negative', sans-serif;*/
+	font-family: 'Antic Slab', serif;
+	font-size: 12pt;
+}
+
+section {
+	position: relative
+}
+
+#container {
+	margin:0 auto; 
+	width:1250px;
+}
+
+#header{
+	float: left;
+	width: 1220px;
+	margin-top: 10px;
+	padding: 10px; 
+	font-size: 24pt;
+	font-weight: bold;
+}
+
+/* chart is the main bar chart with our results */
+
+#chart {
+	float: left;
+	width: 1220px;
+	background-color: #FFF;
+	margin: 10px 0px; 
+	border-radius: 6px; 
+	padding: 6px; 
+	border: 4px double #eee;
+	box-shadow: 2px 2px 1px #c9c9c9;
+}
+
+#chart-header{
+	text-align: left;
+	font-weight: bold;
+	font-size: 12pt;
+	border-radius: 4px; 
+	padding: 10px;
+	margin-bottom: 8px;
+	background-color: #fcfcfc; 
+	border: 1px solid #f8f8f8; /* #e3e3e3 */
+}
+
+/* timeline is displayed beneath bar chart */
+
+#timeline{
+	float: left;
+	font-weight: bold;	
+	width: 1140px;
+	height: 25px;
+	font-size: 8pt;
+	border-radius: 4px; 
+	padding: 10px;
+	margin-left: 48px;
+	margin-bottom: 8px;
+	background-color: #fcfcfc; 
+	border: 1px solid #e3e3e3;	
+}
+
+#map {
+	float: left;
+	width: 800px;
+	height: 500px;
+	background-color: #FFF; 
+	border-radius: 6px; 
+	padding: 6px; 
+	border: 4px double #eee;
+	box-shadow: 2px 2px 1px #c9c9c9;
+}
+
+/*Ashley: Added container for the map*/
+#map-container{
+	border: 1px solid black;
+	display:block; 
+	height:450px; 
+	width:750px;
+	margin: auto;
+}
+/* infobar is at the bottom of the page beneath our results */
+
+#infobar {
+	float: left;
+	width: 1220px;
+	height: 180px;
+	background-color: #FFF;
+	margin: 10px 0px; 
+	border-radius: 6px; 
+	padding: 6px; 
+	border: 4px double #eee;
+	box-shadow: 2px 2px 1px #c9c9c9;
+	/*display: none;*/
+}
+
+/* sidebar contains month report details, displayed when user clicks on a bar */
+
+#sidebar {
+	float: left;
+	width: 393px;
+	height: 500px;
+	background-color: #FFF;
+	margin-right: 8px; 
+	border-radius: 6px; 
+	padding: 6px; 
+	border: 4px double #eee;
+	box-shadow: 2px 2px 1px #c9c9c9;
+}
+
+#sidebar-content-container{
+	padding: 4px;
+	border: 1px dotted #f0f0f0;
+	height: 292px;
+	overflow: scroll;
+	border-radius: 4px;
+	box-shadow: 1px 1px 2px #f8f8f8 inset;
+    -moz-box-shadow: 1px 1px 2px #f8f8f8 inset;
+    -webkit-box-shadow: 1px 1px 2px #f8f8f8 inset;
+
+}
+
+#sidebar-content{
+	margin: 0px auto;
+	float: center;
+	width: 350px;
+	height: 432px;
+}
+
+#sidebar-content-header{
+	text-align: center;
+	font-weight: bold;
+	font-size: 12pt;
+	background: #fcfcfc;
+	border-radius: 4px; 
+	padding: 10px;
+	margin-bottom: 8px; 
+	border: 1px solid #e3e3e3;
+}
+
+#sidebar-month-visualization{
+	text-align: center;
+	font-weight: bold;
+	font-size: 10pt;
+	background: #fff;
+	border-radius: 4px; 
+	padding: 10px;
+	margin-bottom: 8px; 
+	border: 1px solid #e3e3e3;
+	height: 200px;
+}
+
+.sighting-list {
+}
+
+.sighting-item {
+	font-size: 10pt;
+	padding: 4px 0px;
+	border-bottom: 1px dotted #cfcfcf;
+	margin-bottom: 3px;
+}
+
+.sighting-item .title {
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.sighting-item .description {
+	font-size: 8pt;
+}
+
+/* svg styles */
+
+svg {
+	padding: 10px;
+}
+
+/*Ashley: Style for grid lines*/
+.grid{
+	stroke: lightgrey;
+	opacity: 0.5;
+	stroke-width: 1px;
+}
+
+.axis path,
+.axis line {
+	fill:none; 
+	stroke:#aaa; 
+	stroke-width:1px;
+    shape-rendering: crispEdges;
+}
+
+.tick text {
+	fill:#aaa; 
+	font-size:.75em; 
+	font-weight:normal;
+}
+.info {
+	position: absolute; 
+	text-align: center;
+	background-color:rgba(255,255,255,0.95);
+	width: 120px;
+	border-radius: 4px; 
+	padding: 6px;
+	margin-bottom: 8px; 
+	border: 1px solid #632400;
+	display: none;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);	
+}
+.info .title{
+	font-weight: bold;
+	font-size: 8pt;
+	margin-bottom: 4px;
+}
+.info .description{
+	font-size: 8pt;
+}
+.sidebar-info {
+	position: absolute; 
+	text-align: center;
+	background-color:rgba(255,255,255,0.95);
+	width: 80px;
+	border-radius: 2px; 
+	padding: 4px;
+	margin-bottom: 8px; 
+	border: 1px solid #632400;
+	display: none;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);	
+}
+.sidebar-info .title{
+	font-weight: bold;
+	font-size: 8pt;
+	margin-bottom: 4px;
+}
+.sidebar-info .description{
+	font-size: 8pt;
+}
+text {
+	cursor: default;
+}
+h1 {
+	font-size: 150%;
+	font-family: sans-serif;
+	font-weight: bold;
+	position: absolute; 
+	left: 130px; 
+	top: 15px; 
+	color: gray;
+	display: inline-block;
+	text-align: center;
+}
+h1 span {
+	display:block;
+	font-size: 60%;
+}
+
+.bar {
+
+}
+
+.selected {
+	/* style for the bar in the chart that the user clicked on */
+	fill: red !important;
+}
+
+.infoHeader {
+	position: absolute;
+	top: 66px;
+	left: 183px;
+	font-family:sans-serif; 
+	color: gray; 
+	font-size: 80%;
+}
+.infoHeader div span {
+	display: inline-block; 
+	width: 10px; 
+	height: 10px; 
+	margin-right: 4px;
+}
+.infoHeader div:nth-of-type(1) span {
+	background-color: #447cb8; 
+	margin-right: 17px;
+}
+.infoHeader div:nth-of-type(2) span {
+	background-color: red; 
+	border-radius: 10px;
+}
