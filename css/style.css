@@ -211,7 +211,7 @@ section {
 	padding: 10px;
 	margin-bottom: 8px; 
 	border: 1px solid #e3e3e3;
-	height: 120px;
+	height: 150px;
 }
 
 .sighting-list {
@@ -237,6 +237,12 @@ section {
 
 svg {
 	padding: 10px;
+}
+
+.grid{
+	stroke: lightgrey;
+	opacity: 0.5;
+	stroke-width: 1px;
 }
 
 .axis path,
