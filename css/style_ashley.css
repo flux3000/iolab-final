@@ -33,6 +33,8 @@ input[type=text]:focus {}
 input[type=submit] {}
 textarea {}
 
+
+
 ::selection {}
 ::-moz-selection {}
 
@@ -49,13 +51,12 @@ main {
 	background:#fff; 
 	width:1250px;
 	margin:0 auto;
-	/*font-family: 'Signika Negative', sans-serif;*/
 	font-family: 'Antic Slab', serif;
 	font-size: 12pt;
 }
 
 section {
-	position: relative
+	position: relative;
 }
 
 #container {
@@ -66,9 +67,9 @@ section {
 #header{
 	float: left;
 	width: 1220px;
-	margin-top: 10px;
-	padding: 10px; 
-	font-size: 24pt;
+	margin-top: 4px;
+	padding: 8px; 
+	font-size: 16pt;
 	font-weight: bold;
 }
 
@@ -96,26 +97,124 @@ section {
 	border: 1px solid #f8f8f8; /* #e3e3e3 */
 }
 
-/* timeline is displayed beneath bar chart */
+/* timeline is displayed beneath bar chart, and contains both an event div and a infobar div */
 
-#timeline{
+#timeline {
 	float: left;
 	font-weight: bold;	
-	width: 1140px;
-	height: 25px;
+	width: 1148px;
+	height: 48px;
 	font-size: 8pt;
 	border-radius: 4px; 
-	padding: 10px;
 	margin-left: 48px;
 	margin-bottom: 8px;
 	background-color: #fcfcfc; 
 	border: 1px solid #e3e3e3;	
 }
 
+#timeline-events {
+	position: absolute;
+	float: left;
+	width: 1138px;
+	height: 40px;
+	padding: 10px;
+}
+
+/* timeline-infobar is within the timeline div, displayed beneath the icons */
+
+#timeline-infobar {
+	position: relative;
+	float: left;
+	width: 1100px;
+	height: 132px;
+	padding: 6px;
+	margin: 6px 10px;
+	display: none;
+	border-radius: 4px; 
+	border: 1px solid #e3e3e3;
+	background-color: #fff;
+	top: 40px;
+}
+
+.event-icon {
+	position: absolute;
+	float: left;
+	background-color: #e3e3e3;
+	width: 24px;
+	height: 24px;
+	border: 1px solid #000;
+	border-radius: 2px;
+	font-size: 7pt;
+	z-index: 1;
+}
+
+.event-icon-pointer {
+	height: 10px;
+	margin-top: 27px;
+	margin-left: 12px;
+	border-left: 1px solid #e3e3e3;
+	display: none;
+	z-index: -1;
+}
+.event-icon-up-pointer {
+	height: 40px;
+	margin-left: 12px;
+	border-left: 1px solid #C99C30;
+	margin-top: -62px;
+	display: none;
+	z-index: -1;
+}
+
+#timeline-infobar-contents img {
+	float: left;
+	padding: 1px;
+	border: 1px solid #e3e3e3;
+    width: 120px;
+    height: 120px;
+    margin: 3px;
+}
+
+#timeline-infobar-contents ul { 
+   list-style-type: disc; 
+   list-style-position: inside;
+   line-height: 110%; 
+}
+#timeline-infobar-contents li { 
+	margin: 8px 0px;
+	font-size: 8pt;
+}
+
+#timeline-infobar-contents .title {
+	float: left;
+	font-size: 12pt;
+	font-weight: bold;
+	padding: 4px 8px;
+	width: 300px;
+	height: 120px;
+	border-radius: 2px;
+}
+
+#timeline-infobar-contents .description {
+	float: left;
+	overflow: auto;
+	font-size: 8pt;
+	padding: 4px 8px;
+	width: 628px;
+	height: 110px;	
+	border-left: 1px dotted #e3e3e3;
+}
+#timeline-infobar-contents .link a {
+	float: right;
+	font-size: 8pt;
+	text-decoration: none;
+	margin: 0px 10px 10px 0px;
+	color: steelblue;
+}
+
 #map {
 	float: left;
 	width: 800px;
-	height: 500px;
+	height: 600px;
 	background-color: #FFF; 
 	border-radius: 6px; 
 	padding: 6px; 
@@ -123,7 +222,6 @@ section {
 	box-shadow: 2px 2px 1px #c9c9c9;
 }
 
-/*Ashley: Added container for the map*/
 #map-container{
 	border: 1px solid black;
 	display:block; 
@@ -131,27 +229,13 @@ section {
 	width:750px;
 	margin: auto;
 }
-/* infobar is at the bottom of the page beneath our results */
-
-#infobar {
-	float: left;
-	width: 1220px;
-	height: 180px;
-	background-color: #FFF;
-	margin: 10px 0px; 
-	border-radius: 6px; 
-	padding: 6px; 
-	border: 4px double #eee;
-	box-shadow: 2px 2px 1px #c9c9c9;
-	/*display: none;*/
-}
 
 /* sidebar contains month report details, displayed when user clicks on a bar */
 
 #sidebar {
 	float: left;
 	width: 393px;
-	height: 500px;
+	height: 600px;
 	background-color: #FFF;
 	margin-right: 8px; 
 	border-radius: 6px; 
@@ -163,7 +247,7 @@ section {
 #sidebar-content-container{
 	padding: 4px;
 	border: 1px dotted #f0f0f0;
-	height: 292px;
+	height: 360px;
 	overflow: scroll;
 	border-radius: 4px;
 	box-shadow: 1px 1px 2px #f8f8f8 inset;
@@ -176,7 +260,7 @@ section {
 	margin: 0px auto;
 	float: center;
 	width: 350px;
-	height: 432px;
+	height: 392px;
 }
 
 #sidebar-content-header{
@@ -199,7 +283,7 @@ section {
 	padding: 10px;
 	margin-bottom: 8px; 
 	border: 1px solid #e3e3e3;
-	height: 200px;
+	height: 150px;
 }
 
 .sighting-list {
@@ -221,13 +305,26 @@ section {
 	font-size: 8pt;
 }
 
+#foobar {
+	float: left;
+	width: 1220px;
+	height: 60px;
+	text-align: right;
+	font-size: 10pt;
+	border-radius: 6px; 
+	padding: 8px;
+	margin: 8px 0px;
+	background-color: #fcfcfc; 
+	border: 4px double #eee;
+	box-shadow: 2px 2px 1px #c9c9c9;
+}
+
 /* svg styles */
 
 svg {
 	padding: 10px;
 }
 
-/*Ashley: Style for grid lines*/
 .grid{
 	stroke: lightgrey;
 	opacity: 0.5;

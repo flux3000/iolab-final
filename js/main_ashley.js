@@ -109,7 +109,7 @@ function graphData(data){
 		.domain([0, 1000])
 		.range([h-30, 0]);
 		
-	//Ashley: xAxisGridLines and yAxisGridLines for the grid lines	
+	// xAxisGridLines and yAxisGridLines for the grid lines	
 	var xAxisGridLines = d3.svg.axis()
 						.scale(xAxisScale)
 						.orient("bottom")
@@ -141,7 +141,7 @@ function graphData(data){
 		.attr("transform", "translate(40," + (h-20) + ")")
 		.call(xAxis);
 	
-	//Ashley: Drawing Grid Lines
+	// Drawing Grid Lines
 	var xGridLines = svg.append("g")
 							.attr("class", "grid")
 							.attr("transform", "translate(" + 40 + "," + (h - 20)  + ")")
@@ -345,7 +345,7 @@ function graphMonthData(data){
 	var numPoints = data.length;
 	// set up the svg 	
 	var w = 390;
-	var h = 180; //Ashley: Changed the value from 100 to 180.
+	var h = 180; 
 	var svg = d3.select("#month-visualization");
 	svg.attr("width", w).attr("height", h);
 
@@ -362,7 +362,7 @@ function graphMonthData(data){
 
 	var yScale = d3.scale.linear()
 		.domain([0, d3.max(data, function(d) { return d.sightings; })])
-		.range([0, h - 35]); //Ashley: Changed the value from 15 to 35
+		.range([0, h - 35]); 
 
 	//console.log("startdate:"+startDate);
 	//console.log("enddate:"+endDate);
@@ -374,7 +374,7 @@ function graphMonthData(data){
 	
 	var yAxisScale = d3.scale.linear()
 		.domain([0, d3.max(data, function(d) { return d.sightings; })])
-		.range([h - 35, 0]); //Ashley: Changed the value from 15 to 35
+		.range([h - 35, 0]); 
 
 	//Creating the y-axis
 	var yAxis = d3.svg.axis()
@@ -383,7 +383,7 @@ function graphMonthData(data){
 		.ticks(5);
 	svg.append("g")
 		.attr("class", "axis")
-		.attr("transform", "translate(26," + 10 + ")") //Ashley: Changed the x-axis value from 14 to 26
+		.attr("transform", "translate(26," + 10 + ")") 
 		.call(yAxis);
 
 	//Creating the x-axis
@@ -394,10 +394,10 @@ function graphMonthData(data){
         .ticks(10);
 	svg.append("g")
 		.attr("class", "axis")
-		.attr("transform", "translate(26," + (h-25) + ")") //Ashley: Changed the x-axis value from 14 to 26
+		.attr("transform", "translate(26," + (h-25) + ")") 
 		.call(xAxis);
 	
-	//Ashley: Drawing the Axis Labels	
+	// Drawing the Axis Labels	
 	var xAxisLabel = svg.append("text")
 						.attr("fill", "#aaa")
 						.attr("font-size", "10px")
@@ -406,7 +406,7 @@ function graphMonthData(data){
 						.attr("transform", "translate(" + (w/2) + "," + (h + 5) + ")")
 						.text("Days");
 	
-	//Ashley: Drawing the Axis Labels
+	// Drawing the Axis Labels
 	var yAxisLabel = svg.append("text")
 								.attr("fill", "#aaa")
 								.attr("font-size", "10px")
@@ -503,7 +503,7 @@ function mapData(data){
 	console.log(data);
 }
 
-// Ashley: google maps code
+// Google maps code
 var map, pointarray, heatmap,
 taxiData = [
   new google.maps.LatLng(37.782551, -122.445368),
@@ -1008,7 +1008,7 @@ taxiData = [
   new google.maps.LatLng(37.751266, -122.403355)
 ];
 
-//Ashley: Made changes for generating Heat Map
+// Made changes for generating Heat Map
 function mapsInitialize(targetID) {
     var myLatlng = new google.maps.LatLng(41.850033, -87.6500523);
     var mapOptions = {
