@@ -54,7 +54,7 @@ main {
 }
 
 section {
-	position: relative
+	position: relative;
 }
 
 #container {
@@ -66,8 +66,8 @@ section {
 	float: left;
 	width: 1220px;
 	margin-top: 4px;
-	padding: 6px; 
-	font-size: 18pt;
+	padding: 8px; 
+	font-size: 16pt;
 	font-weight: bold;
 }
 
@@ -100,7 +100,7 @@ section {
 #timeline {
 	float: left;
 	font-weight: bold;	
-	width: 1140px;
+	width: 1148px;
 	height: 48px;
 	font-size: 8pt;
 	border-radius: 4px; 
@@ -113,7 +113,7 @@ section {
 #timeline-events {
 	position: absolute;
 	float: left;
-	width: 1128px;
+	width: 1138px;
 	height: 40px;
 	padding: 6px;
 }
@@ -124,7 +124,7 @@ section {
 	position: relative;
 	float: left;
 	width: 1100px;
-	height: 80px;
+	height: 132px;
 	padding: 6px;
 	margin: 6px 10px;
 	display: none;
@@ -145,10 +145,38 @@ section {
 	font-size: 7pt;
 }
 
+#timeline-infobar-contents img {
+	float: left;
+	padding: 1px;
+	border: 1px solid #e3e3e3;
+    width: 120px;
+    height: 120px;
+    margin: 3px;
+}
+
+
+#timeline-infobar-contents .title {
+	float: left;
+	font-size: 10pt;
+	padding: 4px 8px;
+	width: 300px;
+	height: 120px;
+	border-radius: 2px;
+}
+
+#timeline-infobar-contents .description {
+	float: left;
+	font-size: 8pt;
+	padding: 4px 8px;
+	width: 628px;
+	height: 120px;	
+	border-left: 1px dotted #e3e3e3;
+}
+
 #map {
 	float: left;
 	width: 800px;
-	height: 500px;
+	height: 600px;
 	background-color: #FFF; 
 	border-radius: 6px; 
 	padding: 6px; 
@@ -163,7 +191,7 @@ section {
 #sidebar {
 	float: left;
 	width: 393px;
-	height: 500px;
+	height: 600px;
 	background-color: #FFF;
 	margin-right: 8px; 
 	border-radius: 6px; 
@@ -175,7 +203,7 @@ section {
 #sidebar-content-container{
 	padding: 4px;
 	border: 1px dotted #f0f0f0;
-	height: 292px;
+	height: 360px;
 	overflow: scroll;
 	border-radius: 4px;
 	box-shadow: 1px 1px 2px #f8f8f8 inset;
@@ -188,7 +216,7 @@ section {
 	margin: 0px auto;
 	float: center;
 	width: 350px;
-	height: 432px;
+	height: 392px;
 }
 
 #sidebar-content-header{
@@ -231,6 +259,20 @@ section {
 
 .sighting-item .description {
 	font-size: 8pt;
+}
+
+#foobar {
+	float: left;
+	width: 1220px;
+	height: 60px;
+	text-align: right;
+	font-size: 10pt;
+	border-radius: 6px; 
+	padding: 8px;
+	margin: 8px 0px;
+	background-color: #fcfcfc; 
+	border: 4px double #eee;
+	box-shadow: 2px 2px 1px #c9c9c9;
 }
 
 /* svg styles */

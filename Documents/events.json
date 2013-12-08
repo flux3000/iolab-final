@@ -1,12 +1,14 @@
 {
 	"0": 
 	{
-		"name": "ET Released",
+		"name": "June, 1983 - E.T. Released",
+		"stats": "<ul><li>Superceded Star Wars as highest-grossing film of all-time</li><li>$619 million worldwide gross in 1983</li>",
 		"type": "Movie",
 		"month": "06",
 		"year": "1983",
-		"description": "A touching story of a young boy's illicit relationship with an alien",
-		"image": "1983-06-et.jpg"
+		"description": "E.T. the Extra-Terrestrial (often referred to simply as E.T.) is a 1982 American science fiction film co-produced and directed by Steven Spielberg, written by Melissa Mathison and starring Henry Thomas, Dee Wallace, Robert MacNaughton, Drew Barrymore, and Peter Coyote. It tells the story of Elliott (played by Thomas), a lonely boy who befriends an extraterrestrial, dubbed \"E.T.\", who is stranded on Earth. Elliott and his siblings help the extraterrestrial return home while attempting to keep it hidden from their mother and the government.",
+		"image": "1983-06-et.jpg",
+		"url": "http://en.wikipedia.org/wiki/E.T._the_Extra-Terrestrial"
 	},
 	"1": 
 	{
@@ -15,7 +17,8 @@
 		"month": "02",
 		"year": "1986",
 		"description": "Appearing every 75-76 years, Halley's Comet's last perihelion occurred on 9 February 1986",
-		"image": "1986-02-halleys.jpg"	
+		"image": "1986-02-halleys.jpg",
+		"url": "http://en.wikipedia.org/wiki/Halleys_Comet"	
 
 	}
 }

@@ -28,6 +28,7 @@ function displayTimeline(pointLocations){
 	var events = [];
 	//console.log(pointLocations);
 
+
 	$.getJSON( "documents/events.json", function( eventdata ) {
 		$.each( eventdata, function( key, val ) {
 			var event = [key, val];
@@ -49,6 +50,8 @@ function displayTimeline(pointLocations){
 
 		});
 		console.log(events);
+		$(".event-icon").css({'cursor': 'pointer'});
+
 	});
 
 	$("#timeline-events").on("click", ".event-icon", function() {
@@ -56,18 +59,27 @@ function displayTimeline(pointLocations){
 		$(this).siblings().removeClass("active");
 		$(this).addClass("active");
 
-		$("#timeline").animate({"height": "160px"}, "fast");
-		$("#timeline-infobar").fadeIn("slow");
+		$("#timeline").animate({"height": "200px"}, "fast");
+
 
 		var thisEventID = $(this).attr("id");
 		var thisEventName = events[thisEventID][1]["name"];
+		var thisEventStats = events[thisEventID][1]["stats"];
 		var thisEventDescription = events[thisEventID][1]["description"];
 		var thisEventImage = events[thisEventID][1]["image"];
+		var thisEventURL = events[thisEventID][1]["url"];
 		var thisEventType = events[thisEventID][1]["type"];
 		var thisEventMonth = events[thisEventID][1]["month"];
 		var thisEventYear = events[thisEventID][1]["year"];
 
-		$("#timeline-infobar").html("<img src='images/"+thisEventImage+"' style='width:75px;'>"+thisEventName + " " + thisEventDescription);
+		var thisInfobarHTML = "<div id='timeline-infobar-contents'>";
+		thisInfobarHTML += "<div class='img'><img src='images/"+thisEventImage+"' alt='"+thisEventName+"'></div>";
+		thisInfobarHTML += "<div class='title'><strong>"+thisEventName+"</strong><br>"+thisEventStats+"</div>";
+		thisInfobarHTML += "<div class='description'>"+thisEventDescription+"</div>";
+		thisInfobarHTML += "</div>";
+
+
+		$("#timeline-infobar").fadeIn("slow").html(thisInfobarHTML);
 
 	});	
 
@@ -197,7 +209,7 @@ function graphData(data){
 	var xAxis = d3.svg.axis()
         .scale(xAxisScale)
         .orient("bottom")
-        .tickSize(6, 0)
+        .tickSize(8, 0)
 		.ticks(d3.time.year, 2);
 	svg.append("g")
 		.attr("class", "axis")
