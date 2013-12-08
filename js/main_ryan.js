@@ -1,6 +1,7 @@
 // Change this to adjust the date range we are using. Will need to change var BW (bar width) if the date range gets long enough.
 var startYear = 1981; 
 
+
 $(document).ready(function(){
 
 	google.maps.event.addDomListener(window, 'load', mapsInitialize("map-container"));
@@ -20,6 +21,85 @@ $(document).ready(function(){
 	});
 
 });
+
+
+function displayTimeline(pointLocations){
+
+	var events = [];
+	//console.log(pointLocations);
+
+
+	$.getJSON( "documents/events.json", function( eventdata ) {
+		$.each( eventdata, function( key, val ) {
+			var event = [key, val];
+
+			thisMonth = val["month"];
+			thisYear = val["year"];
+
+			for (var i = 0; i < pointLocations.length; i++) {
+				if (thisMonth == pointLocations[i][1] && thisYear == pointLocations[i][0]) {
+					thisXCoord = pointLocations[i][2] - 12;
+					console.log("x coord of "+thisMonth+"-"+thisYear+" is "+thisXCoord);
+				}
+			}
+			//thisXCoord = 0;
+
+			$("#timeline-events").append("<div class='event-icon' id='"+key+"' style='left:"+thisXCoord+"px;'>"+thisMonth+'-'+thisYear+"<div class='event-icon-up-pointer'></div><div class='event-icon-pointer'></div></div>");
+
+			events.push(event);
+
+		});
+		console.log(events);
+		$(".event-icon").css({'cursor': 'pointer'});
+
+	});
+
+	$("#timeline-events").on("click", ".event-icon", function() {
+		
+		$(this).children('.event-icon-pointer').fadeIn("fast");
+		$(this).children('.event-icon-up-pointer').fadeIn("fast");
+		$(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("fast")
+		$(this).siblings().children('.event-icon-up-pointer').fadeOut("fast")
+
+		$(this).addClass("active");
+
+		$("#timeline").animate({"height": "200px"}, "fast");
+
+
+		var thisEventID = $(this).attr("id");
+		var thisEventName = events[thisEventID][1]["name"];
+		var thisEventStats = events[thisEventID][1]["stats"];
+		var thisEventDescription = events[thisEventID][1]["description"];
+		var thisEventImage = events[thisEventID][1]["image"];
+		var thisEventURL = events[thisEventID][1]["url"];
+		var thisEventType = events[thisEventID][1]["type"];
+		var thisEventMonth = events[thisEventID][1]["month"];
+		var thisEventYear = events[thisEventID][1]["year"];
+
+		var a = moment([thisEventYear, thisEventMonth])
+		var displayDate = a.format("MMMM YYYY");
+
+		var thisInfobarHTML = "<div id='timeline-infobar-contents'>";
+		thisInfobarHTML += "<div class='img'><img src='images/"+thisEventImage+"' alt='"+thisEventName+"'></div>";
+		thisInfobarHTML += "<div class='title'><strong>"+displayDate+" - "+thisEventName+"</strong><br>"+thisEventStats+"</div>";
+		thisInfobarHTML += "<div class='description'>"+thisEventDescription+"</div>";
+		thisInfobarHTML += "<div class='link'><a href='"+thisEventURL+"' target='_new'>Wikipedia</a></div>";
+		thisInfobarHTML += "</div>";
+
+
+		$("#timeline-infobar").fadeIn("slow").html(thisInfobarHTML);
+
+	});	
+
+	$("#timeline-events").on("click", ".active", function() {
+		$("#timeline-infobar").fadeOut("fast");
+		$("#timeline").animate({"height": "48px"}, "fast");
+		$(this).removeClass("active");
+
+	});
+	
+}
+
 
 function prepareData(data){
 
@@ -66,11 +146,14 @@ function prepareData(data){
 		}
     }
     graphData(myUFOs)
+    
 }
 
 
 function graphData(data){
 	//console.log(data);
+
+	var pointLocations = [];
 
 	var numPoints = data.length;
 	// set up the svg 	
@@ -109,6 +192,17 @@ function graphData(data){
 		.domain([0, 1000])
 		.range([h-30, 0]);
 
+	//xAxisGridLines and yAxisGridLines for the grid lines	
+	var xAxisGridLines = d3.svg.axis()
+						.scale(xAxisScale)
+						.orient("bottom")
+						.ticks(20);
+
+	var yAxisGridLines = d3.svg.axis()
+						.scale(yAxisScale)
+						.orient("left")
+						.ticks(10);
+
 	//Creating the y-axis
 	var yAxis = d3.svg.axis()
         .scale(yAxisScale)
@@ -123,13 +217,32 @@ function graphData(data){
 	var xAxis = d3.svg.axis()
         .scale(xAxisScale)
         .orient("bottom")
-        .tickSize(6, 0)
+        .tickSize(8, 0)
 		.ticks(d3.time.year, 2);
 	svg.append("g")
 		.attr("class", "axis")
 		.attr("transform", "translate(40," + (h-20) + ")")
 		.call(xAxis);
 	
+	//Drawing Grid Lines
+	var xGridLines = svg.append("g")
+						.attr("class", "grid")
+						.attr("transform", "translate(" + 40 + "," + (h - 20)  + ")")
+						.style("stroke-dasharray", ("3, 3"))
+						.call(xAxisGridLines
+								.tickSize(-h + 30,0,0)
+								.tickFormat("")
+							);
+								
+	var yGridLines = svg.append("g")
+						.attr("class", "grid")
+						.attr("transform", "translate(40,10)")
+						.style("stroke-dasharray", ("3, 3"))
+						.call(yAxisGridLines
+								.tickSize(-w + 40,0,0)
+								.tickFormat("")
+							);
+
 	//Drawing the bars of the graph
 	svg.selectAll("rect")
 		.data(data)
@@ -141,7 +254,11 @@ function graphData(data){
 			    return yScale(d.sightings);
 			},
 			"x": function(d, i) {
-				return 40 + i*BTW;
+				thisX = 40 + i*BTW;
+				thisPointLocation = [d.year, d.month, i*BTW];
+				pointLocations.push(thisPointLocation);
+				return thisX;
+
 			},
 			"y": function(d, i) {
 				return h - 20 - yScale(d.sightings);
@@ -211,6 +328,8 @@ function graphData(data){
 			$(".info").hide();
 		}
 	);
+
+	displayTimeline(pointLocations);
 
 }
 
@@ -306,13 +425,13 @@ function graphMonthData(data){
 
 	var numPoints = data.length;
 	// set up the svg 	
-	var w = 350;
-	var h = 100;
+	var w = 390;
+	var h = 140;
 	var svg = d3.select("#month-visualization");
 	svg.attr("width", w).attr("height", h);
 
 	//setting variables for drawing
-	var BW = 9; //Bar width
+	var BW = 8; //Bar width
 	var BTW = BW+2; //Bar Total Width
 	var OL = 24; //Offset Left
 
@@ -324,7 +443,7 @@ function graphMonthData(data){
 
 	var yScale = d3.scale.linear()
 		.domain([0, d3.max(data, function(d) { return d.sightings; })])
-		.range([0, h-5]);
+		.range([0, h-35]);
 
 	//console.log("startdate:"+startDate);
 	//console.log("enddate:"+endDate);
@@ -336,7 +455,7 @@ function graphMonthData(data){
 	
 	var yAxisScale = d3.scale.linear()
 		.domain([0, d3.max(data, function(d) { return d.sightings; })])
-		.range([h-5, 0]);
+		.range([h-35, 0]);
 
 	//Creating the y-axis
 	var yAxis = d3.svg.axis()
@@ -345,7 +464,7 @@ function graphMonthData(data){
 		.ticks(5);
 	svg.append("g")
 		.attr("class", "axis")
-		.attr("transform", "translate(14," + 0 + ")")
+		.attr("transform", "translate(30," + 0 + ")")
 		.call(yAxis);
 
 	//Creating the x-axis
@@ -356,9 +475,30 @@ function graphMonthData(data){
         .ticks(10);
 	svg.append("g")
 		.attr("class", "axis")
-		.attr("transform", "translate(14," + (h-5) + ")")
+		.attr("transform", "translate(30," + (h-35) + ")")
 		.call(xAxis);
+
+	//Ashley: Drawing the Axis Labels	
+	var xAxisLabel = svg.append("text")
+						.attr("fill", "#aaa")
+						.attr("font-size", "10px")
+						.attr("font-weight", "normal")
+						.attr("text-anchor", "middle")
+						.attr("transform", "translate(" + ((w/2)-10) + "," + (h-5) + ")")
+						.text("Day of Month");
 	
+	//Ashley: Drawing the Axis Labels
+	var yAxisLabel = svg.append("text")
+						.attr("fill", "#aaa")
+						.attr("font-size", "10px")
+						.attr("font-weight", "normal")
+						.attr("text-anchor", "middle")
+						.attr("transform", "rotate(-90)")
+						.attr("x", 0 - h/2)
+						.attr("y", -13)
+						.attr("dy", "1em")
+						.text("# of Sightings");			
+
 	//Drawing the bars of the graph
 	svg.selectAll("rect")
 		.data(data)
@@ -367,11 +507,11 @@ function graphMonthData(data){
 		.attr({
 			"width": BW,		
 			"x": function(d, i) {
-				return 15 + i*BTW;
+				return 32 + i*BTW;
 			},
         	"height": 0,
 			"y": function(d, i) {
-				return h-5;
+				return h-35;
 			} ,   
 			"desc": function(d, i) {
 				var v = moment([d.year, d.month-1, d.day])
@@ -392,7 +532,7 @@ function graphMonthData(data){
 			    return yScale(d.sightings);
 			},
 			"y": function(d, i) {
-				return h - 5 - yScale(d.sightings);
+				return h - 35 - yScale(d.sightings);
 			}       
     	})
         .duration(500)	

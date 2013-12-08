@@ -123,6 +123,7 @@ section {
 	box-shadow: 2px 2px 1px #c9c9c9;
 }
 
+/*Ashley: Added container for the map*/
 #map-container{
 	border: 1px solid black;
 	display:block; 
