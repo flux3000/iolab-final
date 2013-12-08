@@ -13,12 +13,12 @@ $(document).ready(function(){
 		success: prepareData,
 		error: function(e){console.log("error: " + e);}
 	});
-	
+	/*
 	$.ajax({
 		url: "http://ufo.quast.li/backend/mapper.php",
 		success: mapData,
 		error: function(e){console.log("error: " + e);}
-	});
+	});*/
 
 });
 
@@ -39,7 +39,7 @@ function displayTimeline(pointLocations){
 			for (var i = 0; i < pointLocations.length; i++) {
 				if (thisMonth == pointLocations[i][1] && thisYear == pointLocations[i][0]) {
 					thisXCoord = pointLocations[i][2] - 12;
-					console.log("x coord of "+thisMonth+"-"+thisYear+" is "+thisXCoord);
+					//console.log("x coord of "+thisMonth+"-"+thisYear+" is "+thisXCoord);
 				}
 			}
 			//thisXCoord = 0;
@@ -49,7 +49,7 @@ function displayTimeline(pointLocations){
 			events.push(event);
 
 		});
-		console.log(events);
+		//console.log(events);
 		$(".event-icon").css({'cursor': 'pointer'});
 
 	});
@@ -310,9 +310,9 @@ function graphData(data){
 		//Setting the info-text
 		var txt = $(this).attr("desc");
 		//var left = $(this).position().left - 60;
-		var left = (event.pageX) + "px"; //Ashley
+		var left = (event.pageX) + "px"; 
 		//var top = h - 50;
-		var top = (event.pageY - 50) + "px"; //Ashley
+		var top = (event.pageY - 50) + "px"; 
 		$(".info").html(txt).css({"left" : left, "top" : top}).show();		
 		//$( this ).toggleClass("selected", addOrRemove); // doesn't work, because fill attribute overrides classes
 	});
@@ -326,9 +326,9 @@ function graphData(data){
 			//Setting the info-text
 			var txt = $(this).attr("desc");
 			//var left = $(this).position().left - 60;
-			var left = (event.pageX) + "px"; //Ashley
+			var left = (event.pageX) + "px"; 
 			//var top = h - 50;
-			var top = (event.pageY - 50) + "px"; //Ashley
+			var top = (event.pageY - 50) + "px"; 
 			$(".info").html(txt).css({"left" : left, "top" : top}).show();
 		}, 
 		function() {
@@ -345,10 +345,12 @@ function graphData(data){
 function displayDetailsChart(data) {
 	var json = JSON.parse(data);
 	//console.log(json);
-		thisSightingDateArr = json[i]["date"].split("-");
-		thisSightingYear = thisSightingDateArr[0];
-		thisSightingMonth = thisSightingDateArr[1];
-		thisSightingDay = thisSightingDateArr[2];	
+
+/*	thisSightingDateArr = json[i]["date"].split("-");
+	thisSightingYear = thisSightingDateArr[0];
+	thisSightingMonth = thisSightingDateArr[1];
+	thisSightingDay = thisSightingDateArr[2];*/
+
 	graphMonthData(json);
 
 }
@@ -367,15 +369,37 @@ function displayDetailsHeader(year, month, sightings){
 
 }
 
+function displayDayDetailsHeader(year, month, day, sightings){
+	var thisMonth = parseInt(month)-1;
+	var a = moment([year, thisMonth, day])
+	var displayDate = a.format("MMMM Do YYYY");
+	$("#sighting-list").empty();
+	if (parseInt(sightings) > 1) {
+		var ufos = "UFOs";
+	} else {
+		var ufos = "UFO";
+	}
+	$("#sidebar-content-header").html(sightings+" "+ufos+" reported on "+displayDate).show();
+
+}
+
+
+
 function displayDetails(data){
+
 	var json = JSON.parse(data);
 	//console.log(json);
-	
+
+	var selectedDetails = []; // this is the JSON object that will feed the map	
+
+	selectedDetails = json; // add our sighting results to a json that will feed the map
+
 	for (var i = 0; i < json.length; i++) {
 		thisSightingDateArr = json[i]["date"].split("-");
 		thisSightingYear = thisSightingDateArr[0];
 		thisSightingMonth = thisSightingDateArr[1];
 		thisSightingDay = thisSightingDateArr[2];
+
 		var a = moment([thisSightingYear, thisSightingMonth-1, thisSightingDay])
 		var displayDate = a.format("D MMMM YYYY");
 
@@ -386,7 +410,45 @@ function displayDetails(data){
 
 		$("#sighting-list").append("<li>"+thisSightingHTML+"</li>");
 
+
 	}
+
+	mapData(selectedDetails);
+
+}
+
+function displayDayDetails(data, day){
+
+	var json = JSON.parse(data);
+
+	var selectedDetails = []; // this is the JSON object that will feed the map
+
+
+	for (var i = 0; i < json.length; i++) {
+
+		thisSightingDateArr = json[i]["date"].split("-");
+		thisSightingYear = thisSightingDateArr[0];
+		thisSightingMonth = thisSightingDateArr[1];
+		thisSightingDay = thisSightingDateArr[2];
+
+		if (thisSightingDay == day) {
+
+			selectedDetails.push(json[i]); // add this result to the JSON that will feed the map
+
+			var a = moment([thisSightingYear, thisSightingMonth-1, thisSightingDay])
+			var displayDate = a.format("D MMMM YYYY");
+
+			thisSightingHTML = "<div class='sighting-item'>";
+			thisSightingHTML += "<div class='title'>" + displayDate + " - " + json[i]["city"] + ", " + json[i]["state"] + "</div>";
+			thisSightingHTML += "<div class='description'><strong>Shape:</strong> " + json[i]["shape"] + "&nbsp;&nbsp;<strong>Duration:</strong> " + json[i]["duration"] + "<br><br>" + json[i]["summary"] + "</div>";
+			thisSightingHTML += "</div>";
+
+			$("#sighting-list").append("<li>"+thisSightingHTML+"</li>");
+
+		}
+	}
+
+	mapData(selectedDetails);
 
 }
 
@@ -400,7 +462,8 @@ function prepareMonthData(data, year, month){
 
 	// go through each day in the calendar month. If there is a sighting for this day in our dataset, we will record the sightings under the "count" variable. If there is no data, "count" will be 0.
 
-	for (var j = 1; j < 32; j++){ // needs fix to figure out days in month
+
+	for (var j = 1; j < 32; j++){ // TODO - needs fix to figure out days in month
 		var thisPoint = [];
 		thisPoint.year = year;
 		thisPoint.month = month;
@@ -419,16 +482,20 @@ function prepareMonthData(data, year, month){
 				}				
 			}
 	    }
-	    console.log(thisPoint.year + "-" + thisPoint.month + "-"+thisPoint.day+" : " + thisPoint.sightings);
+	    //console.log(thisPoint.year + "-" + thisPoint.month + "-"+thisPoint.day+" : " + thisPoint.sightings);
 
 		myMonthUFOs.push(thisPoint);    
 	}
+
     graphMonthData(myMonthUFOs);
 }
 
 
 function graphMonthData(data){
-	console.log(data);
+	//console.log(data);
+
+	var thisMonthData = data;
+
 
 	$("#month-visualization").empty();
 
@@ -487,7 +554,7 @@ function graphMonthData(data){
 		.attr("transform", "translate(30," + (h-35) + ")")
 		.call(xAxis);
 
-	//Ashley: Drawing the Axis Labels	
+	// Drawing the Axis Labels	
 	var xAxisLabel = svg.append("text")
 						.attr("fill", "#aaa")
 						.attr("font-size", "10px")
@@ -496,7 +563,7 @@ function graphMonthData(data){
 						.attr("transform", "translate(" + ((w/2)-10) + "," + (h-5) + ")")
 						.text("Day of Month");
 	
-	//Ashley: Drawing the Axis Labels
+	// Drawing the Axis Labels
 	var yAxisLabel = svg.append("text")
 						.attr("fill", "#aaa")
 						.attr("font-size", "10px")
@@ -512,7 +579,29 @@ function graphMonthData(data){
 	svg.selectAll("rect")
 		.data(data)
 		.enter()
-		.append("rect")	
+		.append("rect")
+		.on("click", function(d, i) {
+			// run when user clicks on a bar in the small sidechart. 
+			// populate sidebar with details on this day's sightings.
+
+			var dataString = 'month='+d.month+'&year='+d.year;
+
+			$.ajax({
+				url: "http://ufo.quast.li/backend/ufoMapper.php",
+				data: dataString,
+				success: function(data) {
+					displayDayDetailsHeader(d.year, d.month, d.day, d.sightings); 
+					displayDayDetails(data, d.day);
+
+
+				},
+				error: function(e){console.log("error: " + e);}
+			});
+
+			//displayDayDetailsHeader(d.year, d.month, d.day, d.sightings); 
+			//displayDayDetails(d);
+
+		})
 		.attr({
 			"width": BW,		
 			"x": function(d, i) {
@@ -546,25 +635,10 @@ function graphMonthData(data){
     	})
         .duration(500)	
 
-/*		.on("click", function(d, i) {
-			// run when user clicks on a bar in the chart. 
-			//populate sidebar with details on this month's sightings.
-			var dataString = 'month='+d.month+'&year='+d.year;
-
-			$.ajax({
-				url: "http://ufo.quast.li/backend/ufoMapper.php",
-				data: dataString,
-				success: function(data) {
-					displayDetailsHeader(d.year, d.month, d.sightings); 
-					displayDetails(data);
-				},
-				error: function(e){console.log("error: " + e);}
-			});
-		});		    
-*/
+	    
 	//Changing color of the rect when clicked
 	$(".smallbar").click(function() {
-		$(this).siblings().attr("fill", "#FFD573");
+		$(this).siblings(".smallbar").attr("fill", "#FFD573");
 		$(this).attr("fill", "#b34100");
 		//$( this ).toggleClass("selected", addOrRemove); // doesn't work, because fill attribute overrides classes
 	});
@@ -592,9 +666,9 @@ function graphMonthData(data){
 
 
 function mapData(data){
-	//console.log(data);
+	console.log(data);
 }
-// Ashley: google maps code
+// Google maps code
 var map, pointarray, heatmap,
 taxiData = [
   new google.maps.LatLng(37.782551, -122.445368),
@@ -1099,7 +1173,7 @@ taxiData = [
   new google.maps.LatLng(37.751266, -122.403355)
 ];
 
-//Ashley: Made changes for generating Heat Map
+// Generating Heat Map
 function mapsInitialize(targetID) {
     var myLatlng = new google.maps.LatLng(41.850033, -87.6500523);
     var mapOptions = {
