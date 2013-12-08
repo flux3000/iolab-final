@@ -1,6 +1,7 @@
 // Change this to adjust the date range we are using. Will need to change var BW (bar width) if the date range gets long enough.
 var startYear = 1981; 
 
+
 $(document).ready(function(){
 
 	google.maps.event.addDomListener(window, 'load', mapsInitialize("map-container"));
@@ -20,6 +21,65 @@ $(document).ready(function(){
 	});
 
 });
+
+
+function displayTimeline(pointLocations){
+
+	var events = [];
+	//console.log(pointLocations);
+
+	$.getJSON( "documents/events.json", function( eventdata ) {
+		$.each( eventdata, function( key, val ) {
+			var event = [key, val];
+
+			thisMonth = val["month"];
+			thisYear = val["year"];
+
+			for (var i = 0; i < pointLocations.length; i++) {
+				if (thisMonth == pointLocations[i][1] && thisYear == pointLocations[i][0]) {
+					thisXCoord = pointLocations[i][2] - 12;
+					console.log("x coord of "+thisMonth+"-"+thisYear+" is "+thisXCoord);
+				}
+			}
+			//thisXCoord = 0;
+
+			$("#timeline-events").append("<div class='event-icon' id='"+key+"' style='left:"+thisXCoord+"px;'>"+thisMonth+'-'+thisYear+"</div>");
+
+			events.push(event);
+
+		});
+		console.log(events);
+	});
+
+	$("#timeline-events").on("click", ".event-icon", function() {
+		
+		$(this).siblings().removeClass("active");
+		$(this).addClass("active");
+
+		$("#timeline").animate({"height": "160px"}, "fast");
+		$("#timeline-infobar").fadeIn("slow");
+
+		var thisEventID = $(this).attr("id");
+		var thisEventName = events[thisEventID][1]["name"];
+		var thisEventDescription = events[thisEventID][1]["description"];
+		var thisEventImage = events[thisEventID][1]["image"];
+		var thisEventType = events[thisEventID][1]["type"];
+		var thisEventMonth = events[thisEventID][1]["month"];
+		var thisEventYear = events[thisEventID][1]["year"];
+
+		$("#timeline-infobar").html("<img src='images/"+thisEventImage+"' style='width:75px;'>"+thisEventName + " " + thisEventDescription);
+
+	});	
+
+	$("#timeline-events").on("click", ".active", function() {
+		$("#timeline-infobar").fadeOut("fast");
+		$("#timeline").animate({"height": "40px"}, "fast");
+		$(this).removeClass("active");
+
+	});
+	
+}
+
 
 function prepareData(data){
 
@@ -66,11 +126,14 @@ function prepareData(data){
 		}
     }
     graphData(myUFOs)
+    
 }
 
 
 function graphData(data){
 	//console.log(data);
+
+	var pointLocations = [];
 
 	var numPoints = data.length;
 	// set up the svg 	
@@ -141,7 +204,11 @@ function graphData(data){
 			    return yScale(d.sightings);
 			},
 			"x": function(d, i) {
-				return 40 + i*BTW;
+				thisX = 40 + i*BTW;
+				thisPointLocation = [d.year, d.month, i*BTW];
+				pointLocations.push(thisPointLocation);
+				return thisX;
+
 			},
 			"y": function(d, i) {
 				return h - 20 - yScale(d.sightings);
@@ -211,6 +278,8 @@ function graphData(data){
 			$(".info").hide();
 		}
 	);
+
+	displayTimeline(pointLocations);
 
 }
 
