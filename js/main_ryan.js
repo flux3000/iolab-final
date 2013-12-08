@@ -44,7 +44,7 @@ function displayTimeline(pointLocations){
 			}
 			//thisXCoord = 0;
 
-			$("#timeline-events").append("<div class='event-icon' id='"+key+"' style='left:"+thisXCoord+"px;'>"+thisMonth+'-'+thisYear+"</div>");
+			$("#timeline-events").append("<div class='event-icon' id='"+key+"' style='left:"+thisXCoord+"px;'>"+thisMonth+'-'+thisYear+"<div class='event-icon-up-pointer'></div><div class='event-icon-pointer'></div></div>");
 
 			events.push(event);
 
@@ -56,7 +56,11 @@ function displayTimeline(pointLocations){
 
 	$("#timeline-events").on("click", ".event-icon", function() {
 		
-		$(this).siblings().removeClass("active");
+		$(this).children('.event-icon-pointer').fadeIn("fast");
+		$(this).children('.event-icon-up-pointer').fadeIn("fast");
+		$(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("fast")
+		$(this).siblings().children('.event-icon-up-pointer').fadeOut("fast")
+
 		$(this).addClass("active");
 
 		$("#timeline").animate({"height": "200px"}, "fast");
@@ -72,10 +76,14 @@ function displayTimeline(pointLocations){
 		var thisEventMonth = events[thisEventID][1]["month"];
 		var thisEventYear = events[thisEventID][1]["year"];
 
+		var a = moment([thisEventYear, thisEventMonth])
+		var displayDate = a.format("MMMM YYYY");
+
 		var thisInfobarHTML = "<div id='timeline-infobar-contents'>";
 		thisInfobarHTML += "<div class='img'><img src='images/"+thisEventImage+"' alt='"+thisEventName+"'></div>";
-		thisInfobarHTML += "<div class='title'><strong>"+thisEventName+"</strong><br>"+thisEventStats+"</div>";
+		thisInfobarHTML += "<div class='title'><strong>"+displayDate+" - "+thisEventName+"</strong><br>"+thisEventStats+"</div>";
 		thisInfobarHTML += "<div class='description'>"+thisEventDescription+"</div>";
+		thisInfobarHTML += "<div class='link'><a href='"+thisEventURL+"' target='_new'>Wikipedia</a></div>";
 		thisInfobarHTML += "</div>";
 
 
@@ -85,7 +93,7 @@ function displayTimeline(pointLocations){
 
 	$("#timeline-events").on("click", ".active", function() {
 		$("#timeline-infobar").fadeOut("fast");
-		$("#timeline").animate({"height": "40px"}, "fast");
+		$("#timeline").animate({"height": "48px"}, "fast");
 		$(this).removeClass("active");
 
 	});
