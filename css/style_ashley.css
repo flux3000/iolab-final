@@ -123,6 +123,13 @@ section {
 	box-shadow: 2px 2px 1px #c9c9c9;
 }
 
+#map-container{
+	border: 1px solid black;
+	display:block; 
+	height:450px; 
+	width:750px;
+	margin: auto;
+}
 /* infobar is at the bottom of the page beneath our results */
 
 #infobar {
