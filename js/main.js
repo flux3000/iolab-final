@@ -44,12 +44,14 @@ function displayTimeline(pointLocations){
 			}
 			//thisXCoord = 0;
 
-			$("#timeline-events").append("<div class='event-icon' id='"+key+"' style='left:"+thisXCoord+"px;'>"+thisMonth+'-'+thisYear+"<div class='event-icon-up-pointer'></div><div class='event-icon-pointer'></div></div>");
+			$("#timeline-events").append("<div class='event-icon' id='"+key+
+										"' style='background-image:url(../images/icons/movie.jpg);'"+
+										"' style='left:"+thisXCoord+"px; background-image:url(../images/icons/movie.jpg);'>"+
+										"<div class='event-icon-up-pointer'></div><div class='event-icon-pointer'></div></div>");
 
 			events.push(event);
 
 		});
-		console.log(events);
 		$(".event-icon").css({'cursor': 'pointer'});
 
 	});

@@ -1,24 +1,103 @@
 {
-	"0": 
-	{
-		"name": "E.T. Released",
-		"stats": "<ul><li>Superceded Star Wars as highest-grossing film of all-time</li><li>$619 million worldwide gross in 1983</li>",
-		"type": "Movie",
-		"month": "06",
-		"year": "1983",
-		"description": "E.T. the Extra-Terrestrial (often referred to simply as E.T.) is a 1982 American science fiction film co-produced and directed by Steven Spielberg, written by Melissa Mathison and starring Henry Thomas, Dee Wallace, Robert MacNaughton, Drew Barrymore, and Peter Coyote. It tells the story of Elliott (played by Thomas), a lonely boy who befriends an extraterrestrial, dubbed \"E.T.\", who is stranded on Earth. Elliott and his siblings help the extraterrestrial return home while attempting to keep it hidden from their mother and the government.",
-		"image": "1983-06-et.jpg",
-		"url": "http://en.wikipedia.org/wiki/E.T._the_Extra-Terrestrial"
+	"0" : {
+		"name" : "E.T. Released",
+		"stats" : "<ul><li>Superceded Star Wars as highest-grossing film of all-time</li><li>$619 million worldwide gross in 1983</li>",
+		"type" : "Movie",
+		"month" : "10",
+		"year" : "1983",
+		"description" : "E.T. the Extra-Terrestrial (often referred to simply as E.T.) is a 1982 American science fiction film co-produced and directed by Steven Spielberg, written by Melissa Mathison and starring Henry Thomas, Dee Wallace, Robert MacNaughton, Drew Barrymore, and Peter Coyote. It tells the story of Elliott (played by Thomas), a lonely boy who befriends an extraterrestrial, dubbed \"E.T.\", who is stranded on Earth. Elliott and his siblings help the extraterrestrial return home while attempting to keep it hidden from their mother and the government.",
+		"image" : "1983-06-et.jpg",
+		"url" : "http://en.wikipedia.org/wiki/E.T._the_Extra-Terrestrial"
 	},
-	"1": 
-	{
-		"name": "Halley's Comet",
-		"type": "Astronomy",
-		"month": "02",
-		"year": "1986",
-		"description": "Appearing every 75-76 years, Halley's Comet's last perihelion occurred on 9 February 1986",
-		"image": "1986-02-halleys.jpg",
-		"url": "http://en.wikipedia.org/wiki/Halleys_Comet"	
+	"1" : {
+		"name" : "Halley's Comet",
+		"type" : "Astronomy",
+		"month" : "02",
+		"year" : "1986",
+		"description" : "Appearing every 75-76 years, Halley's Comet's last perihelion occurred on 9 February 1986",
+		"image" : "1986-02-halleys.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Halleys_Comet"
 
+	},
+	"2" : {
+		"name" : "Alien Resurrection Released",
+		"stats" : "<ul><li>Alien garnered both critical acclaim and box office success.</li><li>The success of Alien spawned a media franchise of novels, comic books, video games, and toys.</li>",
+		"type" : "Movie",
+		"month" : "11",
+		"year" : "1997",
+		"description" : "The commercial vessel Nostromo receives a distress call from an unexplored planet. After searching for survivors, the crew heads home only to realize that a deadly bioform has joined them.",
+		"image" : "1979-06-alien.jpg",
+		"url" : "https://en.wikipedia.org/wiki/Alien_(film)"
+	},
+	"3" : {
+		"name" : "Space Shuttle Columbia Launch",
+		"stats" : "<ul><li>Designed at the Kennedy Space Center.</li><li>Columbia was dubber STS-5.</li>",
+		"type" : "Event",
+		"month" : "11",
+		"year" : "1982",
+		"description" : "The highlight of this mission was that the four astronauts aboard deployed two commercial communications satellite",
+		"image" : "1982-11-columbia.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Space_Shuttle_Columbia"
+	},
+	"4" : {
+		"name" : "International Space Station Lowest Orbit",
+		"stats" : "<ul><li>Altitude is 207 miles (332 km)</li><li>Orbit is dropping 300 feet (90 meters) per day</li>",
+		"type" : "Event",
+		"month" : "03",
+		"year" : "2007",
+		"description" : "Under the inexorable decay of air drag, its orbital path around Earth has slipped down to 207 miles (332 kilometers), the lowest average altitude in the nine-year life of the project.",
+		"image" : "1982-11-columbia.jpg",
+		"url" : "http://www.nbcnews.com/id/17630218/#.UqUiufRDt50"
+	},
+	"5" : {
+		"name" : "Independence Day Released",
+		"stats" : "<ul><li>Box office gross was $816,969,268</li><li>At the time was the second-highest worldwide gross of all time.</li>",
+		"type" : "Movie",
+		"month" : "07",
+		"year" : "1996",
+		"description" : "The aliens are coming and their goal is to invade and destroy. Fighting superior technology, Man's best weapon is the will to survive.",
+		"image" : "1996-07-id4.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Independence_Day_(1996_film)"
+	},
+	"6" : {
+		"name" : "Contact Released",
+		"stats" : "<ul><li>Carl Sagan and Ann Druyan began working on the film in 1979.</li><li>Sagan published Contact as a novel in 1985</li>",
+		"type" : "Movie",
+		"month" : "07",
+		"year" : "1997",
+		"description" : "Dr. Ellie Arroway, after years of searching, finds conclusive radio proof of intelligent aliens, who send plans for a mysterious machine.",
+		"image" : "1997-07-contact.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Contact_(1997_film)"
+	},
+	"7" : {
+		"name" : "District 9 Released",
+		"stats" : "<ul><li>District 9 depicts humanity, xenophobia, and social segregation. </li><li>The title and premise of District 9 were inspired by events in District Six, Cape Town during the apartheid era.</li>",
+		"type" : "Movie",
+		"month" : "08",
+		"year" : "2009",
+		"description" : "An extraterrestrial race forced to live in slum-like conditions on Earth suddenly finds a kindred spirit in a government agent who is exposed to their biotechnology.",
+		"image" : "2009-08-district9.jpg",
+		"url" : "http://en.wikipedia.org/wiki/District_9"
+	},
+	"8" : {
+		"name" : "Peekskill Meteorite",
+		"stats" : "<ul><li>Peekskill Meteorite was seen from Kentucky to New York.</li>",
+		"type" : "Astronomy",
+		"month" : "10",
+		"year" : "1992",
+		"description" : "The Peekskill meteorite is among the most historic meteorite events on record.[1] Sixteen separate video recordings document the meteorite burning through the Earth's atmosphere, whereupon it struck a parked car in Peekskill, New York.",
+		"image" : "1992-10-peek.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Peekskill_meteorite"
+	},
+	"9" : {
+		"name" : "Sutter’s Mill Meteorite",
+		"stats" : "<ul><li>Exploded into fragments over northern California.</li><li>It weighed barely 2 pounds and was apparently from a family of known asteroids named 495 Eulalia.</li>",
+		"type" : "Astronomy",
+		"month" : "04",
+		"year" : "2012",
+		"description" : "The meteorite was found to contain some of the oldest material in the Solar System. The name comes from the Sutter's Mill, the California Gold Rush site near where some pieces were recovered.",
+		"image" : "2012-04-sutters.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Sutter&#39;s_Mill_meteorite"
 	}
+	
 }

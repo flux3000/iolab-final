@@ -35,6 +35,24 @@ function displayTimeline(pointLocations){
 
 			thisMonth = val["month"];
 			thisYear = val["year"];
+			thisType = val["type"]
+			iconUrl = ""
+/* 			if (thisType == "Movie") {
+				var iconUrl = "(../images/icons/movie.jpg)"
+			} */
+			console.log(iconUrl)
+			switch (thisType) {
+				case "Movie":
+					iconUrl = "(../images/icons/movie.jpg)"
+					console.log(iconUrl)
+					break;
+				case "Astronomy":
+					iconUrl = "(../images/icons/astronomy.jpg)"
+					break;
+				case "Event":
+					iconUrl = "(../images/icons/event.jpg)"
+					break;
+			}
 
 			for (var i = 0; i < pointLocations.length; i++) {
 				if (thisMonth == pointLocations[i][1] && thisYear == pointLocations[i][0]) {
@@ -44,8 +62,9 @@ function displayTimeline(pointLocations){
 			}
 			//thisXCoord = 0;
 
-			$("#timeline-events").append("<div class='event-icon' id='"+key+"' style='left:"+thisXCoord+"px;'>"+thisMonth+'-'+thisYear+"<div class='event-icon-up-pointer'></div><div class='event-icon-pointer'></div></div>");
-
+			$("#timeline-events").append("<div class='event-icon' id='"+key+
+										"' style='left:"+thisXCoord+"px; background-image:url"+iconUrl+";'>"+
+										"<div class='event-icon-up-pointer'></div><div class='event-icon-pointer'></div></div>");
 			events.push(event);
 
 		});
@@ -266,6 +285,7 @@ function graphData(data){
 			"desc": function(d, i) {
 				var v = moment([d.year, d.month-1])
 				var displayDate = v.format("MMMM YYYY");
+				console.log("last month: "+data[i-1].sightings);
 				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
 
 			},
