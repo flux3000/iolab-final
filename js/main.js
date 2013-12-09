@@ -1,6 +1,23 @@
+/*
+Function List:
+
+displayTimeLine
+prepareData
+graphData
+displayDetailsChart
+displayDetailsHeader
+displayDayDetailsHeader
+displayDetails
+displayDayDetails
+prepareMonthData
+graphMonthData
+mapData
+mapsInitialize
+
+*/
 // Change this to adjust the date range we are using. Will need to change var BW (bar width) if the date range gets long enough.
 var startYear = 1981; 
-
+var myUFOs = [];
 
 $(document).ready(function(){
 
@@ -13,21 +30,20 @@ $(document).ready(function(){
 		success: prepareData,
 		error: function(e){console.log("error: " + e);}
 	});
-	/*
+	
 	$.ajax({
 		url: "http://ufo.quast.li/backend/mapper.php",
 		success: mapData,
 		error: function(e){console.log("error: " + e);}
-	});*/
+	});
 
 });
 
 
-function displayTimeline(pointLocations){
+function displayTimeline(pointLocations, foo){
 
 	var events = [];
 	//console.log(pointLocations);
-
 
 	$.getJSON( "documents/events.json", function( eventdata ) {
 		$.each( eventdata, function( key, val ) {
@@ -35,42 +51,58 @@ function displayTimeline(pointLocations){
 
 			thisMonth = val["month"];
 			thisYear = val["year"];
+			thisType = val["type"]
+			iconUrl = ""
+/* 			if (thisType == "Movie") {
+				var iconUrl = "(../images/icons/movie.jpg)"
+			} */
+			switch (thisType) {
+				case "Movie":
+					iconUrl = "(../images/icons/movie.jpg)"
+					break;
+				case "Astronomy":
+					iconUrl = "(../images/icons/astronomy.jpg)"
+					break;
+				case "Event":
+					iconUrl = "(../images/icons/event.jpg)"
+					break;
+			}
 
 			for (var i = 0; i < pointLocations.length; i++) {
 				if (thisMonth == pointLocations[i][1] && thisYear == pointLocations[i][0]) {
-					thisXCoord = pointLocations[i][2] - 12;
+					thisXCoord = pointLocations[i][2] - 8;
 					//console.log("x coord of "+thisMonth+"-"+thisYear+" is "+thisXCoord);
 				}
 			}
 			//thisXCoord = 0;
 
 			$("#timeline-events").append("<div class='event-icon' id='"+key+
-										"' style='background-image:url(../images/icons/movie.jpg);'"+
-										"' style='left:"+thisXCoord+"px; background-image:url(../images/icons/movie.jpg);'>"+
-										"<div class='event-icon-up-pointer'></div><div class='event-icon-pointer'></div></div>");
-
+										"' style='left:"+thisXCoord+"px; background-image:url"+iconUrl+";'>"+
+										"</div>");
 			events.push(event);
 
 		});
-<<<<<<< HEAD
-=======
 		//console.log(events);
->>>>>>> fc71afe33c1af6b0c6645d9087988b29a5d532ed
 		$(".event-icon").css({'cursor': 'pointer'});
 
 	});
 
-	$("#timeline-events").on("click", ".event-icon", function() {
-		
-		$(this).children('.event-icon-pointer').fadeIn("fast");
-		$(this).children('.event-icon-up-pointer').fadeIn("fast");
-		$(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("fast")
-		$(this).siblings().children('.event-icon-up-pointer').fadeOut("fast")
+	$("#timeline-events").on("click", ".event-icon:not(.active)", function() {
+
+		var pointerXPos = ($(this).position().left)+11;
+
+		//console.log("making bars red");
+		$('svg#visualization').children("rect").attr("fill", "#b34100"); // make all bars red
+
+		$('.event-icon-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
+		$('.event-icon-up-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
+
+		$(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("slow")
+		$(this).siblings().children('.event-icon-up-pointer').fadeOut("slow")
 
 		$(this).addClass("active");
 
-		$("#timeline").animate({"height": "200px"}, "fast");
-
+		$("#timeline").animate({"height": "200px"}, 400);
 
 		var thisEventID = $(this).attr("id");
 		var thisEventName = events[thisEventID][1]["name"];
@@ -84,26 +116,65 @@ function displayTimeline(pointLocations){
 
 		var a = moment([thisEventYear, thisEventMonth])
 		var displayDate = a.format("MMMM YYYY");
+		var titleDate = a.format("YYYY-MM");
 
 		var thisInfobarHTML = "<div id='timeline-infobar-contents'>";
+		thisInfobarHTML += "<div class='close'>&#x2715;</div>";
 		thisInfobarHTML += "<div class='img'><img src='images/"+thisEventImage+"' alt='"+thisEventName+"'></div>";
 		thisInfobarHTML += "<div class='title'><strong>"+displayDate+" - "+thisEventName+"</strong><br>"+thisEventStats+"</div>";
 		thisInfobarHTML += "<div class='description'>"+thisEventDescription+"</div>";
 		thisInfobarHTML += "<div class='link'><a href='"+thisEventURL+"' target='_new'>Wikipedia</a></div>";
 		thisInfobarHTML += "</div>";
 
+		$('svg#visualization').children("rect[title='"+titleDate+"']").delay(600).queue(function() {
+			$(this).attr("fill", "#FFD573"); // make correct bar yellow
+			//console.log("making bar "+titleDate+" yellow");
+		});
 
-		$("#timeline-infobar").fadeIn("slow").html(thisInfobarHTML);
+		$("#timeline-infobar").delay(400).fadeIn(400).html(thisInfobarHTML);
+
+		var dataString = 'month='+(parseInt(thisEventMonth)+1)+'&year='+thisEventYear;
+		$.ajax({
+			url: "http://ufo.quast.li/backend/ufoMapper.php",
+			data: dataString,
+			success: function(data) {
+				var json = JSON.parse(data);
+				var thisMonthSightings = json.length;
+
+				displayDetailsHeader(thisEventYear, parseInt(thisEventMonth)+1, thisMonthSightings); 
+				displayDetails(data);
+				prepareMonthData(data, thisEventYear, parseInt(thisEventMonth)+1);
+			},
+			error: function(e){console.log("error: " + e);}
+		});
 
 	});	
 
 	$("#timeline-events").on("click", ".active", function() {
-		$("#timeline-infobar").fadeOut("fast");
-		$("#timeline").animate({"height": "48px"}, "fast");
+
+		$('.event-icon-pointer').hide();
+		$('.event-icon-up-pointer').hide();
+		$('svg#visualization').children("rect").delay(300).queue(function() {
+			$(this).attr("fill", "#b34100"); // make all bars red
+		});
+
+		$("#timeline-infobar").fadeOut(400);
+		$("#timeline").delay(400).animate({"height": "48px"}, 400);
+
 		$(this).removeClass("active");
 
 	});
-	
+
+	$("#timeline-infobar").on("click", ".close", function() {
+
+		$('.event-icon-pointer').hide();
+		$('.event-icon-up-pointer').hide();
+
+		$("#timeline-infobar").fadeOut(400);
+		$("#timeline").delay(400).animate({"height": "48px"}, 400);
+
+		$(this).siblings("#timeline-events").removeClass("active");
+	});
 }
 
 
@@ -111,7 +182,6 @@ function prepareData(data){
 
     // Make JSON object that will contain all data points for our graph. Note that we must display a data point for every month, even if there were zero sightings that month. So, we must parse the JSON from the database and create a new object to account for this.
 
-	myUFOs = [];
 	var monthCount = 0;
 	var json = JSON.parse(data);
 
@@ -270,24 +340,17 @@ function graphData(data){
 				return h - 20 - yScale(d.sightings);
 			},
 			"desc": function(d, i) {
-				var v = moment([d.year, d.month-1])
+				var v = moment([d.year, d.month-1]);
 				var displayDate = v.format("MMMM YYYY");
 				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
 
 			},
+			"title": function(d, i) {
+				var v = moment([d.year, d.month-1]);
+				var titleDate = v.format("YYYY-MM");
+				return titleDate;
+			},
 			"fill" : function(d, i){
-				/*
-				if(i<(numPoints*.1)){return "#ff9d66";}
-				else if(i<(numPoints*.2)){return "#f6925a";}
-				else if(i<(numPoints*.3)){return "#ee884f";}
-				else if(i<(numPoints*.4)){return "#e57e44";}
-				else if(i<(numPoints*.5)){return "#dd7438";}
-				else if(i<(numPoints*.6)){return "#d4692d";}
-				else if(i<(numPoints*.7)){return "#cc5f22";}
-				else if(i<(numPoints*.8)){return "#c35516";}
-				else if(i<(numPoints*.9)){return "#bb4b0b";}
-				else {
-				*/
 				return "#b34100";
 			},
 			"class" : "bar"
@@ -319,8 +382,16 @@ function graphData(data){
 		var left = (event.pageX) + "px"; 
 		//var top = h - 50;
 		var top = (event.pageY - 50) + "px"; 
-		$(".info").html(txt).css({"left" : left, "top" : top}).show();		
-		//$( this ).toggleClass("selected", addOrRemove); // doesn't work, because fill attribute overrides classes
+		$(".info").html(txt).css({"left" : left, "top" : top}).show();
+
+		$('.event-icon-pointer').hide();
+		$('.event-icon-up-pointer').hide();
+
+		$("#timeline-infobar").fadeOut(400);
+		$("#timeline").delay(400).animate({"height": "48px"}, 400);
+
+		$("#timeline-events").removeClass("active");
+
 	});
 
 	//Animating the rects of the diagrams on hover
@@ -344,19 +415,17 @@ function graphData(data){
 		}
 	);
 
-	displayTimeline(pointLocations);
+	displayTimeline(pointLocations, data);
 
 }
 
 function displayDetailsChart(data) {
 	var json = JSON.parse(data);
 	//console.log(json);
-
-/*	thisSightingDateArr = json[i]["date"].split("-");
-	thisSightingYear = thisSightingDateArr[0];
-	thisSightingMonth = thisSightingDateArr[1];
-	thisSightingDay = thisSightingDateArr[2];*/
-
+		thisSightingDateArr = json[i]["date"].split("-");
+		thisSightingYear = thisSightingDateArr[0];
+		thisSightingMonth = thisSightingDateArr[1];
+		thisSightingDay = thisSightingDateArr[2];	
 	graphMonthData(json);
 
 }
@@ -389,23 +458,15 @@ function displayDayDetailsHeader(year, month, day, sightings){
 
 }
 
-
-
 function displayDetails(data){
-
 	var json = JSON.parse(data);
 	//console.log(json);
-
-	var selectedDetails = []; // this is the JSON object that will feed the map	
-
-	selectedDetails = json; // add our sighting results to a json that will feed the map
-
+	
 	for (var i = 0; i < json.length; i++) {
 		thisSightingDateArr = json[i]["date"].split("-");
 		thisSightingYear = thisSightingDateArr[0];
 		thisSightingMonth = thisSightingDateArr[1];
 		thisSightingDay = thisSightingDateArr[2];
-
 		var a = moment([thisSightingYear, thisSightingMonth-1, thisSightingDay])
 		var displayDate = a.format("D MMMM YYYY");
 
@@ -416,19 +477,14 @@ function displayDetails(data){
 
 		$("#sighting-list").append("<li>"+thisSightingHTML+"</li>");
 
-
 	}
-
-	mapData(selectedDetails);
 
 }
 
 function displayDayDetails(data, day){
 
 	var json = JSON.parse(data);
-
 	var selectedDetails = []; // this is the JSON object that will feed the map
-
 
 	for (var i = 0; i < json.length; i++) {
 
@@ -468,8 +524,7 @@ function prepareMonthData(data, year, month){
 
 	// go through each day in the calendar month. If there is a sighting for this day in our dataset, we will record the sightings under the "count" variable. If there is no data, "count" will be 0.
 
-
-	for (var j = 1; j < 32; j++){ // TODO - needs fix to figure out days in month
+	for (var j = 1; j < 32; j++){ // needs fix to figure out days in month
 		var thisPoint = [];
 		thisPoint.year = year;
 		thisPoint.month = month;
@@ -492,16 +547,12 @@ function prepareMonthData(data, year, month){
 
 		myMonthUFOs.push(thisPoint);    
 	}
-
     graphMonthData(myMonthUFOs);
 }
 
 
 function graphMonthData(data){
 	//console.log(data);
-
-	var thisMonthData = data;
-
 
 	$("#month-visualization").empty();
 
@@ -560,7 +611,7 @@ function graphMonthData(data){
 		.attr("transform", "translate(30," + (h-35) + ")")
 		.call(xAxis);
 
-	// Drawing the Axis Labels	
+	//Ashley: Drawing the Axis Labels	
 	var xAxisLabel = svg.append("text")
 						.attr("fill", "#aaa")
 						.attr("font-size", "10px")
@@ -569,7 +620,7 @@ function graphMonthData(data){
 						.attr("transform", "translate(" + ((w/2)-10) + "," + (h-5) + ")")
 						.text("Day of Month");
 	
-	// Drawing the Axis Labels
+	//Ashley: Drawing the Axis Labels
 	var yAxisLabel = svg.append("text")
 						.attr("fill", "#aaa")
 						.attr("font-size", "10px")
@@ -599,15 +650,11 @@ function graphMonthData(data){
 					displayDayDetailsHeader(d.year, d.month, d.day, d.sightings); 
 					displayDayDetails(data, d.day);
 
-
 				},
 				error: function(e){console.log("error: " + e);}
 			});
 
-			//displayDayDetailsHeader(d.year, d.month, d.day, d.sightings); 
-			//displayDayDetails(d);
-
-		})
+		})	
 		.attr({
 			"width": BW,		
 			"x": function(d, i) {
@@ -624,10 +671,10 @@ function graphMonthData(data){
 
 			},
 			"fill" : function(d, i){
-				return "#FFD573"; // yellow
+				return "#FFD573"; // yellow FFD573
 			},
 			"stroke-width": 1,
-			"stroke": "#C99C30",
+			"stroke": "#C99C30", // dark yellow C99C30
 			"class" : "smallbar",
 	    })
         .transition()
@@ -641,11 +688,10 @@ function graphMonthData(data){
     	})
         .duration(500)	
 
-	    
 	//Changing color of the rect when clicked
 	$(".smallbar").click(function() {
-		$(this).siblings(".smallbar").attr("fill", "#FFD573");
-		$(this).attr("fill", "#b34100");
+		$(this).siblings(".smallbar").attr({"fill": "#FFD573", "stroke": "#C99C30"}); // yellow FFD573, Dk Yellow C99C30
+		$(this).attr({"fill": "#286EB8", "stroke": "#215082"}); // green 539120 dkgrn 25420d blue 286EB8  dkblue 215082
 		//$( this ).toggleClass("selected", addOrRemove); // doesn't work, because fill attribute overrides classes
 	});
 
@@ -672,9 +718,9 @@ function graphMonthData(data){
 
 
 function mapData(data){
-	console.log(data);
+	//console.log(data);
 }
-// Google maps code
+// Ashley: google maps code
 var map, pointarray, heatmap,
 taxiData = [
   new google.maps.LatLng(37.782551, -122.445368),
@@ -1179,7 +1225,7 @@ taxiData = [
   new google.maps.LatLng(37.751266, -122.403355)
 ];
 
-// Generating Heat Map
+//Ashley: Made changes for generating Heat Map
 function mapsInitialize(targetID) {
     var myLatlng = new google.maps.LatLng(41.850033, -87.6500523);
     var mapOptions = {

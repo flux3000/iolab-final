@@ -100,16 +100,18 @@ section {
 /* timeline is displayed beneath bar chart, and contains both an event div and a infobar div */
 
 #timeline {
+	position: relative;
 	float: left;
 	font-weight: bold;	
-	width: 1148px;
+	width: 1152px;
 	height: 48px;
 	font-size: 8pt;
 	border-radius: 4px; 
-	margin-left: 48px;
+	margin-left: 49px;
 	margin-bottom: 8px;
 	background-color: #fcfcfc; 
-	border: 1px solid #e3e3e3;	
+	border: 1px solid #e3e3e3;
+	overflow: visible;	
 }
 
 #timeline-events {
@@ -118,6 +120,8 @@ section {
 	width: 1138px;
 	height: 40px;
 	padding: 10px;
+	overflow: visible;	
+
 }
 
 /* timeline-infobar is within the timeline div, displayed beneath the icons */
@@ -125,7 +129,7 @@ section {
 #timeline-infobar {
 	position: relative;
 	float: left;
-	width: 1100px;
+	width: 1116px;
 	height: 132px;
 	padding: 6px;
 	margin: 6px 10px;
@@ -136,33 +140,18 @@ section {
 	top: 40px;
 }
 
-.event-icon {
-	position: absolute;
-	float: left;
-	background-color: #e3e3e3;
-	width: 24px;
-	height: 24px;
-	border: 1px solid #000;
-	border-radius: 2px;
-	font-size: 7pt;
-	z-index: 1;
+#timeline-infobar-contents {
 }
 
-.event-icon-pointer {
-	height: 10px;
-	margin-top: 27px;
-	margin-left: 12px;
-	border-left: 1px solid #e3e3e3;
-	display: none;
-	z-index: -1;
-}
-.event-icon-up-pointer {
-	height: 40px;
-	margin-left: 12px;
-	border-left: 1px solid #C99C30;
-	margin-top: -62px;
-	display: none;
-	z-index: -1;
+#timeline-infobar-contents .close { 
+	float: left;
+	margin-left: 2px;
+	margin-right: 4px;
+	width: 10px;
+	vertical-align: top;
+	font-size: 12px;
+	color: #dedede;
+	cursor: pointer;
 }
 
 #timeline-infobar-contents img {
@@ -192,6 +181,7 @@ section {
 	width: 300px;
 	height: 120px;
 	border-radius: 2px;
+	overflow-y: scroll;
 }
 
 #timeline-infobar-contents .description {
@@ -199,9 +189,11 @@ section {
 	overflow: auto;
 	font-size: 8pt;
 	padding: 4px 8px;
-	width: 628px;
+	width: 620px;
 	height: 110px;	
 	border-left: 1px dotted #e3e3e3;
+	overflow-y: scroll;
+
 }
 #timeline-infobar-contents .link a {
 	float: right;
@@ -210,6 +202,45 @@ section {
 	margin: 0px 10px 10px 0px;
 	color: steelblue;
 }
+
+
+.event-icon {
+	position: absolute;
+	float: left;
+	background-color: #e3e3e3;
+	width: 24px;
+	height: 24px;
+	border: 1px solid #000;
+	border-radius: 2px;
+	font-size: 7pt;
+	z-index: 2;
+}
+
+.event-icon-pointer {
+	position: absolute;
+	float: left;	
+	height: 16px;
+	width: 1px;
+	border-left: 2px solid #e3e3e3;
+	left: 66px;
+	top: 30px;
+	display: none;
+	z-index: 1;
+}
+.event-icon-up-pointer {
+	position: absolute;
+	float: left;	
+	height: 44px;
+	width: px;
+	border-left: 2px solid #FFD573;	
+	left: 66px;
+	top: -31px;
+	display: none;
+	z-index: 1;
+}
+
+
+/* Map Styles */
 
 #map {
 	float: left;
@@ -230,7 +261,7 @@ section {
 	margin: auto;
 }
 
-/* sidebar contains month report details, displayed when user clicks on a bar */
+/* Sidebar contains month report details, displayed when user clicks on a bar */
 
 #sidebar {
 	float: left;
