@@ -393,6 +393,7 @@ svg {
 }
 .info {
 	position: absolute; 
+	z-index: 100;	
 	text-align: center;
 	background-color:rgba(255,255,255,0.95);
 	width: 120px;
@@ -430,7 +431,7 @@ svg {
 }
 .sidebar-info .title{
 	font-weight: bold;
-	font-size: 8pt;
+	font-size: 7pt;
 	margin-bottom: 4px;
 }
 .sidebar-info .description{

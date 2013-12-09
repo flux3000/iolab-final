@@ -155,7 +155,7 @@ function displayTimeline(pointLocations, foo){
 				console.log(markerleft);
 
 				var markertop = 250 - (thisBarHeight) + 42 + "px";
-				var v = moment([thisEventYear, parseInt(thisEventMonth)+1]);
+				var v = moment([thisEventYear, parseInt(thisEventMonth)]);
 				var displayDate = v.format("MMM YYYY");	
 				var markertxt = "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+thisMonthSightings+"</strong></div>";
 
@@ -746,7 +746,7 @@ function graphMonthData(data){
 function mapData(data){
 	//console.log(data);
 }
-// Ashley: google maps code
+// Google maps code
 var map, pointarray, heatmap,
 taxiData = [
   new google.maps.LatLng(37.782551, -122.445368),
@@ -1251,8 +1251,8 @@ taxiData = [
   new google.maps.LatLng(37.751266, -122.403355)
 ];
 
-//Ashley: Made changes for generating Heat Map
-function mapsInitialize(targetID) {
+// Code for Generating Heat Map
+/*function mapsInitialize(targetID) {
     var myLatlng = new google.maps.LatLng(41.850033, -87.6500523);
     var mapOptions = {
         zoom: 3,
@@ -1271,4 +1271,4 @@ function mapsInitialize(targetID) {
 	});
 
 	heatmap.setMap(map);
-}
+}*/
