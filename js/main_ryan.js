@@ -345,7 +345,8 @@ function graphData(data){
 							);
 
 	//Drawing the bars of the graph
-	sightingsArray = [];
+	
+	sightingsArray = []; //this array collects all sightings values for all months to be later used for finding % increase/decrease
 	svg.selectAll("rect")
 		.data(data)
 		.enter()
@@ -369,10 +370,12 @@ function graphData(data){
 			"desc": function(d, i) {
 				var v = moment([d.year, d.month-1]);
 				var displayDate = v.format("MMMM YYYY");
-				//console.log(d.month);
 				
+				//adding sighting numbers to array
 				sightingsArray.push(d.sightings);
+				//finding the previous month's sightings
 				prevSighting = sightingsArray[sightingsArray.length-2];
+				//% change
 				pChange = (((d.sightings-prevSighting)/prevSighting)*100).toFixed(2);
 				if (pChange >= 0) {
 					pChangeText = "</strong>% Increase from Previous Month</div>"
@@ -381,9 +384,6 @@ function graphData(data){
 					pChangeText = "</strong>% Decrease from Previous Month</div>"
 				}
 				
-				/* for (item in d) {
-					console.log(item);
-				} */
 				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+Math.abs(pChange)+pChangeText;
 
 			},
