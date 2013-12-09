@@ -11,10 +11,11 @@
 	},
 	"1" : {
 		"name" : "Halley's Comet",
+		"stats" : "<ul><li>Approach reached 39 million miles away from Earth</li><li>First appearance in which observation was aided by photography via satellites</li></ul>",
 		"type" : "Astronomy",
 		"month" : "02",
 		"year" : "1986",
-		"description" : "Appearing every 75-76 years, Halley's Comet's last perihelion occurred on 9 February 1986",
+		"description" : "Halley's Comet or Comet Halley (/ˈhæli/ or /ˈheɪli/), officially designated 1P/Halley,[2] is the best-known of the short-period comets and is visible from Earth every 75–76 years[2][10] and is expected again in 2061. Halley's Comet returns to the inner Solar System have been observed and recorded by astronomers since at least 240 BCE. Clear records of the comet's appearances were made by Chinese, Babylonian, and medieval European chroniclers, but were not recognized as reappearances of the same object at the time. The comet's periodicity was first determined in 1705 by English astronomer Edmond Halley, after whom it is now named. Halley's Comet last appeared in the inner Solar System in 1986 and will next appear in mid-2061.",
 		"image" : "1986-02-halleys.jpg",
 		"url" : "http://en.wikipedia.org/wiki/Halleys_Comet"
 

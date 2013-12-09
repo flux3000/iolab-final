@@ -91,6 +91,8 @@ function displayTimeline(pointLocations, foo){
 
 		var pointerXPos = ($(this).position().left)+11;
 
+		$(".month-marker").hide();
+
 		//console.log("making bars red");
 		$('svg#visualization').children("rect").attr("fill", "#b34100"); // make all bars red
 
@@ -99,7 +101,6 @@ function displayTimeline(pointLocations, foo){
 
 		$(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("slow")
 		$(this).siblings().children('.event-icon-up-pointer').fadeOut("slow")
-
 		$(this).addClass("active");
 
 		$("#timeline").animate({"height": "200px"}, 400);
@@ -126,8 +127,16 @@ function displayTimeline(pointLocations, foo){
 		thisInfobarHTML += "<div class='link'><a href='"+thisEventURL+"' target='_new'>Wikipedia</a></div>";
 		thisInfobarHTML += "</div>";
 
-		$('svg#visualization').children("rect[title='"+titleDate+"']").delay(600).queue(function() {
+		var thisBarHeight;
+		var thisBarXCoord;
+		var thisBarYCoord;
+
+		$('svg#visualization').children("rect[title='"+titleDate+"']").delay(300).queue(function() {
 			$(this).attr("fill", "#FFD573"); // make correct bar yellow
+			thisBarHeight = $(this).attr("height");
+			thisBarXCoord = $(this).attr("x");
+			thisBarYCoord = $(this).attr("y");
+
 			//console.log("making bar "+titleDate+" yellow");
 		});
 
@@ -140,6 +149,17 @@ function displayTimeline(pointLocations, foo){
 			success: function(data) {
 				var json = JSON.parse(data);
 				var thisMonthSightings = json.length;
+
+				//Setting the marker text and location
+				var markerleft = (parseInt(thisBarXCoord) + 80) + "px";
+				console.log(markerleft);
+
+				var markertop = 250 - (thisBarHeight) + 42 + "px";
+				var v = moment([thisEventYear, parseInt(thisEventMonth)+1]);
+				var displayDate = v.format("MMM YYYY");	
+				var markertxt = "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+thisMonthSightings+"</strong></div>";
+
+				$(".month-marker").html(markertxt).css({"left" : markerleft, "top" : markertop}).show();
 
 				displayDetailsHeader(thisEventYear, parseInt(thisEventMonth)+1, thisMonthSightings); 
 				displayDetails(data);
@@ -345,6 +365,11 @@ function graphData(data){
 				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
 
 			},
+			"markerdesc": function(d,i){
+				var v = moment([d.year, d.month-1]);
+				var displayDate = v.format("MMM YYYY");
+				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong></div>";
+			},
 			"title": function(d, i) {
 				var v = moment([d.year, d.month-1]);
 				var titleDate = v.format("YYYY-MM");
@@ -372,18 +397,17 @@ function graphData(data){
 			});
 		});		    
 
-	//Changing color of the rect when clicked
+	//Changing color of the rect when clicked, adding month-marker popup
 	$(".bar").click(function() {
 		$(this).siblings().attr("fill", "#b34100");
 		$(this).attr("fill", "#FFD573"); // Yellow highlight
-		//Setting the info-text
-		var txt = $(this).attr("desc");
-		//var left = $(this).position().left - 60;
-		var left = (event.pageX) + "px"; 
-		//var top = h - 50;
-		var top = (event.pageY - 50) + "px"; 
-		$(".info").html(txt).css({"left" : left, "top" : top}).show();
-
+		
+		//Setting the marker text and location
+		var markertxt = $(this).attr("markerdesc");
+		var markerleft = ($(this).position().left - 31) + "px";
+		var markertop = h - ($(this).attr("height")) + 42 + "px";
+		$(".month-marker").hide();
+		$(".month-marker").html(markertxt).css({"left" : markerleft, "top" : markertop}).show();			
 		$('.event-icon-pointer').hide();
 		$('.event-icon-up-pointer').hide();
 
@@ -655,6 +679,7 @@ function graphMonthData(data){
 			});
 
 		})	
+
 		.attr({
 			"width": BW,		
 			"x": function(d, i) {
@@ -667,8 +692,7 @@ function graphMonthData(data){
 			"desc": function(d, i) {
 				var v = moment([d.year, d.month-1, d.day])
 				var displayDate = v.format("MMMM Do YYYY");
-				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong></div>";
-
+				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+" UFOs Reported</strong></div>";
 			},
 			"fill" : function(d, i){
 				return "#FFD573"; // yellow FFD573
@@ -703,8 +727,10 @@ function graphMonthData(data){
 			
 			//Setting the info-text
 			var txt = $(this).attr("desc");
-			var left = $(this).position().left - 40;
-			var top = h - 50;
+			//var left = $(this).position().left - 60;
+			var left = (event.pageX) + "px"; 
+			//var top = h - 50;
+			var top = (event.pageY - 50) + "px"; 
 			$(".sidebar-info").html(txt).css({"left" : left, "top" : top}).show();
 		}, 
 		function() {

@@ -337,12 +337,13 @@ section {
 	font-size: 8pt;
 }
 
-#foobar {
+#footer {
 	float: left;
 	width: 1220px;
-	height: 60px;
+	height: 40px;
 	text-align: right;
-	font-size: 10pt;
+	color: #b8b8b8;
+	font-size: 8pt;
 	border-radius: 6px; 
 	padding: 8px;
 	margin: 8px 0px;
@@ -376,6 +377,20 @@ svg {
 	font-size:.75em; 
 	font-weight:normal;
 }
+.month-info {
+	position: absolute; 
+	text-align: center;
+	background-color:rgba(255,255,255,0.95);
+	width: 120px;
+	border-radius: 4px; 
+	padding: 6px;
+	margin-bottom: 8px; 
+	border: 1px solid #C99C30;
+	display: none;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);	
+}
 .info {
 	position: absolute; 
 	text-align: center;
@@ -399,14 +414,15 @@ svg {
 	font-size: 8pt;
 }
 .sidebar-info {
-	position: absolute; 
+	position: absolute;
+	z-index: 100;
 	text-align: center;
 	background-color:rgba(255,255,255,0.95);
-	width: 80px;
+	width: 140px;
 	border-radius: 2px; 
 	padding: 4px;
 	margin-bottom: 8px; 
-	border: 1px solid #632400;
+	border: 1px solid #C99C30;
 	display: none;
     box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
@@ -418,7 +434,34 @@ svg {
 	margin-bottom: 4px;
 }
 .sidebar-info .description{
+	font-size: 7pt;
+}
+.month-marker {
+	position: absolute;
+	text-align: center;
+	vertical-align: middle;
+	overflow: visible;
+	background-color:rgba(255,255,255,0.90);
+	width: 50px;
+	height: 50px;
+	border-radius: 50%; 
+	padding: 4px;
+	border: 2px solid #FFD573;
+	display: none;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);	
+}
+.month-marker .title{
+	margin-top: 15px;
+	margin-left: 3px;
+	font-weight: bold;
+	font-size: 6pt;
+	letter-spacing: -1px
+}
+.month-marker .description{
 	font-size: 8pt;
+	margin-left: 3px;
 }
 text {
 	cursor: default;
