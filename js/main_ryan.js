@@ -285,7 +285,6 @@ function graphData(data){
 			"desc": function(d, i) {
 				var v = moment([d.year, d.month-1])
 				var displayDate = v.format("MMMM YYYY");
-				console.log("last month: "+data[i-1].sightings);
 				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
 
 			},
