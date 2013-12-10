@@ -214,7 +214,6 @@ function prepareData(data){
 
 	    	for (var j = 1; j < 13; j++){
 	    		var thisPoint = [];
-				//var lastPoint = [];
 	    		thisPoint.year = json[i]["year"];
 	    		dataMonths = json[i]["months"];
 	    		if (j<10) {
@@ -225,11 +224,9 @@ function prepareData(data){
 	    		thisPoint.month = thisMonth;
 	    		thisPoint.date = thisPoint.year+"-"+thisPoint.month;
 	    		thisPoint.sightings = 0;
-				//lastPoint.sightings = 0;
 				for (var k in dataMonths) {
 					if (dataMonths[k]["month"] == thisMonth) {
 						thisPoint.sightings = dataMonths[k]["sightings"];
-						//lastPoint.sightings = dataMonths[k-1]["sightings"];
 					}
 				
 				}    			
@@ -347,6 +344,7 @@ function graphData(data){
 	//Drawing the bars of the graph
 	
 	sightingsArray = []; //this array collects all sightings values for all months to be later used for finding % increase/decrease
+	fullSightingObject = {};
 	svg.selectAll("rect")
 		.data(data)
 		.enter()
@@ -355,7 +353,7 @@ function graphData(data){
 			"width": BW,
 			"height": function(d, i) {
 			    return yScale(d.sightings);
-				
+			
 			},
 			"x": function(d, i) {
 				thisX = 40 + i*BTW;
@@ -370,7 +368,7 @@ function graphData(data){
 			"desc": function(d, i) {
 				var v = moment([d.year, d.month-1]);
 				var displayDate = v.format("MMMM YYYY");
-				
+				//console.log(d);	
 				//adding sighting numbers to array
 				sightingsArray.push(d.sightings);
 				//finding the previous month's sightings
@@ -459,7 +457,7 @@ function graphData(data){
 			//var left = $(this).position().left - 60;
 			var left = (event.pageX) + "px"; 
 			//var top = h - 50;
-			var top = (event.pageY - 50) + "px"; 
+			var top = (event.pageY - 75) + "px"; 
 			$(".info").html(txt).css({"left" : left, "top" : top}).show();
 		}, 
 		function() {
