@@ -248,6 +248,7 @@ section {
 }
 
 #map-container{
+	margin-top: 18px;
 	border: 1px solid black;
 	display:block; 
 	height:450px; 
@@ -348,7 +349,7 @@ section {
 }
 
 .footer-logo{
-	
+
 }
 
 .footer-text {
@@ -442,8 +443,11 @@ svg {
 .sidebar-info .description{
 	font-size: 7pt;
 }
+.month-marker-container{
+	height: 0px;
+}
 .month-marker {
-	position: absolute;
+	position: relative;
 	text-align: center;
 	vertical-align: middle;
 	overflow: visible;
