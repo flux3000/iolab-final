@@ -33,13 +33,18 @@ $res = '"Country","State","County","City","PostalCode","Street","Lat","Lng","Dra
 echo $res;
 echo "<br><br><br>";
 
-
 $resA = explode(",", $res);
 for ( $i = 0; $i < sizeof($resA); $i++){
 	if($i % 15 == 0){ //country e.g. "Country"|"DisplayLng" "US"|"-122.329437" "US"|"-112.075768" "US"|"
 		echo "<b>".$i."</b>";
 		if($i != 0 && $i < 1501){
-			echo "city: " . $resA[$i + 3] . "(lat: " . $resA[$i + 6] . " lng: " . $resA[$i + 7] . ")<br>";
+			$city = trim($resA[$i + 3], '"'); //remove trailing "
+			$lat = trim($resA[$i + 6], '"');
+			$lng = trim($resA[$i + 7], '"');
+
+			$stmt = $mysqli->prepare("INSERT INTO cities (name, lat, lng) VALUES (?,?,?)");
+			$stmt->bind_param("sdd", $city, $lat, $lng);
+			$stmt->execute();
 		}
 	}
 }

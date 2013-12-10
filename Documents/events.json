@@ -1,24 +1,163 @@
 {
-	"0": 
-	{
-		"name": "E.T. Released",
-		"stats": "<ul><li>Superceded Star Wars as highest-grossing film of all-time</li><li>$619 million worldwide gross in 1983</li>",
-		"type": "Movie",
-		"month": "06",
-		"year": "1983",
-		"description": "E.T. the Extra-Terrestrial (often referred to simply as E.T.) is a 1982 American science fiction film co-produced and directed by Steven Spielberg, written by Melissa Mathison and starring Henry Thomas, Dee Wallace, Robert MacNaughton, Drew Barrymore, and Peter Coyote. It tells the story of Elliott (played by Thomas), a lonely boy who befriends an extraterrestrial, dubbed \"E.T.\", who is stranded on Earth. Elliott and his siblings help the extraterrestrial return home while attempting to keep it hidden from their mother and the government.",
-		"image": "1983-06-et.jpg",
-		"url": "http://en.wikipedia.org/wiki/E.T._the_Extra-Terrestrial"
+	"0" : {
+		"name" : "E.T. Released",
+		"stats" : "<ul><li>Superceded Star Wars as highest-grossing film of all-time</li><li>$619 million worldwide gross in 1983</li>",
+		"type" : "Movie",
+		"month" : "10",
+		"year" : "1983",
+		"description" : "E.T. the Extra-Terrestrial (often referred to simply as E.T.) is a 1982 American science fiction film co-produced and directed by Steven Spielberg, written by Melissa Mathison and starring Henry Thomas, Dee Wallace, Robert MacNaughton, Drew Barrymore, and Peter Coyote. It tells the story of Elliott (played by Thomas), a lonely boy who befriends an extraterrestrial, dubbed \"E.T.\", who is stranded on Earth. Elliott and his siblings help the extraterrestrial return home while attempting to keep it hidden from their mother and the government.",
+		"image" : "1983-06-et.jpg",
+		"url" : "http://en.wikipedia.org/wiki/E.T._the_Extra-Terrestrial"
 	},
-	"1": 
-	{
-		"name": "Halley's Comet",
-		"type": "Astronomy",
-		"month": "02",
-		"year": "1986",
-		"description": "Appearing every 75-76 years, Halley's Comet's last perihelion occurred on 9 February 1986",
-		"image": "1986-02-halleys.jpg",
-		"url": "http://en.wikipedia.org/wiki/Halleys_Comet"	
+	"1" : {
+		"name" : "Halley's Comet",
+		"stats" : "<ul><li>Approach reached 39 million miles away from Earth</li><li>First appearance in which observation was aided by photography via satellites</li></ul>",
+		"type" : "Astronomy",
+		"month" : "02",
+		"year" : "1986",
+		"description" : "Halley's Comet or Comet Halley (/ˈhæli/ or /ˈheɪli/), officially designated 1P/Halley,[2] is the best-known of the short-period comets and is visible from Earth every 75–76 years[2][10] and is expected again in 2061. Halley's Comet returns to the inner Solar System have been observed and recorded by astronomers since at least 240 BCE. Clear records of the comet's appearances were made by Chinese, Babylonian, and medieval European chroniclers, but were not recognized as reappearances of the same object at the time. The comet's periodicity was first determined in 1705 by English astronomer Edmond Halley, after whom it is now named. Halley's Comet last appeared in the inner Solar System in 1986 and will next appear in mid-2061.",
+		"image" : "1986-02-halleys.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Halleys_Comet"
 
+	},
+	"2" : {
+		"name" : "Alien Resurrection Released",
+		"stats" : "<ul><li>Alien garnered both critical acclaim and box office success.</li><li>The success of Alien spawned a media franchise of novels, comic books, video games, and toys.</li>",
+		"type" : "Movie",
+		"month" : "11",
+		"year" : "1997",
+		"description" : "The commercial vessel Nostromo receives a distress call from an unexplored planet. After searching for survivors, the crew heads home only to realize that a deadly bioform has joined them.",
+		"image" : "1979-06-alien.jpg",
+		"url" : "https://en.wikipedia.org/wiki/Alien_(film)"
+	},
+	"3" : {
+		"name" : "Space Shuttle Columbia Launch",
+		"stats" : "<ul><li>Designed at the Kennedy Space Center.</li><li>Columbia was dubber STS-5.</li>",
+		"type" : "Event",
+		"month" : "11",
+		"year" : "1982",
+		"description" : "The highlight of this mission was that the four astronauts aboard deployed two commercial communications satellite",
+		"image" : "1982-11-columbia.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Space_Shuttle_Columbia"
+	},
+	"4" : {
+		"name" : "International Space Station Lowest Orbit",
+		"stats" : "<ul><li>Altitude is 207 miles (332 km)</li><li>Orbit is dropping 300 feet (90 meters) per day</li>",
+		"type" : "Event",
+		"month" : "03",
+		"year" : "2007",
+		"description" : "Under the inexorable decay of air drag, its orbital path around Earth has slipped down to 207 miles (332 kilometers), the lowest average altitude in the nine-year life of the project.",
+		"image" : "2007-03-iss.jpg",
+		"url" : "http://en.wikipedia.org/wiki/International_Space_Station"
+	},
+	"5" : {
+		"name" : "Independence Day Released",
+		"stats" : "<ul><li>Box office gross was $816,969,268</li><li>At the time was the second-highest worldwide gross of all time.</li>",
+		"type" : "Movie",
+		"month" : "07",
+		"year" : "1996",
+		"description" : "The aliens are coming and their goal is to invade and destroy. Fighting superior technology, Man's best weapon is the will to survive.",
+		"image" : "1996-07-id4.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Independence_Day_(1996_film)"
+	},
+	"6" : {
+		"name" : "Contact Released",
+		"stats" : "<ul><li>Carl Sagan and Ann Druyan began working on the film in 1979.</li><li>Sagan published Contact as a novel in 1985</li>",
+		"type" : "Movie",
+		"month" : "07",
+		"year" : "1997",
+		"description" : "Dr. Ellie Arroway, after years of searching, finds conclusive radio proof of intelligent aliens, who send plans for a mysterious machine.",
+		"image" : "1997-07-contact.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Contact_(1997_film)"
+	},
+	"7" : {
+		"name" : "District 9 Released",
+		"stats" : "<ul><li>District 9 depicts humanity, xenophobia, and social segregation. </li><li>The title and premise of District 9 were inspired by events in District Six, Cape Town during the apartheid era.</li>",
+		"type" : "Movie",
+		"month" : "08",
+		"year" : "2009",
+		"description" : "An extraterrestrial race forced to live in slum-like conditions on Earth suddenly finds a kindred spirit in a government agent who is exposed to their biotechnology.",
+		"image" : "2009-08-district9.jpg",
+		"url" : "http://en.wikipedia.org/wiki/District_9"
+	},
+	"8" : {
+		"name" : "Peekskill Meteorite",
+		"stats" : "<ul><li>Peekskill Meteorite was seen from Kentucky to New York.</li>",
+		"type" : "Astronomy",
+		"month" : "10",
+		"year" : "1992",
+		"description" : "The Peekskill meteorite is among the most historic meteorite events on record.[1] Sixteen separate video recordings document the meteorite burning through the Earth's atmosphere, whereupon it struck a parked car in Peekskill, New York.",
+		"image" : "1992-10-peek.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Peekskill_meteorite"
+	},
+	"9" : {
+		"name" : "Sutter’s Mill Meteorite",
+		"stats" : "<ul><li>Exploded into fragments over northern California.</li><li>It weighed barely 2 pounds and was apparently from a family of known asteroids named 495 Eulalia.</li>",
+		"type" : "Astronomy",
+		"month" : "04",
+		"year" : "2012",
+		"description" : "The meteorite was found to contain some of the oldest material in the Solar System. The name comes from the Sutter's Mill, the California Gold Rush site near where some pieces were recovered.",
+		"image" : "2012-04-sutters.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Sutter&#39;s_Mill_meteorite"
+	},
+	"10" : {
+		"name" : "War of the Worlds Released",
+		"stats" : "<ul><li>A loose adaptation of H. G. Wells's novel The War of the Worlds</li><li>The film was shot in 73 days, in California, Connecticut, New Jersey, New York, and Virginia.</li>",
+		"type" : "Movie",
+		"month" : "06",
+		"year" : "2005",
+		"description" : "As Earth is invaded by alien tripod fighting machines, one family fights for survival.",
+		"image" : "2005-06-wotw.jpg",
+		"url" : "http://en.wikipedia.org/wiki/War_of_the_Worlds_(2005_film)"
+	},
+	"11" : {
+		"name" : "Signs Released",
+		"stats" : "<ul><li>Written and directed by M. Night Shyamalan</li><li>$408,247,917 in gross revenue, with only a $72 million budget</li>",
+		"type" : "Movie",
+		"month" : "08",
+		"year" : "2002",
+		"description" : "A family living on a farm finds mysterious crop circles in their fields which suggests something more frightening to come.",
+		"image" : "2002-08-signs.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Signs_(film)"
+	},
+	"12" : {
+		"name" : "Pitch Black Released",
+		"stats" : "<ul><li>Movie it was a sleeper hit.</li><li>Grossed over US$53 million worldwide, and developed its own cult following.</li>",
+		"type" : "Movie",
+		"month" : "01",
+		"year" : "2000",
+		"description" : "A prisoner transport ship and its crew are marooned on a planet full of bloodthirsty creatures that only come out to feast at night. But then, they learn that a month-long eclipse is about to occur.",
+		"image" : "2000-01-pitchblack.jpg",
+		"url" : "http://en.wikipedia.org/wiki/Pitch_Black_(film)"
+	},
+	"13" : {
+		"name" : "They Live Released",
+		"stats" : "<ul><li>The film follows a nameless drifter referred to as 'Nada', who discovers the ruling class are in fact aliens </li><li>Budget $3,000,000, Box office $13,008,928.</li>",
+		"type" : "Movie",
+		"month" : "11",
+		"year" : "1988",
+		"description" : "A drifter discovers a pair of sunglasses that allow him to wake up to the fact that aliens have taken over the Earth.",
+		"image" : "1988-11-theylive.jpg",
+		"url" : "http://en.wikipedia.org/wiki/They_Live"
+	},
+	"14" : {
+		"name" : "World Wide Web gains popularity",
+		"stats" : "<ul><li>'Surfing the Internet' is coined by Jean Armour Polly.</li><li>InterNICcreated.</li>",
+		"type" : "Event",
+		"month" : "10",
+		"year" : "1993",
+		"description" : "Web grows by 341,000 percent in a year.",
+		"image" : "1993-04-internet.jpg",
+		"url" : "http://en.wikipedia.org/wiki/History_of_the_Internet"
+	},
+	"15" : {
+		"name" : "Windows 95 Released",
+		"stats" : "<ul><li>Windows 95 is a consumer-oriented graphical user interface-based operating system.</li><li>It was a significant progression from the company's previous Windows products.</li>",
+		"type" : "Event",
+		"month" : "08",
+		"year" : "1995",
+		"description" : "Accompanied by an extensive marketing campaign,[4] Windows 95 was a major success in the marketplace at launch and shortly became the most popular desktop operating system.",
+		"image" : "1995-08-windows95.png",
+		"url" : "http://en.wikipedia.org/wiki/Windows_95"
 	}
 }
