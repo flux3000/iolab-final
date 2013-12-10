@@ -15,7 +15,7 @@ mapData
 mapsInitialize
 
 */
-// Change this to adjust the date range we are using. Will need to change var BW (bar width) if the date range gets long enough.
+// Change this to adjust the date range we are using. Need to change var BW (bar width) if the date range changes.
 var startYear = 1981; 
 var myUFOs = [];
 
@@ -39,7 +39,7 @@ $(document).ready(function(){
 
 });
 
-function displayTimeline(pointLocations, foo){
+function displayTimeline(pointLocations){
 
 	var events = [];
 	//console.log(pointLocations);
@@ -154,7 +154,7 @@ function displayTimeline(pointLocations, foo){
 				console.log(markerleft);
 
 				var markertop = 250 - (thisBarHeight) + 42 + "px";
-				var v = moment([thisEventYear, parseInt(thisEventMonth)+1]);
+				var v = moment([thisEventYear, thisEventMonth]);
 				var displayDate = v.format("MMM YYYY");	
 				var markertxt = "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+thisMonthSightings+"</strong></div>";
 
@@ -396,7 +396,6 @@ function graphData(data){
 					} else {
 						pChangeText = "No change from<br>Previous Month";
 					}
-
 					var descString = "<div class='title'>"+displayDate+"</div><div class='title'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
 
 					if (pChange != "NaN"){
@@ -432,8 +431,6 @@ function graphData(data){
     	})
         .duration(1200)	
 
-
-
 	//Changing color of the rect when clicked, adding month-marker popup
 	$(".bar").click(function() {
 		$(this).siblings().attr("fill", "#b34100");
@@ -466,7 +463,7 @@ function graphData(data){
 			//var left = $(this).position().left - 60;
 			var left = (event.pageX + 4) + "px";  
 			//var top = h - 50;
-			var top = (event.pageY - 60) + "px"; 
+			var top = (event.pageY - 70) + "px"; 
 			$(".info").html(txt).css({"left" : left, "top" : top}).show();
 		}, 
 		function() {
@@ -476,7 +473,7 @@ function graphData(data){
 		}
 	);
 
-	displayTimeline(pointLocations, data);
+	displayTimeline(pointLocations);
 
 }
 

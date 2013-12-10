@@ -230,11 +230,9 @@ section {
 .event-icon-up-pointer {
 	position: absolute;
 	float: left;	
-	height: 44px;
-	width: px;
+	height: 48px;
 	border-left: 2px solid #FFD573;	
-	left: 66px;
-	top: -31px;
+	top: -35px;
 	display: none;
 	z-index: 1;
 }
