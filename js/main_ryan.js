@@ -430,7 +430,7 @@ function graphData(data){
 				return h - 20 - yScale(d.sightings);
 			}       
     	})
-        .duration(800)	
+        .duration(1200)	
 
 
 
