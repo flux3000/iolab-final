@@ -680,6 +680,7 @@ function graphMonthData(data){
 						.text("# of Sightings");			
 
 	//Drawing the bars of the graph
+	sightingsArray2 = []; //this array collects all sightings values for all months to be later used for finding % increase/decrease
 	svg.selectAll("rect")
 		.data(data)
 		.enter()
@@ -715,7 +716,19 @@ function graphMonthData(data){
 			"desc": function(d, i) {
 				var v = moment([d.year, d.month-1, d.day])
 				var displayDate = v.format("MMMM Do YYYY");
-				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+" UFOs Reported</strong></div>";
+				//adding sighting numbers to array
+				sightingsArray2.push(d.sightings);
+				//finding the previous month's sightings
+				prevSighting2 = sightingsArray2[sightingsArray2.length-2];
+				//% change
+				pChange2 = (((d.sightings-prevSighting2)/prevSighting2)*100).toFixed(2);
+				if (pChange2 >= 0) {
+					pChangeText2 = "</strong>% Increase from Previous Day</div>"
+				}
+				else {
+					pChangeText2 = "</strong>% Decrease from Previous Day</div>"
+				}
+				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+Math.abs(pChange2)+pChangeText2;
 			},
 			"fill" : function(d, i){
 				return "#FFD573"; // yellow FFD573
