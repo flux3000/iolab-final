@@ -21,7 +21,7 @@ var myUFOs = [];
 
 $(document).ready(function(){
 
-	google.maps.event.addDomListener(window, 'load', mapsInitialize("map-container"));
+	//google.maps.event.addDomListener(window, 'load', mapsInitialize("map-container"));
 
 	$("#start-year").text(startYear);
 
