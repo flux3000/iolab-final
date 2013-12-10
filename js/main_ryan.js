@@ -377,14 +377,25 @@ function graphData(data){
 				prevSighting = sightingsArray[sightingsArray.length-2];
 				//% change
 				pChange = (((d.sightings-prevSighting)/prevSighting)*100).toFixed(2);
-				if (pChange >= 0) {
-					pChangeText = "</strong>% Increase from Previous Month</div>"
+
+				if (pChange == "Infinity"){
+					pChangeText = "<strong>+&#8734;</strong>% from<br>Previous Month";
+				} else if (pChange > 0) {
+					pChangeText = "<strong>+"+Math.abs(pChange)+"</strong>% from<br>Previous Month";
+				} else if (pChange < 0) {
+					pChangeText = "<strong>-"+Math.abs(pChange)+"</strong>% from<br>Previous Month";
+				} else {
+					pChangeText = "No change from<br>Previous Month";
 				}
-				else {
-					pChangeText = "</strong>% Decrease from Previous Month</div>"
+
+				var descString = "<div class='title'>"+displayDate+"</div><div class='title'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
+
+				if (pChange != "NaN"){
+					descString += "<div class='description'>"+pChangeText+"</div>";	
 				}
-				
-				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+Math.abs(pChange)+pChangeText;
+
+				return descString;
+
 
 			},
 			
@@ -450,9 +461,9 @@ function graphData(data){
 			//Setting the info-text
 			var txt = $(this).attr("desc");
 			//var left = $(this).position().left - 60;
-			var left = (event.pageX) + "px"; 
+			var left = (event.pageX + 4) + "px"; 
 			//var top = h - 50;
-			var top = (event.pageY - 50) + "px"; 
+			var top = (event.pageY - 60) + "px"; 
 			$(".info").html(txt).css({"left" : left, "top" : top}).show();
 		}, 
 		function() {
@@ -720,15 +731,27 @@ function graphMonthData(data){
 				sightingsArray2.push(d.sightings);
 				//finding the previous month's sightings
 				prevSighting2 = sightingsArray2[sightingsArray2.length-2];
+				
 				//% change
 				pChange2 = (((d.sightings-prevSighting2)/prevSighting2)*100).toFixed(2);
-				if (pChange2 >= 0) {
-					pChangeText2 = "</strong>% Increase from Previous Day</div>"
+				
+				if (pChange2 == "Infinity"){
+					pChangeText2 = "<strong>+&#8734;</strong>% from Previous Day";
+				} else if (pChange2 > 0) {
+					pChangeText2 = "<strong>+"+Math.abs(pChange2)+"</strong>% from Previous Day";
+				} else if (pChange2 < 0) {
+					pChangeText2 = "<strong>-"+Math.abs(pChange2)+"</strong>% from Previous Day";
+				} else {
+					pChangeText2 = "No change from Previous Day";
 				}
-				else {
-					pChangeText2 = "</strong>% Decrease from Previous Day</div>"
+
+				var descString = "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
+
+				if (pChange2 != "NaN"){
+					descString += "<div class='description'>"+pChangeText2+"</div>";	
 				}
-				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+Math.abs(pChange2)+pChangeText2;
+
+				return descString;
 			},
 			"fill" : function(d, i){
 				return "#FFD573"; // yellow FFD573
@@ -764,9 +787,9 @@ function graphMonthData(data){
 			//Setting the info-text
 			var txt = $(this).attr("desc");
 			//var left = $(this).position().left - 60;
-			var left = (event.pageX) + "px"; 
+			var left = (event.pageX + 4) + "px"; 
 			//var top = h - 50;
-			var top = (event.pageY - 50) + "px"; 
+			var top = (event.pageY - 60) + "px"; 
 			$(".sidebar-info").html(txt).css({"left" : left, "top" : top}).show();
 		}, 
 		function() {
