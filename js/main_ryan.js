@@ -214,6 +214,7 @@ function prepareData(data){
 
 	    	for (var j = 1; j < 13; j++){
 	    		var thisPoint = [];
+				//var lastPoint = [];
 	    		thisPoint.year = json[i]["year"];
 	    		dataMonths = json[i]["months"];
 	    		if (j<10) {
@@ -224,10 +225,13 @@ function prepareData(data){
 	    		thisPoint.month = thisMonth;
 	    		thisPoint.date = thisPoint.year+"-"+thisPoint.month;
 	    		thisPoint.sightings = 0;
+				//lastPoint.sightings = 0;
 				for (var k in dataMonths) {
 					if (dataMonths[k]["month"] == thisMonth) {
 						thisPoint.sightings = dataMonths[k]["sightings"];
+						//lastPoint.sightings = dataMonths[k-1]["sightings"];
 					}
+				
 				}    			
 				
 				if (thisPoint.year >= startYear && thisPoint.year < 2013){
@@ -239,6 +243,7 @@ function prepareData(data){
 					myUFOs.push(thisPoint);
 				}
 	    	}
+		
 		}
     }
     graphData(myUFOs)
@@ -340,6 +345,8 @@ function graphData(data){
 							);
 
 	//Drawing the bars of the graph
+	
+	sightingsArray = []; //this array collects all sightings values for all months to be later used for finding % increase/decrease
 	svg.selectAll("rect")
 		.data(data)
 		.enter()
@@ -348,6 +355,7 @@ function graphData(data){
 			"width": BW,
 			"height": function(d, i) {
 			    return yScale(d.sightings);
+				
 			},
 			"x": function(d, i) {
 				thisX = 40 + i*BTW;
@@ -362,9 +370,24 @@ function graphData(data){
 			"desc": function(d, i) {
 				var v = moment([d.year, d.month-1]);
 				var displayDate = v.format("MMMM YYYY");
-				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
+				
+				//adding sighting numbers to array
+				sightingsArray.push(d.sightings);
+				//finding the previous month's sightings
+				prevSighting = sightingsArray[sightingsArray.length-2];
+				//% change
+				pChange = (((d.sightings-prevSighting)/prevSighting)*100).toFixed(2);
+				if (pChange >= 0) {
+					pChangeText = "</strong>% Increase from Previous Month</div>"
+				}
+				else {
+					pChangeText = "</strong>% Decrease from Previous Month</div>"
+				}
+				
+				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+Math.abs(pChange)+pChangeText;
 
 			},
+			
 			"markerdesc": function(d,i){
 				var v = moment([d.year, d.month-1]);
 				var displayDate = v.format("MMM YYYY");
@@ -657,6 +680,7 @@ function graphMonthData(data){
 						.text("# of Sightings");			
 
 	//Drawing the bars of the graph
+	sightingsArray2 = []; //this array collects all sightings values for all months to be later used for finding % increase/decrease
 	svg.selectAll("rect")
 		.data(data)
 		.enter()
@@ -692,7 +716,19 @@ function graphMonthData(data){
 			"desc": function(d, i) {
 				var v = moment([d.year, d.month-1, d.day])
 				var displayDate = v.format("MMMM Do YYYY");
-				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+" UFOs Reported</strong></div>";
+				//adding sighting numbers to array
+				sightingsArray2.push(d.sightings);
+				//finding the previous month's sightings
+				prevSighting2 = sightingsArray2[sightingsArray2.length-2];
+				//% change
+				pChange2 = (((d.sightings-prevSighting2)/prevSighting2)*100).toFixed(2);
+				if (pChange2 >= 0) {
+					pChangeText2 = "</strong>% Increase from Previous Day</div>"
+				}
+				else {
+					pChangeText2 = "</strong>% Decrease from Previous Day</div>"
+				}
+				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+Math.abs(pChange2)+pChangeText2;
 			},
 			"fill" : function(d, i){
 				return "#FFD573"; // yellow FFD573
