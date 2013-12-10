@@ -348,12 +348,25 @@ function graphData(data){
 		.data(data)
 		.enter()
 		.append("rect")
+		.on("click", function(d, i) {
+			// run when user clicks on a bar in the chart. 
+			//populate sidebar with details on this month's sightings.
+			var dataString = 'month='+d.month+'&year='+d.year;
+
+			$.ajax({
+				url: "http://ufo.quast.li/backend/ufoMapper.php",
+				data: dataString,
+				success: function(data) {
+					displayDetailsHeader(d.year, d.month, d.sightings); 
+					displayDetails(data);
+					prepareMonthData(data, d.year, d.month);
+				},
+				error: function(e){console.log("error: " + e);}
+			});
+		})		
 		.attr({
 			"width": BW,
-			"height": function(d, i) {
-			    return yScale(d.sightings);
-			
-			},
+			"height": 0,
 			"x": function(d, i) {
 				thisX = 40 + i*BTW;
 				thisPointLocation = [d.year, d.month, i*BTW];
@@ -362,7 +375,7 @@ function graphData(data){
 
 			},
 			"y": function(d, i) {
-				return h - 20 - yScale(d.sightings);
+				return h - 20;
 			},
 			"desc": function(d, i) {
 				var v = moment([d.year, d.month-1]);
@@ -408,22 +421,18 @@ function graphData(data){
 			},
 			"class" : "bar"
 	    })
-		.on("click", function(d, i) {
-			// run when user clicks on a bar in the chart. 
-			//populate sidebar with details on this month's sightings.
-			var dataString = 'month='+d.month+'&year='+d.year;
+        .transition()
+        .attr({
+        	"height": function(d, i) {
+			    return yScale(d.sightings);
+			},
+			"y": function(d, i) {
+				return h - 20 - yScale(d.sightings);
+			}       
+    	})
+        .duration(800)	
 
-			$.ajax({
-				url: "http://ufo.quast.li/backend/ufoMapper.php",
-				data: dataString,
-				success: function(data) {
-					displayDetailsHeader(d.year, d.month, d.sightings); 
-					displayDetails(data);
-					prepareMonthData(data, d.year, d.month);
-				},
-				error: function(e){console.log("error: " + e);}
-			});
-		});		    
+
 
 	//Changing color of the rect when clicked, adding month-marker popup
 	$(".bar").click(function() {
@@ -708,7 +717,6 @@ function graphMonthData(data){
 			});
 
 		})	
-
 		.attr({
 			"width": BW,		
 			"x": function(d, i) {
