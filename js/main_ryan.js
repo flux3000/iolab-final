@@ -377,14 +377,21 @@ function graphData(data){
 				prevSighting = sightingsArray[sightingsArray.length-2];
 				//% change
 				pChange = (((d.sightings-prevSighting)/prevSighting)*100).toFixed(2);
-				if (pChange >= 0) {
-					pChangeText = "</strong>% Increase from Previous Month</div>"
+				if (pChange == 'NaN') {
+					pChangeText = "This is the First Month</strong></div>"
+				}
+				else if (pChange >= 0) {
+					pChangeText = Math.abs(pChange)+"</strong>% Increase from Previous Month</div>"
 				}
 				else {
-					pChangeText = "</strong>% Decrease from Previous Month</div>"
+					pChangeText = Math.abs(pChange)+"</strong>% Decrease from Previous Month</div>"
 				}
 				
-				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+Math.abs(pChange)+pChangeText;
+/* 				switch (pChange) {
+					case 
+				} */
+				
+				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+pChangeText;
 
 			},
 			
@@ -722,13 +729,19 @@ function graphMonthData(data){
 				prevSighting2 = sightingsArray2[sightingsArray2.length-2];
 				//% change
 				pChange2 = (((d.sightings-prevSighting2)/prevSighting2)*100).toFixed(2);
-				if (pChange2 >= 0) {
-					pChangeText2 = "</strong>% Increase from Previous Day</div>"
+				if (pChange2 == 'NaN') {
+					pChangeText2 = "This is the First Day</strong></div>"
+				}
+				else if (pChange2 == 'Infinity') {
+					pChangeText2 = "No data for Previous Day</strong></div>"
+				}
+				else if (pChange2 >= 0) {
+					pChangeText2 = Math.abs(pChange2)+"</strong>% Increase from Previous Day</div>"
 				}
 				else {
-					pChangeText2 = "</strong>% Decrease from Previous Day</div>"
+					pChangeText2 = Math.abs(pChange2)+"</strong>% Decrease from Previous Day</div>"
 				}
-				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+Math.abs(pChange2)+pChangeText2;
+				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+pChangeText2;
 			},
 			"fill" : function(d, i){
 				return "#FFD573"; // yellow FFD573
