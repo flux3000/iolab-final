@@ -1,7 +1,7 @@
 <?php 
 header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}"); //allow people to call API
 
-$states = ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"];
+$states = Array("AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY");
 
 require_once 'constants.php';
 $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
@@ -27,12 +27,13 @@ elseif(isset($_GET['month'])){
 	$stmt->bind_result($id,$date,$url,$city,$state,$shape,$duration,$summary);
 	
 	$res = '[';
-	$notAmerican = 0;
 	while($stmt->fetch()){
-		if(!in_array($state, $states)){ //if the state string is not in the stateArray increase counter and don't add
-			$notAmerican++;
-		} 
-		$res .= '{"id":' . json_encode($id) . ',"lat":' . json_encode("37.8714319") . ',"lng":' . json_encode("-122.2584987") . ', "date":' . json_encode($date) . ', "url":' . json_encode($url) . ', "city":' . json_encode($city) . ', "state":' . json_encode($state) . ', "shape":' . json_encode($shape) . ',"duration":' . json_encode($duration) . ',"summary":' . json_encode(str_replace("&quot;", '"', $summary)) . '},';
+	
+		if(!in_array($state, $states)){ //if the state string is not in the stateArray ignore
+		}
+		else{ 
+			$res .= '{"id":' . json_encode($id) . ',"lat":' . json_encode("37.8714319") . ',"lng":' . json_encode("-122.2584987") . ', "date":' . json_encode($date) . ', "url":' . json_encode($url) . ', "city":' . json_encode($city) . ', "state":' . json_encode($state) . ', "shape":' . json_encode($shape) . ',"duration":' . json_encode($duration) . ',"summary":' . json_encode(str_replace("&quot;", '"', $summary)) . '},';
+		}
 	}
 	$res = trim($res, ',');
 	$res .= ']';
