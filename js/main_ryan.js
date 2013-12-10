@@ -21,7 +21,7 @@ var myUFOs = [];
 
 $(document).ready(function(){
 
-	google.maps.event.addDomListener(window, 'load', mapsInitialize("map-container"));
+	//google.maps.event.addDomListener(window, 'load', mapsInitialize("map-container"));
 
 	$("#start-year").text(startYear);
 
@@ -154,7 +154,7 @@ function displayTimeline(pointLocations, foo){
 				console.log(markerleft);
 
 				var markertop = 250 - (thisBarHeight) + 42 + "px";
-				var v = moment([thisEventYear, parseInt(thisEventMonth)+1]);
+				var v = moment([thisEventYear, parseInt(thisEventMonth)]);
 				var displayDate = v.format("MMM YYYY");	
 				var markertxt = "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+thisMonthSightings+"</strong></div>";
 
@@ -374,6 +374,7 @@ function graphData(data){
 				prevSighting = sightingsArray[sightingsArray.length-2];
 				//% change
 				pChange = (((d.sightings-prevSighting)/prevSighting)*100).toFixed(2);
+<<<<<<< HEAD
 				if (pChange == 'NaN') {
 					pChangeText = "This is the First Month</strong></div>"
 				}
@@ -389,6 +390,27 @@ function graphData(data){
 				} */
 				
 				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+pChangeText;
+=======
+
+				if (pChange == "Infinity"){
+					pChangeText = "<strong>+&#8734;</strong>% from<br>Previous Month";
+				} else if (pChange > 0) {
+					pChangeText = "<strong>+"+Math.abs(pChange)+"</strong>% from<br>Previous Month";
+				} else if (pChange < 0) {
+					pChangeText = "<strong>-"+Math.abs(pChange)+"</strong>% from<br>Previous Month";
+				} else {
+					pChangeText = "No change from<br>Previous Month";
+				}
+
+				var descString = "<div class='title'>"+displayDate+"</div><div class='title'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
+
+				if (pChange != "NaN"){
+					descString += "<div class='description'>"+pChangeText+"</div>";	
+				}
+
+				return descString;
+
+>>>>>>> ac0c81a10e0abc42093f50566bacc9dfa5db2226
 
 			},
 			
@@ -454,9 +476,13 @@ function graphData(data){
 			//Setting the info-text
 			var txt = $(this).attr("desc");
 			//var left = $(this).position().left - 60;
-			var left = (event.pageX) + "px"; 
+			var left = (event.pageX + 4) + "px"; 
 			//var top = h - 50;
+<<<<<<< HEAD
 			var top = (event.pageY - 75) + "px"; 
+=======
+			var top = (event.pageY - 60) + "px"; 
+>>>>>>> ac0c81a10e0abc42093f50566bacc9dfa5db2226
 			$(".info").html(txt).css({"left" : left, "top" : top}).show();
 		}, 
 		function() {
@@ -724,8 +750,10 @@ function graphMonthData(data){
 				sightingsArray2.push(d.sightings);
 				//finding the previous month's sightings
 				prevSighting2 = sightingsArray2[sightingsArray2.length-2];
+				
 				//% change
 				pChange2 = (((d.sightings-prevSighting2)/prevSighting2)*100).toFixed(2);
+<<<<<<< HEAD
 				if (pChange2 == 'NaN') {
 					pChangeText2 = "This is the First Day</strong></div>"
 				}
@@ -739,6 +767,26 @@ function graphMonthData(data){
 					pChangeText2 = Math.abs(pChange2)+"</strong>% Decrease from Previous Day</div>"
 				}
 				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div><div class='description'><strong>"+pChangeText2;
+=======
+				
+				if (pChange2 == "Infinity"){
+					pChangeText2 = "<strong>+&#8734;</strong>% from Previous Day";
+				} else if (pChange2 > 0) {
+					pChangeText2 = "<strong>+"+Math.abs(pChange2)+"</strong>% from Previous Day";
+				} else if (pChange2 < 0) {
+					pChangeText2 = "<strong>-"+Math.abs(pChange2)+"</strong>% from Previous Day";
+				} else {
+					pChangeText2 = "No change from Previous Day";
+				}
+
+				var descString = "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
+
+				if (pChange2 != "NaN"){
+					descString += "<div class='description'>"+pChangeText2+"</div>";	
+				}
+
+				return descString;
+>>>>>>> ac0c81a10e0abc42093f50566bacc9dfa5db2226
 			},
 			"fill" : function(d, i){
 				return "#FFD573"; // yellow FFD573
@@ -774,9 +822,9 @@ function graphMonthData(data){
 			//Setting the info-text
 			var txt = $(this).attr("desc");
 			//var left = $(this).position().left - 60;
-			var left = (event.pageX) + "px"; 
+			var left = (event.pageX + 4) + "px"; 
 			//var top = h - 50;
-			var top = (event.pageY - 50) + "px"; 
+			var top = (event.pageY - 60) + "px"; 
 			$(".sidebar-info").html(txt).css({"left" : left, "top" : top}).show();
 		}, 
 		function() {
@@ -792,7 +840,7 @@ function graphMonthData(data){
 function mapData(data){
 	//console.log(data);
 }
-// Ashley: google maps code
+// Google maps code
 var map, pointarray, heatmap,
 taxiData = [
   new google.maps.LatLng(37.782551, -122.445368),
@@ -1297,8 +1345,8 @@ taxiData = [
   new google.maps.LatLng(37.751266, -122.403355)
 ];
 
-//Ashley: Made changes for generating Heat Map
-function mapsInitialize(targetID) {
+// Code for Generating Heat Map
+/*function mapsInitialize(targetID) {
     var myLatlng = new google.maps.LatLng(41.850033, -87.6500523);
     var mapOptions = {
         zoom: 3,
@@ -1317,4 +1365,4 @@ function mapsInitialize(targetID) {
 	});
 
 	heatmap.setMap(map);
-}
+}*/
