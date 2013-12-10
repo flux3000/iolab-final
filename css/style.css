@@ -32,9 +32,6 @@ input[type=text] {}
 input[type=text]:focus {}
 input[type=submit] {}
 textarea {}
-
-
-
 ::selection {}
 ::-moz-selection {}
 
@@ -43,7 +40,6 @@ textarea {}
 strong {font-weight:bold;}
 em {font-style:italic;}
 .cb	{clear:both;}
-
 
 /* main layout sections */
 
@@ -243,7 +239,7 @@ section {
 #map {
 	float: left;
 	width: 800px;
-	height: 600px;
+	height: 490px;
 	background-color: #FFF; 
 	border-radius: 6px; 
 	padding: 6px; 
@@ -337,17 +333,28 @@ section {
 
 #footer {
 	float: left;
-	width: 1220px;
-	height: 40px;
+	width: 800px;
+	height: 82px;
+	vertical-align: bottom;
 	text-align: right;
 	color: #b8b8b8;
 	font-size: 8pt;
 	border-radius: 6px; 
-	padding: 8px;
+	padding: 6px;
 	margin: 8px 0px;
 	background-color: #fcfcfc; 
 	border: 4px double #eee;
 	box-shadow: 2px 2px 1px #c9c9c9;
+}
+
+.footer-logo{
+	
+}
+
+.footer-text {
+	vertical-align: bottom;
+	margin-top: 42px;
+
 }
 
 /* svg styles */

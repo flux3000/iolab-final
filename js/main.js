@@ -49,162 +49,159 @@ $(document).ready(function(){
 });
 
 
-function displayTimeline(pointLocations, foo){
+function displayTimeline(pointLocations){
 
-        var events = [];
-        //console.log(pointLocations);
+    var events = [];
+    //console.log(pointLocations);
 
-        $.getJSON( "documents/events.json", function( eventdata ) {
-                $.each( eventdata, function( key, val ) {
-                        var event = [key, val];
+    $.getJSON( "documents/events.json", function( eventdata ) {
+            $.each( eventdata, function( key, val ) {
+                    var event = [key, val];
 
-                        thisMonth = val["month"];
-                        thisYear = val["year"];
-                        thisType = val["type"]
-                        iconUrl = ""
-/*                         if (thisType == "Movie") {
-                                var iconUrl = "(../images/icons/movie.jpg)"
-                        } */
-                        switch (thisType) {
-                                case "Movie":
-                                        iconUrl = "(../images/icons/movie.jpg)"
-                                        break;
-                                case "Astronomy":
-                                        iconUrl = "(../images/icons/astronomy.jpg)"
-                                        break;
-                                case "Event":
-                                        iconUrl = "(../images/icons/event.jpg)"
-                                        break;
-                        }
+                    thisMonth = val["month"];
+                    thisYear = val["year"];
+                    thisType = val["type"]
+                    iconUrl = ""
+                    switch (thisType) {
+                            case "Movie":
+                                    iconUrl = "(../images/icons/movie.jpg)"
+                                    break;
+                            case "Astronomy":
+                                    iconUrl = "(../images/icons/astronomy.jpg)"
+                                    break;
+                            case "Event":
+                                    iconUrl = "(../images/icons/event.jpg)"
+                                    break;
+                    }
 
-                        for (var i = 0; i < pointLocations.length; i++) {
-                                if (thisMonth == pointLocations[i][1] && thisYear == pointLocations[i][0]) {
-                                        thisXCoord = pointLocations[i][2] - 8;
-                                        //console.log("x coord of "+thisMonth+"-"+thisYear+" is "+thisXCoord);
-                                }
-                        }
-                        //thisXCoord = 0;
+                    for (var i = 0; i < pointLocations.length; i++) {
+                            if (thisMonth == pointLocations[i][1] && thisYear == pointLocations[i][0]) {
+                                    thisXCoord = pointLocations[i][2] - 8;
+                                    //console.log("x coord of "+thisMonth+"-"+thisYear+" is "+thisXCoord);
+                            }
+                    }
+                    //thisXCoord = 0;
 
-                        $("#timeline-events").append("<div class='event-icon' id='"+key+
-                                                                                "' style='left:"+thisXCoord+"px; background-image:url"+iconUrl+";'>"+
-                                                                                "</div>");
-                        events.push(event);
+                    $("#timeline-events").append("<div class='event-icon' id='"+key+
+                                                                            "' style='left:"+thisXCoord+"px; background-image:url"+iconUrl+";'>"+
+                                                                            "</div>");
+                    events.push(event);
 
-                });
-                //console.log(events);
-                $(".event-icon").css({'cursor': 'pointer'});
+            });
+            //console.log(events);
+            $(".event-icon").css({'cursor': 'pointer'});
+    });
 
-        });
-
-        $("#timeline-events").on("click", ".event-icon:not(.active)", function() {
+    $("#timeline-events").on("click", ".event-icon:not(.active)", function() {
 
 
-                var pointerXPos = ($(this).position().left)+11;
+            var pointerXPos = ($(this).position().left)+11;
 
-                $(".month-marker").hide();
+            $(".month-marker").hide();
 
-                //console.log("making bars red");
-                $('svg#visualization').children("rect").attr("fill", "#b34100"); // make all bars red
+            //console.log("making bars red");
+            $('svg#visualization').children("rect").attr("fill", "#b34100"); // make all bars red
 
-                $('.event-icon-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
-                $('.event-icon-up-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
+            $('.event-icon-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
+            $('.event-icon-up-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
 
-                $(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("slow")
-                $(this).siblings().children('.event-icon-up-pointer').fadeOut("slow")
-                $(this).addClass("active");
+            $(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("slow")
+            $(this).siblings().children('.event-icon-up-pointer').fadeOut("slow")
+            $(this).addClass("active");
 
-                $("#timeline").animate({"height": "200px"}, 400);
+            $("#timeline").animate({"height": "200px"}, 400);
 
-                var thisEventID = $(this).attr("id");
-                var thisEventName = events[thisEventID][1]["name"];
-                var thisEventStats = events[thisEventID][1]["stats"];
-                var thisEventDescription = events[thisEventID][1]["description"];
-                var thisEventImage = events[thisEventID][1]["image"];
-                var thisEventURL = events[thisEventID][1]["url"];
-                var thisEventType = events[thisEventID][1]["type"];
-                var thisEventMonth = events[thisEventID][1]["month"];
-                var thisEventYear = events[thisEventID][1]["year"];
+            var thisEventID = $(this).attr("id");
+            var thisEventName = events[thisEventID][1]["name"];
+            var thisEventStats = events[thisEventID][1]["stats"];
+            var thisEventDescription = events[thisEventID][1]["description"];
+            var thisEventImage = events[thisEventID][1]["image"];
+            var thisEventURL = events[thisEventID][1]["url"];
+            var thisEventType = events[thisEventID][1]["type"];
+            var thisEventMonth = events[thisEventID][1]["month"];
+            var thisEventYear = events[thisEventID][1]["year"];
 
-                var a = moment([thisEventYear, thisEventMonth])
-                var displayDate = a.format("MMMM YYYY");
-                var titleDate = a.format("YYYY-MM");
+            var a = moment([thisEventYear, thisEventMonth])
+            var displayDate = a.format("MMMM YYYY");
+            var titleDate = a.format("YYYY-MM");
 
-                var thisInfobarHTML = "<div id='timeline-infobar-contents'>";
-                thisInfobarHTML += "<div class='close'>&#x2715;</div>";
-                thisInfobarHTML += "<div class='img'><img src='images/"+thisEventImage+"' alt='"+thisEventName+"'></div>";
-                thisInfobarHTML += "<div class='title'><strong>"+displayDate+" - "+thisEventName+"</strong><br>"+thisEventStats+"</div>";
-                thisInfobarHTML += "<div class='description'>"+thisEventDescription+"</div>";
-                thisInfobarHTML += "<div class='link'><a href='"+thisEventURL+"' target='_new'>Wikipedia</a></div>";
-                thisInfobarHTML += "</div>";
+            var thisInfobarHTML = "<div id='timeline-infobar-contents'>";
+            thisInfobarHTML += "<div class='close'>&#x2715;</div>";
+            thisInfobarHTML += "<div class='img'><img src='images/"+thisEventImage+"' alt='"+thisEventName+"'></div>";
+            thisInfobarHTML += "<div class='title'><strong>"+displayDate+" - "+thisEventName+"</strong><br>"+thisEventStats+"</div>";
+            thisInfobarHTML += "<div class='description'>"+thisEventDescription+"</div>";
+            thisInfobarHTML += "<div class='link'><a href='"+thisEventURL+"' target='_new'>Wikipedia</a></div>";
+            thisInfobarHTML += "</div>";
 
-                var thisBarHeight;
-                var thisBarXCoord;
-                var thisBarYCoord;
+            var thisBarHeight;
+            var thisBarXCoord;
+            var thisBarYCoord;
 
-                $('svg#visualization').children("rect[title='"+titleDate+"']").delay(300).queue(function() {
-                        $(this).attr("fill", "#FFD573"); // make correct bar yellow
-                        thisBarHeight = $(this).attr("height");
-                        thisBarXCoord = $(this).attr("x");
-                        thisBarYCoord = $(this).attr("y");
+            // TODO - Inspect bug when clicking a bunch of times
+            $('svg#visualization').children("rect[title='"+titleDate+"']").delay(300).queue(function() {
+                    $(this).attr("fill", "#FFD573"); // make correct bar yellow
+                    thisBarHeight = $(this).attr("height");
+                    thisBarXCoord = $(this).attr("x");
+                    thisBarYCoord = $(this).attr("y");
 
-                        //console.log("making bar "+titleDate+" yellow");
-                });
+                    //console.log("making bar "+titleDate+" yellow");
+            });
 
-                $("#timeline-infobar").delay(400).fadeIn(400).html(thisInfobarHTML);
+            $("#timeline-infobar").delay(400).fadeIn(400).html(thisInfobarHTML);
 
-                var dataString = 'month='+(parseInt(thisEventMonth)+1)+'&year='+thisEventYear;
-                $.ajax({
-                        url: "http://ufo.quast.li/backend/ufoMapper.php",
-                        data: dataString,
-                        success: function(data) {
-                                var json = JSON.parse(data);
-                                var thisMonthSightings = json.length;
+            var dataString = 'month='+(parseInt(thisEventMonth)+1)+'&year='+thisEventYear;
+            $.ajax({
+                    url: "http://ufo.quast.li/backend/ufoMapper.php",
+                    data: dataString,
+                    success: function(data) {
+                            var json = JSON.parse(data);
+                            var thisMonthSightings = json.length;
 
-                                //Setting the marker text and location
-                                var markerleft = (parseInt(thisBarXCoord) + 80) + "px";
-                                console.log(markerleft);
+                            //Setting the marker text and location
+                            var markerleft = (parseInt(thisBarXCoord) + 80) + "px";
+                            console.log(markerleft);
 
-                                var markertop = 250 - (thisBarHeight) + 42 + "px";
-                                var v = moment([thisEventYear, parseInt(thisEventMonth)+1]);
-                                var displayDate = v.format("MMM YYYY");        
-                                var markertxt = "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+thisMonthSightings+"</strong></div>";
+                            var markertop = 250 - (thisBarHeight) + 42 + "px";
+                            var v = moment([thisEventYear, thisEventMonth]);
+                            var displayDate = v.format("MMM YYYY");        
+                            var markertxt = "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+thisMonthSightings+"</strong></div>";
 
-                                $(".month-marker").html(markertxt).css({"left" : markerleft, "top" : markertop}).show();
+                            $(".month-marker").html(markertxt).css({"left" : markerleft, "top" : markertop}).show();
 
-                                displayDetailsHeader(thisEventYear, parseInt(thisEventMonth)+1, thisMonthSightings); 
-                                displayDetails(data);
-                                prepareMonthData(data, thisEventYear, parseInt(thisEventMonth)+1);
-                        },
-                        error: function(e){console.log("error: " + e);}
-                });
+                            displayDetailsHeader(thisEventYear, parseInt(thisEventMonth)+1, thisMonthSightings); 
+                            displayDetails(data);
+                            prepareMonthData(data, thisEventYear, parseInt(thisEventMonth)+1);
+                    },
+                    error: function(e){console.log("error: " + e);}
+            });
 
-        });        
+    });        
 
-        $("#timeline-events").on("click", ".active", function() {
+    $("#timeline-events").on("click", ".active", function() {
 
-                $('.event-icon-pointer').hide();
-                $('.event-icon-up-pointer').hide();
-                $('svg#visualization').children("rect").delay(300).queue(function() {
-                        $(this).attr("fill", "#b34100"); // make all bars red
-                });
+            $('.event-icon-pointer').hide();
+            $('.event-icon-up-pointer').hide();
+            $('svg#visualization').children("rect").delay(300).queue(function() {
+                    $(this).attr("fill", "#b34100"); // make all bars red
+            });
 
-                $("#timeline-infobar").fadeOut(400);
-                $("#timeline").delay(400).animate({"height": "48px"}, 400);
+            $("#timeline-infobar").fadeOut(400);
+            $("#timeline").delay(400).animate({"height": "48px"}, 400);
 
-                $(this).removeClass("active");
+            $(this).removeClass("active");
 
-        });
+    });
 
-        $("#timeline-infobar").on("click", ".close", function() {
+    $("#timeline-infobar").on("click", ".close", function() {
 
-                $('.event-icon-pointer').hide();
-                $('.event-icon-up-pointer').hide();
+            $('.event-icon-pointer').hide();
+            $('.event-icon-up-pointer').hide();
 
-                $("#timeline-infobar").fadeOut(400);
-                $("#timeline").delay(400).animate({"height": "48px"}, 400);
+            $("#timeline-infobar").fadeOut(400);
+            $("#timeline").delay(400).animate({"height": "48px"}, 400);
 
-                $(this).siblings("#timeline-events").removeClass("active");
-        });
+            $(this).siblings("#timeline-events").removeClass("active");
+    });
 }
 
 
@@ -468,7 +465,7 @@ function graphData(data){
                         //var left = $(this).position().left - 60;
                         var left = (event.pageX + 4) + "px";  
                         //var top = h - 50;
-                        var top = (event.pageY - 60) + "px"; 
+                        var top = (event.pageY - 70) + "px"; 
                         $(".info").html(txt).css({"left" : left, "top" : top}).show();
                 }, 
                 function() {
@@ -478,7 +475,7 @@ function graphData(data){
                 }
         );
 
-        displayTimeline(pointLocations, data);
+        displayTimeline(pointLocations);
 
 }
 
@@ -786,7 +783,6 @@ function graphMonthData(data){
         $(".smallbar").click(function() {
                 $(this).siblings(".smallbar").attr({"fill": "#FFD573", "stroke": "#C99C30"}); // yellow FFD573, Dk Yellow C99C30
                 $(this).attr({"fill": "#286EB8", "stroke": "#215082"}); // green 539120 dkgrn 25420d blue 286EB8  dkblue 215082
-                //$( this ).toggleClass("selected", addOrRemove); // doesn't work, because fill attribute overrides classes
         });
 
         //Animating the rects of the diagrams on hover
@@ -831,7 +827,7 @@ function mapData(data){
 	maxValue = Math.max.apply(Math,sightingsNumbers);
 	minValue = Math.min.apply(Math,sightingsNumbers);
 	for(var key in stateSightings){		
-		stateSightings[key] = (stateSightings[key] - minValue)/(maxValue - minValue);
+		stateSightings[key] = ((stateSightings[key] - minValue)/(maxValue - minValue))*.9;
 	}
 
 	$.getJSON( "documents/stateBoundaries.json", function( data ) {
@@ -880,7 +876,7 @@ function redoMapData(data){
 	minValue = Math.min.apply(Math,sightingsNumbers);
 	
 	for(var key in stateSightings){
-		stateSightings[key] = (stateSightings[key] - minValue)/(maxValue - minValue);
+		stateSightings[key] = ((stateSightings[key] - minValue)/(maxValue - minValue))*.9;
 	}
 
 	$.getJSON( "documents/stateBoundaries.json", function( data ) {
