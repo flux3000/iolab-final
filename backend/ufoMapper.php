@@ -20,7 +20,7 @@ elseif(isset($_GET['month'])){
 	$month = $_GET['month'];
 	$year = $_GET['year'];
 	
-	$stmt = $mysqli->prepare("SELECT `id`,`date`,`url`,`city`,`state`,`shape`,`duration`,`summary` FROM `ufos` where `date` between '" . $year . "-" . $month . "-01' and '" . $year . "-" . $month . "-31'");
+	$stmt = $mysqli->prepare("SELECT `id`,`date`,`url`,`city`,`state`,`shape`,`duration`,`summary` FROM `ufos` where `date` between '" . $year . "-" . $month . "-01' and '" . $year . "-" . $month . "-31' ORDER BY  `date`");
 	$stmt->execute();
 	$stmt->bind_result($id,$date,$url,$city,$state,$shape,$duration,$summary);
 	
