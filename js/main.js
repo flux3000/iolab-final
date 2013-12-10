@@ -256,182 +256,188 @@ function prepareData(data){
 
 
 function graphData(data){
-        //console.log(data);
+    //console.log(data);
 
-        var pointLocations = [];
+    var pointLocations = [];
 
-        var numPoints = data.length;
-        // set up the svg         
-        var w = 1190;
-        var h = 250;
-        var svg = d3.select("#visualization");
-        svg.attr("width", w).attr("height", h);
+    var numPoints = data.length;
+    // set up the svg         
+    var w = 1190;
+    var h = 250;
+    var svg = d3.select("#visualization");
+    svg.attr("width", w).attr("height", h);
 
-        //setting variables for drawing
-        var BW = 2; //Bar width
-        var BTW = BW+1; //Bar Total Width
-        var OL = 50; //Offset Left
+    //setting variables for drawing
+    var BW = 2; //Bar width
+    var BTW = BW+1; //Bar Total Width
+    var OL = 50; //Offset Left
 
-        //Setting the scales for the graph
-        // xScale and yScale are for the data points
-        var xScale = d3.time.scale()
-                .domain([0, data.length])
-                .range([0, w]);
+    //Setting the scales for the graph
+    // xScale and yScale are for the data points
+    var xScale = d3.time.scale()
+            .domain([0, data.length])
+            .range([0, w]);
 
-        var yScale = d3.scale.linear()
-                .domain([0, 1000])
-                .range([0, h-30]);
+    var yScale = d3.scale.linear()
+            .domain([0, 1000])
+            .range([0, h-30]);
 
-        var startDate = new Date(data[0].date);
-        var endDate = new Date(data[data.length - 1].date);
+    var startDate = new Date(data[0].date);
+    var endDate = new Date(data[data.length - 1].date);
 
-        //console.log("startdate:"+startDate);
-        //console.log("enddate:"+endDate);
+    //console.log("startdate:"+startDate);
+    //console.log("enddate:"+endDate);
 
-        //xAxisScale and yAxisScale are for the axes
-        var xAxisScale = d3.time.scale()
-                .domain([startDate, endDate])
-                .range([0, BTW*numPoints]);
-        
-        var yAxisScale = d3.scale.linear()
-                .domain([0, 1000])
-                .range([h-30, 0]);
+    //xAxisScale and yAxisScale are for the axes
+    var xAxisScale = d3.time.scale()
+            .domain([startDate, endDate])
+            .range([0, BTW*numPoints]);
+    
+    var yAxisScale = d3.scale.linear()
+            .domain([0, 1000])
+            .range([h-30, 0]);
 
-        //xAxisGridLines and yAxisGridLines for the grid lines        
-        var xAxisGridLines = d3.svg.axis()
-                                                .scale(xAxisScale)
-                                                .orient("bottom")
-                                                .ticks(20);
+    //xAxisGridLines and yAxisGridLines for the grid lines        
+    var xAxisGridLines = d3.svg.axis()
+                                            .scale(xAxisScale)
+                                            .orient("bottom")
+                                            .ticks(20);
 
-        var yAxisGridLines = d3.svg.axis()
-                                                .scale(yAxisScale)
-                                                .orient("left")
-                                                .ticks(10);
+    var yAxisGridLines = d3.svg.axis()
+                                            .scale(yAxisScale)
+                                            .orient("left")
+                                            .ticks(10);
 
-        //Creating the y-axis
-        var yAxis = d3.svg.axis()
-        .scale(yAxisScale)
-        .orient("left")
-                .ticks(10);
-        svg.append("g")
-                .attr("class", "axis")
-                .attr("transform", "translate(40," + 10 + ")")
-                .call(yAxis);
+    //Creating the y-axis
+    var yAxis = d3.svg.axis()
+    .scale(yAxisScale)
+    .orient("left")
+            .ticks(10);
+    svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(40," + 10 + ")")
+            .call(yAxis);
 
-        //Creating the x-axis
-        var xAxis = d3.svg.axis()
-        .scale(xAxisScale)
-        .orient("bottom")
-        .tickSize(8, 0)
-                .ticks(d3.time.year, 2);
-        svg.append("g")
-                .attr("class", "axis")
-                .attr("transform", "translate(40," + (h-20) + ")")
-                .call(xAxis);
-        
-        //Drawing Grid Lines
-        var xGridLines = svg.append("g")
-                                                .attr("class", "grid")
-                                                .attr("transform", "translate(" + 40 + "," + (h - 20)  + ")")
-                                                .style("stroke-dasharray", ("3, 3"))
-                                                .call(xAxisGridLines
-                                                                .tickSize(-h + 30,0,0)
-                                                                .tickFormat("")
-                                                        );
-                                                                
-        var yGridLines = svg.append("g")
-                                                .attr("class", "grid")
-                                                .attr("transform", "translate(40,10)")
-                                                .style("stroke-dasharray", ("3, 3"))
-                                                .call(yAxisGridLines
-                                                                .tickSize(-w + 40,0,0)
-                                                                .tickFormat("")
-                                                        );
+    //Creating the x-axis
+    var xAxis = d3.svg.axis()
+    .scale(xAxisScale)
+    .orient("bottom")
+    .tickSize(8, 0)
+            .ticks(d3.time.year, 2);
+    svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(40," + (h-20) + ")")
+            .call(xAxis);
+    
+    //Drawing Grid Lines
+    var xGridLines = svg.append("g")
+                        .attr("class", "grid")
+                        .attr("transform", "translate(" + 40 + "," + (h - 20)  + ")")
+                        .style("stroke-dasharray", ("3, 3"))
+                        .call(xAxisGridLines
+                            .tickSize(-h + 30,0,0)
+                            .tickFormat("")
+                        );
+                                                            
+    var yGridLines = svg.append("g")
+                        .attr("class", "grid")
+                        .attr("transform", "translate(40,10)")
+                        .style("stroke-dasharray", ("3, 3"))
+                        .call(yAxisGridLines
+                            .tickSize(-w + 40,0,0)
+                            .tickFormat("")
+                        );
 
-        //Drawing the bars of the graph
-        
-        sightingsArray = []; //this array collects all sightings values for all months to be later used for finding % increase/decrease
-        fullSightingObject = {};
-        svg.selectAll("rect")
-                .data(data)
-                .enter()
-                .append("rect")
-                .attr({
-                        "width": BW,
-                        "height": function(d, i) {
-                            return yScale(d.sightings);
-                        
-                        },
-                        "x": function(d, i) {
-                                thisX = 40 + i*BTW;
-                                thisPointLocation = [d.year, d.month, i*BTW];
-                                pointLocations.push(thisPointLocation);
-                                return thisX;
+    //Drawing the bars of the graph
+    
+    sightingsArray = []; //this array collects all sightings values for all months to be later used for finding % increase/decrease
+    fullSightingObject = {};
+	svg.selectAll("rect")
+		.data(data)
+		.enter()
+		.append("rect")
+		.on("click", function(d, i) {
+			// run when user clicks on a bar in the chart. 
+			//populate sidebar with details on this month's sightings.
+			var dataString = 'month='+d.month+'&year='+d.year;
 
-                        },
-                        "y": function(d, i) {
-                                return h - 20 - yScale(d.sightings);
-                        },
-                        "desc": function(d, i) {
-                                var v = moment([d.year, d.month-1]);
-                                var displayDate = v.format("MMMM YYYY");
-                                //console.log(d);        
-                                //adding sighting numbers to array
-                                sightingsArray.push(d.sightings);
-                                //finding the previous month's sightings
-                                prevSighting = sightingsArray[sightingsArray.length-2];
-                                //% change
-                                pChange = (((d.sightings-prevSighting)/prevSighting)*100).toFixed(2);
-                                if (pChange == "Infinity"){
-                                                pChangeText = "<strong>+&#8734;</strong>% from<br>Previous Month";
-                                        } else if (pChange > 0) {
-                                                pChangeText = "<strong>+"+Math.abs(pChange)+"</strong>% from<br>Previous Month";
-                                        } else if (pChange < 0) {
-                                                pChangeText = "<strong>-"+Math.abs(pChange)+"</strong>% from<br>Previous Month";
-                                        } else {
-                                                pChangeText = "No change from<br>Previous Month";
-                                        }
+			$.ajax({
+				url: "http://ufo.quast.li/backend/ufoMapper.php",
+				data: dataString,
+				success: function(data) {
+					displayDetailsHeader(d.year, d.month, d.sightings); 
+					displayDetails(data);
+					prepareMonthData(data, d.year, d.month);
+				},
+				error: function(e){console.log("error: " + e);}
+			});
+		})		
+		.attr({
+			"width": BW,
+			"height": 0,
+			"x": function(d, i) {
+				thisX = 40 + i*BTW;
+				thisPointLocation = [d.year, d.month, i*BTW];
+				pointLocations.push(thisPointLocation);
+				return thisX;
 
-                                        var descString = "<div class='title'>"+displayDate+"</div><div class='title'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
+			},
+			"y": function(d, i) {
+				return h - 20;
+			},
+			"desc": function(d, i) {
+				var v = moment([d.year, d.month-1]);
+				var displayDate = v.format("MMMM YYYY");
+				//console.log(d);	
+				//adding sighting numbers to array
+				sightingsArray.push(d.sightings);
+				//finding the previous month's sightings
+				prevSighting = sightingsArray[sightingsArray.length-2];
+				//% change
+				pChange = (((d.sightings-prevSighting)/prevSighting)*100).toFixed(2);
+				if (pChange == "Infinity"){
+						pChangeText = "<strong>+&#8734;</strong>% from<br>Previous Month";
+					} else if (pChange > 0) {
+						pChangeText = "<strong>+"+Math.abs(pChange)+"</strong>% from<br>Previous Month";
+					} else if (pChange < 0) {
+						pChangeText = "<strong>-"+Math.abs(pChange)+"</strong>% from<br>Previous Month";
+					} else {
+						pChangeText = "No change from<br>Previous Month";
+					}
+					var descString = "<div class='title'>"+displayDate+"</div><div class='title'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
 
-                                        if (pChange != "NaN"){
-                                                descString += "<div class='description'>"+pChangeText+"</div>";        
-                                        }
+					if (pChange != "NaN"){
+						descString += "<div class='description'>"+pChangeText+"</div>";	
+					}
 
-                                        return descString;
-                        },
-                        
-                        "markerdesc": function(d,i){
-                                var v = moment([d.year, d.month-1]);
-                                var displayDate = v.format("MMM YYYY");
-                                return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong></div>";
-                        },
-                        "title": function(d, i) {
-                                var v = moment([d.year, d.month-1]);
-                                var titleDate = v.format("YYYY-MM");
-                                return titleDate;
-                        },
-                        "fill" : function(d, i){
-                                return "#b34100";
-                        },
-                        "class" : "bar"
-            })
-                .on("click", function(d, i) {
-                        // run when user clicks on a bar in the chart. 
-                        //populate sidebar with details on this month's sightings.
-                        var dataString = 'month='+d.month+'&year='+d.year;
-
-                        $.ajax({
-                                url: "http://ufo.quast.li/backend/ufoMapper.php",
-                                data: dataString,
-                                success: function(data) {
-                                        displayDetailsHeader(d.year, d.month, d.sightings); 
-                                        displayDetails(data);
-                                        prepareMonthData(data, d.year, d.month);
-                                },
-                                error: function(e){console.log("error: " + e);}
-                        });
-                });                    
+					return descString;
+			},
+			
+			"markerdesc": function(d,i){
+				var v = moment([d.year, d.month-1]);
+				var displayDate = v.format("MMM YYYY");
+				return "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong></div>";
+			},
+			"title": function(d, i) {
+				var v = moment([d.year, d.month-1]);
+				var titleDate = v.format("YYYY-MM");
+				return titleDate;
+			},
+			"fill" : function(d, i){
+				return "#b34100";
+			},
+			"class" : "bar"
+	    })
+        .transition()
+        .attr({
+        	"height": function(d, i) {
+			    return yScale(d.sightings);
+			},
+			"y": function(d, i) {
+				return h - 20 - yScale(d.sightings);
+			}       
+    	})
+        .duration(1200)	
 
         //Changing color of the rect when clicked, adding month-marker popup
         $(".bar").click(function() {
