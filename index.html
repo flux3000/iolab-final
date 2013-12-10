@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="js/d3.min.js"></script>
 	<script type="text/javascript" src="js/moment.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
-	<script type="text/javascript" src="js/main_ryan.js"></script>	
+	<!--<script type="text/javascript" src="js/main_ryan.js"></script>-->
 	<!--<script type="text/javascript" src="js/main_ashley.js"></script>-->
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<!--<link rel="stylesheet" type="text/css" href="css/style_ashley.css" />-->
@@ -24,10 +24,12 @@
 
 	<div id="chart">
 		<div class="info"></div>
+		<div class="month-marker"></div>
 		<div id="chart-header">Reported UFO Sightings - <span id="start-year">1980</span>-2012</div>
 		<svg id="visualization" xmlns="http://www.w3.org/2000/svg" version="1.1">
 		</svg>
 		<div id="timeline">
+			<span class='event-icon-up-pointer'></span><span class='event-icon-pointer'></span>
 			<div id="timeline-events">
 			</div>
 			<div id="timeline-infobar">
@@ -45,7 +47,6 @@
 		</div>
 		<div id="sidebar-content-container">
 			<div id="sidebar-content">
-
 				<ul id='sighting-list'></ul>
 			</div>
 		</div>
@@ -56,10 +57,13 @@
 		<div id="map-container"></div>
 	</div>
 
-	<div id="foobar">
-		
+	<div id="footer">
+		UC Berkeley School of Information<br>
+		Information Organization Lab - Fall 2013<br>
+		Ryan Baker, Ashley DeSouza, Victor Starostenko, Tom Quast
 	</div>
 
 </main>
+<script type="text/javascript" src="js/main_ashley.js"></script>
 </body>
 </html>
