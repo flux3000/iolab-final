@@ -39,7 +39,6 @@ $(document).ready(function(){
 
 });
 
-
 function displayTimeline(pointLocations, foo){
 
 	var events = [];
