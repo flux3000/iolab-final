@@ -1,6 +1,7 @@
 /*
 Function List:
 
+moveit
 displayTimeLine
 prepareData
 graphData
@@ -20,7 +21,9 @@ var startYear = 1981;
 var myUFOs = [];
 
 $(document).ready(function(){
-
+	
+	//moveit();
+	$("#beam_wrapper").animate({"height":"33px"},3000);
 	google.maps.event.addDomListener(window, 'load', mapsInitialize("map-container"));
 
 	$("#start-year").text(startYear);
@@ -38,6 +41,22 @@ $(document).ready(function(){
 	});
 
 });
+
+function moveit() {
+
+    var newTop = Math.floor(Math.random()*350);
+    var newLeft = Math.floor(Math.random()*1500);
+    var newDuration = Math.floor(Math.random()*4000);
+
+    $('#i').animate({
+      top: newTop,
+      left: newLeft,
+      }, newDuration, function() {
+        moveit();
+      });
+
+}
+
 
 function displayTimeline(pointLocations, foo){
 
@@ -473,7 +492,7 @@ function graphData(data){
 
 function displayDetailsChart(data) {
 	var json = JSON.parse(data);
-	//console.log(json);
+	//console.log(data);
 		thisSightingDateArr = json[i]["date"].split("-");
 		thisSightingYear = thisSightingDateArr[0];
 		thisSightingMonth = thisSightingDateArr[1];
@@ -512,7 +531,7 @@ function displayDayDetailsHeader(year, month, day, sightings){
 
 function displayDetails(data){
 	var json = JSON.parse(data);
-	//console.log(json);
+	//console.log(data);
 	
 	for (var i = 0; i < json.length; i++) {
 		thisSightingDateArr = json[i]["date"].split("-");
@@ -702,7 +721,6 @@ function graphMonthData(data){
 				success: function(data) {
 					displayDayDetailsHeader(d.year, d.month, d.day, d.sightings); 
 					displayDayDetails(data, d.day);
-
 				},
 				error: function(e){console.log("error: " + e);}
 			});
