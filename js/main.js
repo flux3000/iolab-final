@@ -36,9 +36,13 @@ map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
 
 $(document).ready(function(){
         $("#start-year").text(startYear);
+<<<<<<< HEAD
+				
+=======
         // show the loading animation while the main chart loads
         $("#loading-chart").show();
         $("#beam_wrapper").animate({"height":"33px"},3000);
+>>>>>>> 4c6eafe035813a8ba82e15c27b96dd4773815a8e
         $.ajax({
                 url: "http://ufo.quast.li/backend/graph.php",
                 success: function(data) {
@@ -53,6 +57,9 @@ $(document).ready(function(){
                 success: mapData,
                 error: function(e){console.log("error: " + e);}
         });
+		$("#saucer2").animate({"opacity":"1"},1000);
+		$("#beam_wrapper").delay(3000).animate({"opacity":"1"},100);
+		$("#i").delay(3000).animate({"height":"33px"},4000);
 });
 
 function displayTimeline(pointLocations){
