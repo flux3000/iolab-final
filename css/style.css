@@ -463,6 +463,7 @@ a.sighting-item-link:active {text-decoration: underline; color: #000;}
 }
 
 #report {
+	font-size: 10pt;
 	text-decoration: none;
 }
 

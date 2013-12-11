@@ -606,8 +606,8 @@ function displayDayDetails(data, day){
                         thisSightingHTML = "<div class='sighting-item'>";
                         thisSightingHTML += "<div class='title'>" + displayDate + " - " + json[i]["city"] + ", " + json[i]["state"] + "</div>";
                         thisSightingHTML += "<div class='description'><strong>Shape:</strong> " + json[i]["shape"] + "&nbsp;&nbsp;<strong>Duration:</strong> " + json[i]["duration"] + "<br><br>" + json[i]["summary"] + "</div>";
-                        thisSightingHTML += "</div>";
-
+                        thisSightingHTML += "<div class='link' onMouseOver='this.style.opacity=1' onMouseOut='this.style.opacity=.4'><a class='sighting-item-link' href='"+json[i]["url"]+"' target='_new'>More details<img src='images/icons/external_link.png' height='10px' width='10px' style='border: none;padding-left:2px;'></a></div></div>";
+                
                         $("#sighting-list").append("<li>"+thisSightingHTML+"</li>");
                         
                         if($.inArray(json[i]["state"], stateList) !== -1){
