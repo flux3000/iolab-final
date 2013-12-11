@@ -55,7 +55,7 @@ var myUFOs = [],
 
 $(document).ready(function(){
         $("#start-year").text(startYear);
-		$("#beam_wrapper").animate({"height":"33px"},3000);
+		
         $.ajax({
                 url: "http://ufo.quast.li/backend/graph.php",
                 success: prepareData,
@@ -67,6 +67,7 @@ $(document).ready(function(){
                 success: mapData,
                 error: function(e){console.log("error: " + e);}
         });
+		$("#beam_wrapper").delay(800).animate({"height":"33px"},4000);
 });
 
 
