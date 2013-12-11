@@ -1,6 +1,8 @@
+
 <!DOCTYPE html>
 <html>
 <head>
+
 	<meta name="viewport" content="width=device-width, user-scalable=yes">
 	<title>UFO-iO</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -8,8 +10,21 @@
 </head>
 <body>
 <main>	
-	<div id="header">
-		IMPORTANT UFO INFORMATION
+	<div id="header" style="text-align: left;">
+		<div id="logo">
+			<img id="ufoo" height="41" width="140" src="/images/logo/UFO-O_Logo.png" alt="image" style="position: relative; top: 0; left: 0;">
+		</div>
+		<div id="saucer2">
+			<img id="saucer" onload="this.style.opacity='1';" height="11" width="25" src="/images/logo/saucer2.png"/>
+		</div>
+		
+		<div id="i">
+			<div id="beam_wrapper">
+				<img id="beam" width="12" src="/images/logo/i.png"/>
+			</div>
+			
+		</div>
+
 	</div>
 
 	<div id="chart">
@@ -30,6 +45,7 @@
 			<div id="timeline-infobar">
 			</div>
 		</div>
+
 	</div>
 
 	<div id="sidebar">
@@ -48,18 +64,26 @@
 	</div>
 
 	<div id="map">
+
 		<div id="map-container"></div>
 	</div>
 
+
 	<div id="footer">
-		<div class="footer-logo">
+	
+		<div id="footerlogo">
+			<img id="ufoio" height="41" width="140" src="images/logo/UFO-iOLogo2.png" alt="image">
+
 		</div>
-		<div class="footer-text">
+		<div id="footertext" style=" text-align: right; ">
+
 			UC Berkeley School of Information<br>
 			Information Organization Lab - Fall 2013<br>
 			Ryan Baker, Ashley DeSouza, Tom Quast, Victor Starostenko
 		</div>
+
 	</div>
+
 
 </main>
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
@@ -68,6 +92,6 @@
 <script type="text/javascript" src="js/moment.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
 <!--<script type="text/javascript" src="js/main.js"></script>-->
-<script type="text/javascript" src="js/main_ryan.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
