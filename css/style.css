@@ -248,12 +248,11 @@ section {
 }
 
 #map-container{
-	margin-top: 18px;
+	margin: 18px auto 0px auto;
 	border: 1px solid black;
 	display:block; 
 	height:450px; 
 	width:750px;
-	margin: auto;
 }
 
 /* Sidebar contains month report details, displayed when user clicks on a bar */
