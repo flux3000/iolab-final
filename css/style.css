@@ -12,7 +12,13 @@ table{border-collapse:collapse;}
 #header {
 	width:140px;
 	max-width:140px;
+	height:41px;
 	display: inline-block;
+	float: left;
+	width: 1220px;
+	margin-top: 4px;
+	font-size: 16pt;
+	font-weight: bold;
 }
 
 #logo {
@@ -26,19 +32,22 @@ table{border-collapse:collapse;}
 	-o-transition: opacity 2s;
 	transition: opacity 10s;
 	position: relative;
-	top: -38px; 
+	top: -52px; 
 	left: 89px;
 }
 
+
 #beam_wrapper {
-	height: 0px;
+	opacity: 0;
+
+	
 }
 
 #i {
-    height:0px;
+	height: 0px;
     width:12px;
 	position: relative;
-	top: -38px; 
+	top: -58px; 
 	left: 96px;
 }
 
@@ -98,25 +107,20 @@ section {
 	width:1250px;
 }
 
-#header{
-	float: left;
-	width: 1220px;
-	margin-top: 4px; 
-	font-size: 16pt;
-	font-weight: bold;
-}
 
 /* chart is the main bar chart with our results */
 
 #chart {
 	float: left;
 	width: 1220px;
+	height: 400px;	
 	background-color: #FFF;
 	margin: 10px 0px; 
 	border-radius: 6px; 
 	padding: 6px; 
 	border: 4px double #eee;
 	box-shadow: 2px 2px 1px #c9c9c9;
+	position: relative;
 }
 
 #chart-header{
@@ -128,6 +132,28 @@ section {
 	margin-bottom: 8px;
 	background-color: #fcfcfc; 
 	border: 1px solid #f8f8f8; /* #e3e3e3 */
+}
+
+#chart-visualization {
+
+}
+
+.chart-info-left{
+	position: absolute;
+	top: 165px;
+	left: -20px;
+	transform:rotate(-90deg);
+	-ms-transform:rotate(-90deg); 
+	-webkit-transform:rotate(-90deg);
+	font-size: 10px;
+	color: rgb(180, 180, 180);
+}
+.chart-info-bottom{
+	position: absolute;
+	top: 305px;
+	left: 55px;
+	font-size: 10px;
+	color: rgb(180, 180, 180);
 }
 
 /* timeline is displayed beneath bar chart, and contains both an event div and a infobar div */
@@ -144,7 +170,7 @@ section {
 	margin-bottom: 8px;
 	background-color: #fcfcfc; 
 	border: 1px solid #e3e3e3;
-	overflow: visible;	
+	overflow: visible;
 }
 
 #timeline-events {
@@ -154,7 +180,6 @@ section {
 	height: 40px;
 	padding: 10px;
 	overflow: visible;	
-
 }
 
 /* timeline-infobar is within the timeline div, displayed beneath the icons */
@@ -278,7 +303,7 @@ section {
 #map {
 	float: left;
 	width: 800px;
-	height: 490px;
+	height: 600px;
 	background-color: #FFF; 
 	border-radius: 6px; 
 	padding: 6px; 
@@ -294,6 +319,41 @@ section {
 	width:750px;
 
 }
+.map-legend{
+	width: 750px;
+	margin: 12px auto;
+}
+.left-legend{
+	font-size: 12px;
+	float:left;
+}
+.right-legend{
+	font-size: 12px;
+	float: right;
+	text-align: right;
+}
+.color-bar{
+	height: 25px;
+	width: 100%;
+	background: -moz-linear-gradient(left, rgba(125,185,232,0) 0%, rgba(179,65,0,1) 100%);
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(125,185,232,0)), color-stop(100%,rgba(179,65,0,1)));
+	background: -webkit-linear-gradient(left, rgba(125,185,232,0) 0%,rgba(179,65,0,1) 100%);
+	background: -o-linear-gradient(left, rgba(125,185,232,0) 0%,rgba(179,65,0,1) 100%);
+	background: -ms-linear-gradient(left, rgba(125,185,232,0) 0%,rgba(179,65,0,1) 100%);
+	background: linear-gradient(to right, rgba(125,185,232,0) 0%,rgba(179,65,0,1) 100%);
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+#map-container-header{
+	text-align: center;
+	font-weight: bold;
+	font-size: 12pt;
+	background: #fcfcfc;
+	border-radius: 4px; 
+	padding: 10px;
+	margin-bottom: 8px; 
+	border: 1px solid #e3e3e3;
+}
+
 
 /* Sidebar contains month report details, displayed when user clicks on a bar */
 
@@ -360,21 +420,45 @@ section {
 	padding: 4px 0px;
 	border-bottom: 1px dotted #cfcfcf;
 	margin-bottom: 3px;
+	overflow: auto;
 }
 
 .sighting-item .title {
 	font-weight: bold;
 	margin-bottom: 4px;
+	float: left;
+	width: 100%;
 }
 
 .sighting-item .description {
 	font-size: 8pt;
+	float: left;
+	width: 100%;
+
 }
+
+.sighting-item .link {
+	float: right;
+	opacity: .4;
+	padding: 2px 4px 4px 2px;	
+}
+
+a.sighting-item-link {
+	font-size: 7pt;
+	text-align: right;
+
+	float: right;
+}
+a.sighting-item-link:link {text-decoration: none; color: #000;}
+a.sighting-item-link:visited {text-decoration: none; color: #000;}
+a.sighting-item-link:hover {text-decoration: underline; color: #000;}
+a.sighting-item-link:active {text-decoration: underline; color: #000;}
+
 
 #footer {
 	float: left;
 	width: 1220px;
-	height: 50px;
+	height: 57px;
 	border-radius: 6px; 
 	padding: 8px;
 	margin: 8px 0px;
@@ -384,16 +468,41 @@ section {
 }
 
 #footerlogo {
+	padding-left: 6px;
 	position: absolute;
 	opacity:0.4; 
 }
 
-footertext {
-	position: absolute;
+#footertext {
+	padding: 6px ;
+	position: relative;
 	text-align: right;
 	color: #b8b8b8;
-	font-size: 8pt;
+	font-size: 9pt;
 }
+
+#report {
+	font-size: 10pt;
+	text-decoration: none;
+}
+
+#loading-chart {
+	width: 1220px;
+	height: 200px;	
+	margin: 50px auto;
+	padding-top: 50px;
+	text-align: center;
+	font-size: 12pt;
+	background: #fff;
+	opacity: .8;
+}
+
+#loading-sidebar {
+	margin: 40px auto;
+	font-size: 12pt;
+	display: none;
+}
+
 
 /* svg styles */
 
@@ -480,6 +589,7 @@ svg {
 .sidebar-info .description{
 	font-size: 7pt;
 }
+
 .month-marker-container{
 	height: 0px;
 }
@@ -528,16 +638,6 @@ h1 span {
 	display:block;
 	font-size: 60%;
 }
-
-.bar {
-
-}
-
-.selected {
-	/* style for the bar in the chart that the user clicked on */
-	fill: red !important;
-}
-
 .infoHeader {
 	position: absolute;
 	top: 66px;
