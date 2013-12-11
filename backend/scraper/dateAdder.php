@@ -1,5 +1,5 @@
 <?php
-require_once 'constants.php';
+require_once '../constants.php';
 //This script is run to add dates to the db entries
 
 $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);

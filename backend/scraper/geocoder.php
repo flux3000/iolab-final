@@ -3,7 +3,7 @@
 //passw sliaheac@wegwerfemail.de
 //api key Fmjtd%7Cluubn16rn0%2Crl%3Do5-90asl0 
 
-require_once 'constants.php';
+require_once '../constants.php';
 $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 if($mysqli->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
 
@@ -36,7 +36,7 @@ while ($stmt->fetch()) {
 //look up all cities and save their geocode in the database. take 100 searches at a time from the prepared array.
 for($u = 0; $u < count($cityArray)-1; $u++){
 
-	$key = "Fmjtd%7Cluubn1u7l9%2C22%3Do5-90bn1a";
+	$key = "Fmjtd%7Cluubn1u7l1%2Cbw%3Do5-90bnlw";
 	$url = "http://www.mapquestapi.com/geocoding/v1/batch?key=".$key.$cityArray[$u]."&thumbMaps=false&maxResults=1&outFormat=csv";
 	
 	$res = file_get_contents($url);
