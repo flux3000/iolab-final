@@ -35,12 +35,21 @@ var myUFOs = [],
 $(document).ready(function(){
         $("#start-year").text(startYear);
 
+		// show the loading animation while the main chart loads
+		
+		$("#loading-chart").show();
+
         $.ajax({
                 url: "http://ufo.quast.li/backend/graph.php",
-                success: prepareData,
+				success: function(data) {
+					$("#chart").css("height", "");
+                	$("#loading-chart").hide();
+
+                	prepareData(data);
+                },
                 error: function(e){console.log("error: " + e);}
         });
-        
+
         $.ajax({
                 url: "http://ufo.quast.li/backend/mapper.php",
                 success: mapData,
@@ -94,10 +103,13 @@ function displayTimeline(pointLocations){
 
     $("#timeline-events").on("click", ".event-icon:not(.active)", function() {
 
-
             var pointerXPos = ($(this).position().left)+11;
             
             $(".month-marker").hide();
+
+			// show the loading animation in the sidebar
+			$("svg#month-visualization").empty();
+			$("#loading-sidebar").show();
 
             //console.log("making bars red");
             $('svg#visualization').children("rect").attr("fill", "#b34100"); // make all bars red
@@ -105,11 +117,12 @@ function displayTimeline(pointLocations){
             $('.event-icon-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
             $('.event-icon-up-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
 
-            $(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("slow")
-            $(this).siblings().children('.event-icon-up-pointer').fadeOut("slow")
+            $(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("slow");
+            $(this).siblings().children('.event-icon-up-pointer').fadeOut("slow");
             $(this).addClass("active");
 
             $("#timeline").animate({"height": "200px"}, 400);
+            $("#chart").animate({"height": "540px"}, 400);
 
             var thisEventID = $(this).attr("id");
             var thisEventName = events[thisEventID][1]["name"];
@@ -154,6 +167,7 @@ function displayTimeline(pointLocations){
                     url: "http://ufo.quast.li/backend/ufoMapper.php",
                     data: dataString,
                     success: function(data) {
+
                             var json = JSON.parse(data);
                             var thisMonthSightings = json.length;
 
@@ -169,6 +183,8 @@ function displayTimeline(pointLocations){
                             displayDetailsHeader(thisEventYear, parseInt(thisEventMonth)+1, thisMonthSightings); 
                             displayDetails(data);
                             prepareMonthData(data, thisEventYear, parseInt(thisEventMonth)+1);
+
+                            $("#loading-sidebar").hide();
                     },
                     error: function(e){console.log("error: " + e);}
             });
@@ -177,14 +193,19 @@ function displayTimeline(pointLocations){
 
     $("#timeline-events").on("click", ".active", function() {
 
+
+
             $('.event-icon-pointer').hide();
             $('.event-icon-up-pointer').hide();
             $('svg#visualization').children("rect").delay(300).queue(function() {
                     $(this).attr("fill", "#b34100"); // make all bars red
             });
 
+
+
             $("#timeline-infobar").fadeOut(400);
             $("#timeline").delay(400).animate({"height": "48px"}, 400);
+            $("#chart").delay(400).animate({"height": "400px"}, 400);
 
             $(this).removeClass("active");
 
@@ -206,7 +227,6 @@ function displayTimeline(pointLocations){
 function prepareData(data){
 
     // Make JSON object that will contain all data points for our graph. Note that we must display a data point for every month, even if there were zero sightings that month. So, we must parse the JSON from the database and create a new object to account for this.
-
         var monthCount = 0;
         var json = JSON.parse(data);
 
@@ -355,6 +375,11 @@ function graphData(data){
 		.enter()
 		.append("rect")
 		.on("click", function(d, i) {
+
+			// show the loading animation in the sidebar
+			$("svg#month-visualization").empty();
+			$("#loading-sidebar").show();
+
 			// run when user clicks on a bar in the chart. 
 			//populate sidebar with details on this month's sightings.
 			var dataString = 'month='+d.month+'&year='+d.year;
@@ -363,6 +388,9 @@ function graphData(data){
 				url: "http://ufo.quast.li/backend/ufoMapper.php",
 				data: dataString,
 				success: function(data) {
+
+					$("#loading-sidebar").hide();
+
 					displayDetailsHeader(d.year, d.month, d.sightings); 
 					displayDetails(data);
 					prepareMonthData(data, d.year, d.month);
@@ -540,7 +568,7 @@ function displayDetails(data){
                 thisSightingHTML = "<div class='sighting-item'>";
                 thisSightingHTML += "<div class='title'>" + displayDate + " - " + json[i]["city"] + ", " + json[i]["state"] + "</div>";
                 thisSightingHTML += "<div class='description'><strong>Shape:</strong> " + json[i]["shape"] + "&nbsp;&nbsp;<strong>Duration:</strong> " + json[i]["duration"] + "<br><br>" + json[i]["summary"] + "</div>";
-                thisSightingHTML += "</div>";
+                thisSightingHTML += "<div class='link' onMouseOver='this.style.opacity=1' onMouseOut='this.style.opacity=.4'><a class='sighting-item-link' href='"+json[i]["url"]+"' target='_new'>More details<img src='images/icons/external_link.png' height='10px' width='10px' style='border: none;padding-left:2px;'></a></div></div>";
 
                 $("#sighting-list").append("<li>"+thisSightingHTML+"</li>");
 				
