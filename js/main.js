@@ -370,9 +370,13 @@ function graphData(data){
         .append("rect")
         .on("click", function(d, i) {
 
+
+            
+
             // show the loading animation in the sidebar
             $("svg#month-visualization").empty();
             $("#loading-sidebar").show();
+            $("#chart").delay(400).animate({"height": "400px"}, 400);
 
             // run when user clicks on a bar in the chart. 
             //populate sidebar with details on this month's sightings.
