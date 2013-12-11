@@ -1,6 +1,6 @@
 <?php
 	include_once 'simple_html_dom.php';
-	require_once 'constants.php';
+	require_once '../constants.php';
 	
 	$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 	if($mysqli->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
@@ -8,11 +8,10 @@
 	//$html = file_get_html('http://www.nuforc.org/webreports/ndxevent.html');
 	$html = ""; //removed for safety reasons, only run this script once!
 	
-	// Find all images
+	// Find the table with the links in it
 	foreach($html->find('table') as $main){ //find the main table
 		$links = $main->find('a'); //get all the links to the subpages
 		for ($i = 3; $i < sizeof($links)-1; $i++){ //loop through them (and ignore the last one which has NO DATE
-		//for ($i = 0; $i < 1; $i++){
 			$link = $links[$i]->href;
 			$subpage = getRowsOfSubpage('http://www.nuforc.org/webreports/'.$link);	
 		}
@@ -27,7 +26,6 @@
 			foreach($subpage->find('table') as $main){ //find the main table
 				$rows = $main->find('tr'); //get all the rows holding the reports
 				for ($i = 1; $i < sizeof($rows); $i++){ //loop through them (Ignore the first element
-				//for ($i = 1; $i < 2; $i++){ //ignore the first element
 					getContentOfRow($rows[$i]);
 				}
 			}
@@ -47,8 +45,7 @@
 		$summary = $fields[5]->plaintext;
 		$post_date = $fields[6]->plaintext;
 		
-		echo "date: " . $date . '<br/>';
-		
+		// Insert the sighting to the database
 		$stmt = $mysqli->prepare("INSERT INTO ufos (date, url, city, state, shape, duration, summary, post_date) VALUES (?,?,?,?,?,?,?,?)");
 		$stmt->bind_param("ssssssss", $date, $link, $city, $state, $shape, $duration, $summary, $post_date);
 		$stmt->execute();
