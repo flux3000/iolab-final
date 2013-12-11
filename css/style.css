@@ -120,6 +120,7 @@ section {
 	padding: 6px; 
 	border: 4px double #eee;
 	box-shadow: 2px 2px 1px #c9c9c9;
+	position: relative;
 }
 
 #chart-header{
@@ -135,6 +136,24 @@ section {
 
 #chart-visualization {
 
+}
+
+.chart-info-left{
+	position: absolute;
+	top: 165px;
+	left: -20px;
+	transform:rotate(-90deg);
+	-ms-transform:rotate(-90deg); 
+	-webkit-transform:rotate(-90deg);
+	font-size: 10px;
+	color: rgb(180, 180, 180);
+}
+.chart-info-bottom{
+	position: absolute;
+	top: 305px;
+	left: 55px;
+	font-size: 10px;
+	color: rgb(180, 180, 180);
 }
 
 /* timeline is displayed beneath bar chart, and contains both an event div and a infobar div */
