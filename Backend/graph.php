@@ -9,7 +9,7 @@ require_once 'constants.php';
 $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 if($mysqli->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
 
-$stmt = $mysqli->prepare("SELECT DATE_FORMAT(`date`, '%Y %m') AS DATUM, COUNT(*) AS SIGHTINGS FROM `ufos` GROUP BY DATE_FORMAT(`date`, '%Y %m')");
+$stmt = $mysqli->prepare("SELECT DATE_FORMAT(`date`, '%Y %m') AS DATUM, COUNT(*) AS SIGHTINGS FROM `ufos` WHERE `state` IN ('AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY') GROUP BY DATE_FORMAT(`date`, '%Y %m')");
 $stmt->execute();
 $stmt->bind_result($date, $sightings);
 

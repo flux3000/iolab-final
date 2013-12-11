@@ -248,11 +248,11 @@ section {
 }
 
 #map-container{
+	margin: 18px auto 0px auto;
 	border: 1px solid black;
 	display:block; 
 	height:450px; 
 	width:750px;
-	margin: auto;
 }
 
 /* Sidebar contains month report details, displayed when user clicks on a bar */
@@ -348,7 +348,7 @@ section {
 }
 
 .footer-logo{
-	
+
 }
 
 .footer-text {
@@ -442,8 +442,11 @@ svg {
 .sidebar-info .description{
 	font-size: 7pt;
 }
+.month-marker-container{
+	height: 0px;
+}
 .month-marker {
-	position: absolute;
+	position: relative;
 	text-align: center;
 	vertical-align: middle;
 	overflow: visible;

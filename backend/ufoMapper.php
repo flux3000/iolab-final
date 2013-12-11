@@ -1,6 +1,8 @@
 <?php 
 header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}"); //allow people to call API
 
+$states = Array("AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY");
+
 require_once 'constants.php';
 $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 if($mysqli->connect_errno){printf("Connect failed: %s\n", $mysqli->connect_error);exit();}
@@ -20,16 +22,21 @@ elseif(isset($_GET['month'])){
 	$month = $_GET['month'];
 	$year = $_GET['year'];
 	
-	$stmt = $mysqli->prepare("SELECT `id`,`date`,`url`,`city`,`state`,`shape`,`duration`,`summary` FROM `ufos` where `date` between '" . $year . "-" . $month . "-01' and '" . $year . "-" . $month . "-31' ORDER BY  `date`");
+	$stmt = $mysqli->prepare("SELECT ufos.id, ufos.date, ufos.url, ufos.city, ufos.state, ufos.shape, ufos.duration, ufos.summary, cities.lat, cities.lng FROM ufos LEFT JOIN cities ON ufos.city = cities.name where `date` between '" . $year . "-" . $month . "-01' and '" . $year . "-" . $month . "-31' ORDER BY  `date`");
 	$stmt->execute();
-	$stmt->bind_result($id,$date,$url,$city,$state,$shape,$duration,$summary);
+	$stmt->bind_result($id,$date,$url,$city,$state,$shape,$duration,$summary,$lat,$lng);
 	
-	$res = "[";
+	$res = '[';
 	while($stmt->fetch()){
-		$res .= '{"id":' . json_encode($id) . ',"lat":' . json_encode("37.8714319") . ',"lng":' . json_encode("-122.2584987") . ', "date":' . json_encode($date) . ', "url":' . json_encode($url) . ', "city":' . json_encode($city) . ', "state":' . json_encode($state) . ', "shape":' . json_encode($shape) . ',"duration":' . json_encode($duration) . ',"summary":' . json_encode(str_replace("&quot;", '"', $summary)) . '},';
+	
+		if(!in_array($state, $states)){ //if the state string is not in the stateArray ignore
+		}
+		else{ 
+			$res .= '{"id":' . json_encode($id) . ',"lat":' . json_encode($lat) . ',"lng":' . json_encode($lng) . ', "date":' . json_encode($date) . ', "url":' . json_encode($url) . ', "city":' . json_encode($city) . ', "state":' . json_encode($state) . ', "shape":' . json_encode($shape) . ',"duration":' . json_encode($duration) . ',"summary":' . json_encode(str_replace("&quot;", '"', $summary)) . '},';
+		}
 	}
-	$res = rtrim($res, ",");
-	$res .= "]";
+	$res = trim($res, ',');
+	$res .= ']';
 	echo $res;
 }
 else{

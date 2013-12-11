@@ -1,6 +1,6 @@
 <?php
 	include_once 'simple_html_dom.php';
-	require_once 'constants.php';
+	require_once '../constants.php';
 	
 	$file = 'errors/xxx'; //enter file here
 	
