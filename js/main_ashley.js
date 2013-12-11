@@ -34,7 +34,8 @@ var myUFOs = [],
 	
 $(document).ready(function(){
         $("#start-year").text(startYear);
-
+		$("#beam_wrapper").animate({"height":"33px"},3000);
+		
         $.ajax({
                 url: "http://ufo.quast.li/backend/graph.php",
                 success: prepareData,
@@ -156,6 +157,7 @@ function displayTimeline(pointLocations){
                     success: function(data) {
                             var json = JSON.parse(data);
                             var thisMonthSightings = json.length;
+							console.log("JSON: " + json);
 
                             //Setting the marker text and location
                             var markerleft = (parseInt(thisBarXCoord) + 80) + "px";
@@ -527,7 +529,7 @@ function displayDayDetailsHeader(year, month, day, sightings){
 function displayDetails(data){
 		Object.keys(stateSightings).length = 0; //Clear the stateSightings Object
         var json = JSON.parse(data);
-        //console.log(json);
+        console.log(json);
         
         for (var i = 0; i < json.length; i++) {
                 thisSightingDateArr = json[i]["date"].split("-");
