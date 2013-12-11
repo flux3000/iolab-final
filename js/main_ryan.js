@@ -42,9 +42,7 @@ $(document).ready(function(){
         $.ajax({
                 url: "http://ufo.quast.li/backend/graph.php",
 				success: function(data) {
-					$("#chart").css("height", "");
                 	$("#loading-chart").hide();
-
                 	prepareData(data);
                 },
                 error: function(e){console.log("error: " + e);}
@@ -204,6 +202,7 @@ function displayTimeline(pointLocations){
 
             $("#timeline-infobar").fadeOut(400);
             $("#timeline").delay(400).animate({"height": "48px"}, 400);
+            $("#chart").delay(400).animate({"height": "400px"}, 400);
 
             $(this).siblings("#timeline-events").removeClass("active");
     });
