@@ -1,6 +1,7 @@
 /*
 Function List:
 
+
 displayTimeLine
 prepareData
 graphData
@@ -12,12 +13,27 @@ displayDayDetails
 prepareMonthData
 graphMonthData
 mapData
+
 redoMapData
 
 */
 // Change this to adjust the date range we are using. Will need to change var BW (bar width) if the date range gets long enough.
 var startYear = 1981; 
 var myUFOs = [],
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	polygonCoords = new Array(), //Ashley: New Array to store the Polygon Co-Ordinates
 	tempPolygonCoords = new Array(), //Ashley: New Array to temporarily store the Polygon Co-Ordinates
 	stateObject = {}, //Ashley: New Object to store the State information
@@ -32,9 +48,14 @@ var myUFOs = [],
 	}, //Ashley: Initial Map Object Options
 	map = new google.maps.Map(document.getElementById("map-container"), mapOptions); //Ashley: New Map Object
 	
+
+
+
+
+
 $(document).ready(function(){
         $("#start-year").text(startYear);
-
+		$("#beam_wrapper").animate({"height":"33px"},3000);
         $.ajax({
                 url: "http://ufo.quast.li/backend/graph.php",
                 success: prepareData,
@@ -49,14 +70,66 @@ $(document).ready(function(){
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function displayTimeline(pointLocations){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     var events = [];
     //console.log(pointLocations);
 
+
+
+
+
+
+
+
     $.getJSON( "documents/events.json", function( eventdata ) {
             $.each( eventdata, function( key, val ) {
                     var event = [key, val];
+
+
+
+
 
                     thisMonth = val["month"];
                     thisYear = val["year"];
@@ -74,42 +147,67 @@ function displayTimeline(pointLocations){
                                     break;
                     }
 
+
                     for (var i = 0; i < pointLocations.length; i++) {
                             if (thisMonth == pointLocations[i][1] && thisYear == pointLocations[i][0]) {
                                     thisXCoord = pointLocations[i][2] - 8;
                                     //console.log("x coord of "+thisMonth+"-"+thisYear+" is "+thisXCoord);
+
                             }
                     }
                     //thisXCoord = 0;
+
 
                     $("#timeline-events").append("<div class='event-icon' id='"+key+
                                                                             "' style='left:"+thisXCoord+"px; background-image:url"+iconUrl+";'>"+
                                                                             "</div>");
                     events.push(event);
 
+
             });
             //console.log(events);
             $(".event-icon").css({'cursor': 'pointer'});
     });
 
+
     $("#timeline-events").on("click", ".event-icon:not(.active)", function() {
+
+
+
 
 
             var pointerXPos = ($(this).position().left)+11;
             
             $(".month-marker").hide();
 
+
+
             //console.log("making bars red");
             $('svg#visualization').children("rect").attr("fill", "#b34100"); // make all bars red
 
+
             $('.event-icon-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
             $('.event-icon-up-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
+
+
 
             $(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("slow")
             $(this).siblings().children('.event-icon-up-pointer').fadeOut("slow")
             $(this).addClass("active");
 
+
+
+
+
+
+
+
+
+
             $("#timeline").animate({"height": "200px"}, 400);
+
+
+
 
             var thisEventID = $(this).attr("id");
             var thisEventName = events[thisEventID][1]["name"];
@@ -121,9 +219,19 @@ function displayTimeline(pointLocations){
             var thisEventMonth = events[thisEventID][1]["month"];
             var thisEventYear = events[thisEventID][1]["year"];
 
+
+
+
+
+
+
+
             var a = moment([thisEventYear, thisEventMonth])
             var displayDate = a.format("MMMM YYYY");
             var titleDate = a.format("YYYY-MM");
+
+
+
 
             var thisInfobarHTML = "<div id='timeline-infobar-contents'>";
             thisInfobarHTML += "<div class='close'>&#x2715;</div>";
@@ -133,9 +241,14 @@ function displayTimeline(pointLocations){
             thisInfobarHTML += "<div class='link'><a href='"+thisEventURL+"' target='_new'>Wikipedia</a></div>";
             thisInfobarHTML += "</div>";
 
+
+
+
             var thisBarHeight;
             var thisBarXCoord;
             var thisBarYCoord;
+
+
 
             // TODO - Inspect bug when clicking a bunch of times
             $('svg#visualization').children("rect[title='"+titleDate+"']").delay(300).queue(function() {
@@ -144,10 +257,21 @@ function displayTimeline(pointLocations){
                     thisBarXCoord = $(this).attr("x");
                     thisBarYCoord = $(this).attr("y");
 
+
                     //console.log("making bar "+titleDate+" yellow");
             });
 
+
+
+
+
+
+
+
             $("#timeline-infobar").delay(400).fadeIn(400).html(thisInfobarHTML);
+
+
+
 
             var dataString = 'month='+(parseInt(thisEventMonth)+1)+'&year='+thisEventYear;
             $.ajax({
@@ -212,6 +336,7 @@ function prepareData(data){
 
         for (var i = 0; i < data.length; i++) {
                 //console.log(json[i]);
+
                 
                 if (typeof json[i] != 'undefined'){
 
@@ -225,6 +350,7 @@ function prepareData(data){
                                     var thisMonth = "0"+j;
                             } else {
                                     var thisMonth = j;
+
                             }
                             thisPoint.month = thisMonth;
                             thisPoint.date = thisPoint.year+"-"+thisPoint.month;
@@ -232,6 +358,10 @@ function prepareData(data){
                                 for (var k in dataMonths) {
                                         if (dataMonths[k]["month"] == thisMonth) {
                                                 thisPoint.sightings = dataMonths[k]["sightings"];
+
+
+
+
                                         }
                                 
                                 }                            
@@ -239,10 +369,16 @@ function prepareData(data){
                                 if (thisPoint.year >= startYear && thisPoint.year < 2013){
                                         monthCount++;
                                         //console.log(monthCount + ". " + thisPoint.date + " : " + thisPoint.sightings);        
+
                                         
                                         // add this point into the myUFOs object. This object will contain all the data we are mapping to the chart.
+
                                         
                                         myUFOs.push(thisPoint);
+
+
+
+
                                 }
                     }
                 
@@ -290,6 +426,7 @@ function graphData(data){
     var xAxisScale = d3.time.scale()
             .domain([startDate, endDate])
             .range([0, BTW*numPoints]);
+
     
     var yAxisScale = d3.scale.linear()
             .domain([0, 1000])
@@ -326,6 +463,7 @@ function graphData(data){
             .attr("class", "axis")
             .attr("transform", "translate(40," + (h-20) + ")")
             .call(xAxis);
+
     
     //Drawing Grid Lines
     var xGridLines = svg.append("g")
@@ -335,6 +473,8 @@ function graphData(data){
                         .call(xAxisGridLines
                             .tickSize(-h + 30,0,0)
                             .tickFormat("")
+
+
                         );
                                                             
     var yGridLines = svg.append("g")
@@ -344,9 +484,11 @@ function graphData(data){
                         .call(yAxisGridLines
                             .tickSize(-w + 40,0,0)
                             .tickFormat("")
+
                         );
 
     //Drawing the bars of the graph
+
     
     sightingsArray = []; //this array collects all sightings values for all months to be later used for finding % increase/decrease
     fullSightingObject = {};
@@ -373,6 +515,9 @@ function graphData(data){
 		.attr({
 			"width": BW,
 			"height": 0,
+
+
+
 			"x": function(d, i) {
 				thisX = 40 + i*BTW;
 				thisPointLocation = [d.year, d.month, i*BTW];
@@ -381,6 +526,7 @@ function graphData(data){
 
 			},
 			"y": function(d, i) {
+
 				return h - 20;
 			},
 			"desc": function(d, i) {
@@ -402,6 +548,7 @@ function graphData(data){
 					} else {
 						pChangeText = "No change from<br>Previous Month";
 					}
+
 					var descString = "<div class='title'>"+displayDate+"</div><div class='title'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
 
 					if (pChange != "NaN"){
@@ -426,6 +573,10 @@ function graphData(data){
 			},
 			"class" : "bar"
 	    })
+
+
+
+
         .transition()
         .attr({
         	"height": function(d, i) {
@@ -437,6 +588,17 @@ function graphData(data){
     	})
         .duration(1200)	
 
+
+
+
+
+
+
+
+
+
+
+
         //Changing color of the rect when clicked, adding month-marker popup
         $(".bar").click(function() {
                 $(this).siblings().attr("fill", "#b34100");
@@ -446,6 +608,14 @@ function graphData(data){
                 var markertxt = $(this).attr("markerdesc");
                 //var markerleft = ($(this).position().left - 31) + "px";              
                 var markerleft = parseInt($(this).attr("x"))-20;
+
+
+
+
+
+
+
+
 
                 var markertop = h - ($(this).attr("height")) - 23 + "px";
                 $(".month-marker").hide();
@@ -465,6 +635,7 @@ function graphData(data){
                 function(event) {
                         var y = parseFloat($(this).attr("y")) + 0;
                         $(this).css("opacity", "0.6").attr("y", y);
+
                         
                         //Setting the info-text
                         var txt = $(this).attr("desc");
@@ -478,6 +649,7 @@ function graphData(data){
                         var y = parseFloat($(this).attr("y")) - 0;
                         $(this).css("opacity", "1").attr("y", y);
                         $(".info").hide();
+
                 }
         );
 
@@ -528,6 +700,7 @@ function displayDetails(data){
 		Object.keys(stateSightings).length = 0; //Clear the stateSightings Object
         var json = JSON.parse(data);
         //console.log(json);
+
         
         for (var i = 0; i < json.length; i++) {
                 thisSightingDateArr = json[i]["date"].split("-");
@@ -536,6 +709,14 @@ function displayDetails(data){
                 thisSightingDay = thisSightingDateArr[2];
                 var a = moment([thisSightingYear, thisSightingMonth-1, thisSightingDay])
                 var displayDate = a.format("D MMMM YYYY");
+
+
+
+
+
+
+
+
 
                 thisSightingHTML = "<div class='sighting-item'>";
                 thisSightingHTML += "<div class='title'>" + displayDate + " - " + json[i]["city"] + ", " + json[i]["state"] + "</div>";
@@ -581,6 +762,7 @@ function displayDayDetails(data, day){
 
                         $("#sighting-list").append("<li>"+thisSightingHTML+"</li>");
 
+
                 }
         }
 
@@ -606,14 +788,19 @@ function prepareMonthData(data, year, month){
                 thisPoint.sightings = 0; 
                 for (var i = 0; i < data.length; i++) {
                         //console.log(json[i]);
+
                         
                         if (typeof json[i] != 'undefined'){
+
                                 
                                 thisSightingDateArr = json[i]["date"].split("-");
                                 thisSightingDay = thisSightingDateArr[2];
 
                                 if (thisSightingDay == j) {
                                         thisPoint.sightings += 1;
+
+
+
                                 }                                
                         }
             }
@@ -659,6 +846,7 @@ function graphMonthData(data){
         var xAxisScale = d3.scale.linear()
                 .domain([1, numPoints]) // need to fix - days in month
                 .range([0, BTW*numPoints]); // need to fix
+
         
         var yAxisScale = d3.scale.linear()
                 .domain([0, d3.max(data, function(d) { return d.sightings; })])
@@ -693,6 +881,7 @@ function graphMonthData(data){
                                                 .attr("text-anchor", "middle")
                                                 .attr("transform", "translate(" + ((w/2)-10) + "," + (h-5) + ")")
                                                 .text("Day of Month");
+
         
         //Ashley: Drawing the Axis Labels
         var yAxisLabel = svg.append("text")
@@ -725,11 +914,43 @@ function graphMonthData(data){
                                         displayDayDetailsHeader(d.year, d.month, d.day, d.sightings); 
                                         displayDayDetails(data, d.day);
 
+
+
+
+
                                 },
                                 error: function(e){console.log("error: " + e);}
                         });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 })        
+
 
                 .attr({
                         "width": BW,                
@@ -759,7 +980,9 @@ function graphMonthData(data){
                                         pChangeText2 = "No change from Previous Day";
                                 }
 
+
                                 var descString = "<div class='title'>"+displayDate+"</div><div class='description'><strong>"+d.sightings+"</strong> UFOs Reported</div>";
+
 
                                 if (pChange2 != "NaN"){
                                         descString += "<div class='description'>"+pChangeText2+"</div>";        
@@ -773,14 +996,21 @@ function graphMonthData(data){
                         "stroke-width": 1,
                         "stroke": "#C99C30", // dark yellow C99C30
                         "class" : "smallbar",
+
             })
         .transition()
         .attr({
+
+
+
+
                 "height": function(d, i) {
                             return yScale(d.sightings);
                         },
                         "y": function(d, i) {
                                 return h - 35 - yScale(d.sightings);
+
+
                         }       
             })
         .duration(500)        
@@ -789,6 +1019,7 @@ function graphMonthData(data){
         $(".smallbar").click(function() {
                 $(this).siblings(".smallbar").attr({"fill": "#FFD573", "stroke": "#C99C30"}); // yellow FFD573, Dk Yellow C99C30
                 $(this).attr({"fill": "#286EB8", "stroke": "#215082"}); // green 539120 dkgrn 25420d blue 286EB8  dkblue 215082
+
         });
 
         //Animating the rects of the diagrams on hover
@@ -796,6 +1027,7 @@ function graphMonthData(data){
                 function(event) {
                         var y = parseFloat($(this).attr("y")) + 0;
                         $(this).css("opacity", "0.6").attr("y", y);
+
                         
                         //Setting the info-text
                         var txt = $(this).attr("desc");
@@ -809,13 +1041,16 @@ function graphMonthData(data){
                         var y = parseFloat($(this).attr("y")) - 0;
                         $(this).css("opacity", "1").attr("y", y);
                         $(".sidebar-info").hide();
+
                 }
         );
 
 }
 
+
 //Ashley: Method to initialize the Map on load
 function mapData(data){
+
 	var maxValue = 0,
 		minValue = 0,
 		sightingsNumbers = [];	
@@ -860,6 +1095,513 @@ function mapData(data){
 	});	
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Ashley: Method to redraw the Map on click of rect in main bar graph
 function redoMapData(data){
 	stateColor.setMap(null);
@@ -868,12 +1610,15 @@ function redoMapData(data){
 		sightingsNumbers = [],
 		mapOptions = {
 			zoom: 4,
+
 			center: new google.maps.LatLng(37.09024, -95.712891),
 			mapTypeId: google.maps.MapTypeId.ROADMAP
+
 		};
 		var map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
 
 	
+
 	var json = JSON.parse( data );
 	for(var key in stateSightings){
 		sightingsNumbers.push(stateSightings[key]);
@@ -881,6 +1626,12 @@ function redoMapData(data){
 	maxValue = Math.max.apply(Math,sightingsNumbers);
 	minValue = Math.min.apply(Math,sightingsNumbers);
 	
+
+
+
+
+
+
 	for(var key in stateSightings){
 		stateSightings[key] = ((stateSightings[key] - minValue)/(maxValue - minValue))*.9;
 	}
