@@ -1,10 +1,8 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-
 	<meta name="viewport" content="width=device-width, user-scalable=yes">
-	<title>UFO-iO</title>
+	<title>UFO-IO</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<link href='http://fonts.googleapis.com/css?family=Antic+Slab' rel='stylesheet' type='text/css'>
 </head>
@@ -17,14 +15,11 @@
 		<div id="saucer2" style="opacity: 0;">
 			<img id="saucer" height="11" width="25" src="/images/logo/saucer2.png"/>
 		</div>
-		
 		<div id="i">
 			<div id="beam_wrapper">
 				<img id="beam" width="12" src="/images/logo/i.png"/>
 			</div>
-			
 		</div>
-
 	</div>
 
 	<div id="chart">
@@ -33,8 +28,11 @@
 			<div class="month-marker"></div>
 		</div>
 		<div id="chart-header">Reported UFO Sightings - <span id="start-year">1980</span>-2012</div>
-		<svg id="visualization" xmlns="http://www.w3.org/2000/svg" version="1.1">
-		</svg>
+		<div id="chart-visualization">
+			<div id="loading-chart"><img src="images/icons/ajax-loader.gif"><br><br>Loading Report Data...</div>
+			<svg id="visualization" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			</svg>
+		</div>
 		<div id="timeline">
 			<span class='event-icon-up-pointer'></span><span class='event-icon-pointer'></span>
 			<div id="timeline-events">
@@ -49,6 +47,7 @@
 		<div class="sidebar-info"></div>
 		<div id="sidebar-content-header">Click on a bar or icon for details</div>
 		<div id="sidebar-month-visualization">
+			<div id="loading-sidebar"><img src="images/icons/ajax-loader.gif"><br><br>Loading Report Data...</div>
 			<svg id="month-visualization" xmlns="http://www.w3.org/2000/svg" version="1.1">
 			</svg>
 		</div>
@@ -60,26 +59,21 @@
 	</div>
 
 	<div id="map">
-
+		<div id="map-container-header">Map</div>
 		<div id="map-container"></div>
 	</div>
-
 
 	<div id="footer">
 	
 		<div id="footerlogo">
 			<img id="ufoio" height="41" width="140" src="images/logo/UFO-iOLogo2.png" alt="image">
-
 		</div>
-		<div id="footertext" style=" text-align: right; ">
-
+		<div id="footertext">
 			UC Berkeley School of Information<br>
 			Information Organization Lab - Fall 2013<br>
-			Ryan Baker, Ashley DeSouza, Victor Starostenko, Tom Quast
+			Ryan Baker, Ashley DeSouza, Tom Quast, Victor Starostenko
 		</div>
-
 	</div>
-
 
 </main>
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
@@ -87,7 +81,6 @@
 <script type="text/javascript" src="js/d3.min.js"></script>
 <script type="text/javascript" src="js/moment.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
-<!--<script type="text/javascript" src="js/main.js"></script>-->
 <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

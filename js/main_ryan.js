@@ -13,7 +13,6 @@ displayDayDetails
 prepareMonthData
 graphMonthData
 mapData
-
 redoMapData
 
 */
@@ -21,47 +20,38 @@ redoMapData
 var startYear = 1981; 
 var myUFOs = [],
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-	polygonCoords = new Array(), //Ashley: New Array to store the Polygon Co-Ordinates
-	tempPolygonCoords = new Array(), //Ashley: New Array to temporarily store the Polygon Co-Ordinates
-	stateObject = {}, //Ashley: New Object to store the State information
-	stateList = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"], //Ashley: New Array of the abbreviated list of States
-	stateMapper = {"Alabama": "AL","Alaska": "AK","Arizona": "AZ","Arkansas": "AR","California": "CA","Colorado": "CO","Connecticut": "CT","Delaware": "DE","WashingtonDC": "DC","Florida": "FL","Georgia": "GA","Hawaii": "HI","Idaho": "ID","Illinois": "IL","Indiana": "IN","Iowa": "IA","Kansas": "KS","Kentucky": "KY","Louisiana": "LA","Maine": "ME","Maryland": "MD","Massachusetts": "MA","Michigan": "MI","Minnesota": "MN","Mississippi": "MS","Missouri": "MO","Montana": "MT","Nebraska": "NE","Nevada": "NV","New Hampshire": "NH","New Jersey": "NJ","New Mexico": "NM","New York": "NY","North Carolina": "NC","North Dakota": "ND","Ohio": "OH","Oklahoma": "OK","Oregon": "OR","Pennsylvania": "PA","Rhode Island": "RI","South Carolina": "SC","South Dakota": "SD","Tennessee": "TN","Texas": "TX","Utah": "UT","Vermont": "VT","Virginia": "VA","Washington": "WA","West Virginia": "WV","Wisconsin": "WI","Wyoming": "WY"}, //Ashley: New Object to map the abbreviated State Name with the Long Name.
-	stateColor, //Ashley: New Variable to store the state color on the map
-	stateSightings = {}, //Ashley: New Object to store the State and Sightings information.
-	mapOptions = {
-		zoom: 4,
-		center: new google.maps.LatLng(37.09024, -95.712891),
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	}, //Ashley: Initial Map Object Options
-	map = new google.maps.Map(document.getElementById("map-container"), mapOptions); //Ashley: New Map Object
-	
-
-
-
-
+polygonCoords = new Array(), //Ashley: New Array to store the Polygon Co-Ordinates
+tempPolygonCoords = new Array(), //Ashley: New Array to temporarily store the Polygon Co-Ordinates
+stateObject = {}, //Ashley: New Object to store the State information
+stateList = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"], //Ashley: New Array of the abbreviated list of States
+stateMapper = {"Alabama": "AL","Alaska": "AK","Arizona": "AZ","Arkansas": "AR","California": "CA","Colorado": "CO","Connecticut": "CT","Delaware": "DE","WashingtonDC": "DC","Florida": "FL","Georgia": "GA","Hawaii": "HI","Idaho": "ID","Illinois": "IL","Indiana": "IN","Iowa": "IA","Kansas": "KS","Kentucky": "KY","Louisiana": "LA","Maine": "ME","Maryland": "MD","Massachusetts": "MA","Michigan": "MI","Minnesota": "MN","Mississippi": "MS","Missouri": "MO","Montana": "MT","Nebraska": "NE","Nevada": "NV","New Hampshire": "NH","New Jersey": "NJ","New Mexico": "NM","New York": "NY","North Carolina": "NC","North Dakota": "ND","Ohio": "OH","Oklahoma": "OK","Oregon": "OR","Pennsylvania": "PA","Rhode Island": "RI","South Carolina": "SC","South Dakota": "SD","Tennessee": "TN","Texas": "TX","Utah": "UT","Vermont": "VT","Virginia": "VA","Washington": "WA","West Virginia": "WV","Wisconsin": "WI","Wyoming": "WY"}, //Ashley: New Object to map the abbreviated State Name with the Long Name.
+stateColor, //Ashley: New Variable to store the state color on the map
+stateSightings = {}, //Ashley: New Object to store the State and Sightings information.
+mapOptions = {
+	zoom: 4,
+	center: new google.maps.LatLng(37.09024, -95.712891),
+	mapTypeId: google.maps.MapTypeId.ROADMAP
+}, //Ashley: Initial Map Object Options
+map = new google.maps.Map(document.getElementById("map-container"), mapOptions); //Ashley: New Map Object
 
 $(document).ready(function(){
         $("#start-year").text(startYear);
+<<<<<<< HEAD
 		
+=======
+		// show the loading animation while the main chart loads
+		$("#loading-chart").show();
+		$("#beam_wrapper").animate({"height":"33px"},3000);
+>>>>>>> 4c6eafe035813a8ba82e15c27b96dd4773815a8e
         $.ajax({
                 url: "http://ufo.quast.li/backend/graph.php",
-                success: prepareData,
+				success: function(data) {
+                	$("#loading-chart").hide();
+                	prepareData(data);
+                },
                 error: function(e){console.log("error: " + e);}
         });
-        
+
         $.ajax({
                 url: "http://ufo.quast.li/backend/mapper.php",
                 success: mapData,
@@ -70,68 +60,12 @@ $(document).ready(function(){
 		$("#beam_wrapper").delay(800).animate({"height":"33px"},4000);
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function displayTimeline(pointLocations){
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     var events = [];
     //console.log(pointLocations);
-
-
-
-
-
-
-
-
     $.getJSON( "documents/events.json", function( eventdata ) {
             $.each( eventdata, function( key, val ) {
                     var event = [key, val];
-
-
-
-
-
                     thisMonth = val["month"];
                     thisYear = val["year"];
                     thisType = val["type"]
@@ -148,7 +82,6 @@ function displayTimeline(pointLocations){
                                     break;
                     }
 
-
                     for (var i = 0; i < pointLocations.length; i++) {
                             if (thisMonth == pointLocations[i][1] && thisYear == pointLocations[i][0]) {
                                     thisXCoord = pointLocations[i][2] - 8;
@@ -157,58 +90,36 @@ function displayTimeline(pointLocations){
                             }
                     }
                     //thisXCoord = 0;
-
-
                     $("#timeline-events").append("<div class='event-icon' id='"+key+
                                                                             "' style='left:"+thisXCoord+"px; background-image:url"+iconUrl+";'>"+
                                                                             "</div>");
                     events.push(event);
-
 
             });
             //console.log(events);
             $(".event-icon").css({'cursor': 'pointer'});
     });
 
-
     $("#timeline-events").on("click", ".event-icon:not(.active)", function() {
-
-
-
-
 
             var pointerXPos = ($(this).position().left)+11;
             
             $(".month-marker").hide();
 
+			// show the loading animation in the sidebar
+			$("svg#month-visualization").empty();
+			$("#loading-sidebar").show();
 
-
-            //console.log("making bars red");
             $('svg#visualization').children("rect").attr("fill", "#b34100"); // make all bars red
-
 
             $('.event-icon-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
             $('.event-icon-up-pointer').hide().delay(400).css({"left": pointerXPos}).fadeIn(800);
 
-
-
-            $(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("slow")
-            $(this).siblings().children('.event-icon-up-pointer').fadeOut("slow")
+            $(this).siblings().removeClass("active").children('.event-icon-pointer').fadeOut("slow");
+            $(this).siblings().children('.event-icon-up-pointer').fadeOut("slow");
             $(this).addClass("active");
-
-
-
-
-
-
-
-
-
-
             $("#timeline").animate({"height": "200px"}, 400);
-
-
-
+            $("#chart").animate({"height": "540px"}, 400);
 
             var thisEventID = $(this).attr("id");
             var thisEventName = events[thisEventID][1]["name"];
@@ -219,20 +130,9 @@ function displayTimeline(pointLocations){
             var thisEventType = events[thisEventID][1]["type"];
             var thisEventMonth = events[thisEventID][1]["month"];
             var thisEventYear = events[thisEventID][1]["year"];
-
-
-
-
-
-
-
-
             var a = moment([thisEventYear, thisEventMonth])
             var displayDate = a.format("MMMM YYYY");
             var titleDate = a.format("YYYY-MM");
-
-
-
 
             var thisInfobarHTML = "<div id='timeline-infobar-contents'>";
             thisInfobarHTML += "<div class='close'>&#x2715;</div>";
@@ -242,14 +142,9 @@ function displayTimeline(pointLocations){
             thisInfobarHTML += "<div class='link'><a href='"+thisEventURL+"' target='_new'>Wikipedia</a></div>";
             thisInfobarHTML += "</div>";
 
-
-
-
             var thisBarHeight;
             var thisBarXCoord;
             var thisBarYCoord;
-
-
 
             // TODO - Inspect bug when clicking a bunch of times
             $('svg#visualization').children("rect[title='"+titleDate+"']").delay(300).queue(function() {
@@ -257,28 +152,17 @@ function displayTimeline(pointLocations){
                     thisBarHeight = $(this).attr("height");
                     thisBarXCoord = $(this).attr("x");
                     thisBarYCoord = $(this).attr("y");
-
-
                     //console.log("making bar "+titleDate+" yellow");
             });
 
-
-
-
-
-
-
-
             $("#timeline-infobar").delay(400).fadeIn(400).html(thisInfobarHTML);
-
-
-
 
             var dataString = 'month='+(parseInt(thisEventMonth)+1)+'&year='+thisEventYear;
             $.ajax({
                     url: "http://ufo.quast.li/backend/ufoMapper.php",
                     data: dataString,
                     success: function(data) {
+
                             var json = JSON.parse(data);
                             var thisMonthSightings = json.length;
 
@@ -294,10 +178,11 @@ function displayTimeline(pointLocations){
                             displayDetailsHeader(thisEventYear, parseInt(thisEventMonth)+1, thisMonthSightings); 
                             displayDetails(data);
                             prepareMonthData(data, thisEventYear, parseInt(thisEventMonth)+1);
+
+                            $("#loading-sidebar").hide();
                     },
                     error: function(e){console.log("error: " + e);}
             });
-
     });        
 
     $("#timeline-events").on("click", ".active", function() {
@@ -310,9 +195,9 @@ function displayTimeline(pointLocations){
 
             $("#timeline-infobar").fadeOut(400);
             $("#timeline").delay(400).animate({"height": "48px"}, 400);
+            $("#chart").delay(400).animate({"height": "400px"}, 400);
 
             $(this).removeClass("active");
-
     });
 
     $("#timeline-infobar").on("click", ".close", function() {
@@ -322,6 +207,7 @@ function displayTimeline(pointLocations){
 
             $("#timeline-infobar").fadeOut(400);
             $("#timeline").delay(400).animate({"height": "48px"}, 400);
+            $("#chart").delay(400).animate({"height": "400px"}, 400);
 
             $(this).siblings("#timeline-events").removeClass("active");
     });
@@ -331,7 +217,6 @@ function displayTimeline(pointLocations){
 function prepareData(data){
 
     // Make JSON object that will contain all data points for our graph. Note that we must display a data point for every month, even if there were zero sightings that month. So, we must parse the JSON from the database and create a new object to account for this.
-
         var monthCount = 0;
         var json = JSON.parse(data);
 
@@ -359,12 +244,7 @@ function prepareData(data){
                                 for (var k in dataMonths) {
                                         if (dataMonths[k]["month"] == thisMonth) {
                                                 thisPoint.sightings = dataMonths[k]["sightings"];
-
-
-
-
                                         }
-                                
                                 }                            
                                 
                                 if (thisPoint.year >= startYear && thisPoint.year < 2013){
@@ -372,14 +252,8 @@ function prepareData(data){
                                         //console.log(monthCount + ". " + thisPoint.date + " : " + thisPoint.sightings);        
 
                                         
-                                        // add this point into the myUFOs object. This object will contain all the data we are mapping to the chart.
-
-                                        
+                                        // add this point into the myUFOs object. This object will contain all the data we are mapping to the chart.              
                                         myUFOs.push(thisPoint);
-
-
-
-
                                 }
                     }
                 
@@ -490,7 +364,6 @@ function graphData(data){
 
     //Drawing the bars of the graph
 
-    
     sightingsArray = []; //this array collects all sightings values for all months to be later used for finding % increase/decrease
     fullSightingObject = {};
 	svg.selectAll("rect")
@@ -498,6 +371,11 @@ function graphData(data){
 		.enter()
 		.append("rect")
 		.on("click", function(d, i) {
+
+			// show the loading animation in the sidebar
+			$("svg#month-visualization").empty();
+			$("#loading-sidebar").show();
+
 			// run when user clicks on a bar in the chart. 
 			//populate sidebar with details on this month's sightings.
 			var dataString = 'month='+d.month+'&year='+d.year;
@@ -506,6 +384,9 @@ function graphData(data){
 				url: "http://ufo.quast.li/backend/ufoMapper.php",
 				data: dataString,
 				success: function(data) {
+
+					$("#loading-sidebar").hide();
+
 					displayDetailsHeader(d.year, d.month, d.sightings); 
 					displayDetails(data);
 					prepareMonthData(data, d.year, d.month);
@@ -516,9 +397,6 @@ function graphData(data){
 		.attr({
 			"width": BW,
 			"height": 0,
-
-
-
 			"x": function(d, i) {
 				thisX = 40 + i*BTW;
 				thisPointLocation = [d.year, d.month, i*BTW];
@@ -575,9 +453,6 @@ function graphData(data){
 			"class" : "bar"
 	    })
 
-
-
-
         .transition()
         .attr({
         	"height": function(d, i) {
@@ -589,17 +464,6 @@ function graphData(data){
     	})
         .duration(1200)	
 
-
-
-
-
-
-
-
-
-
-
-
         //Changing color of the rect when clicked, adding month-marker popup
         $(".bar").click(function() {
                 $(this).siblings().attr("fill", "#b34100");
@@ -609,14 +473,6 @@ function graphData(data){
                 var markertxt = $(this).attr("markerdesc");
                 //var markerleft = ($(this).position().left - 31) + "px";              
                 var markerleft = parseInt($(this).attr("x"))-20;
-
-
-
-
-
-
-
-
 
                 var markertop = h - ($(this).attr("height")) - 23 + "px";
                 $(".month-marker").hide();
@@ -710,19 +566,10 @@ function displayDetails(data){
                 thisSightingDay = thisSightingDateArr[2];
                 var a = moment([thisSightingYear, thisSightingMonth-1, thisSightingDay])
                 var displayDate = a.format("D MMMM YYYY");
-
-
-
-
-
-
-
-
-
                 thisSightingHTML = "<div class='sighting-item'>";
                 thisSightingHTML += "<div class='title'>" + displayDate + " - " + json[i]["city"] + ", " + json[i]["state"] + "</div>";
                 thisSightingHTML += "<div class='description'><strong>Shape:</strong> " + json[i]["shape"] + "&nbsp;&nbsp;<strong>Duration:</strong> " + json[i]["duration"] + "<br><br>" + json[i]["summary"] + "</div>";
-                thisSightingHTML += "</div>";
+                thisSightingHTML += "<div class='link' onMouseOver='this.style.opacity=1' onMouseOut='this.style.opacity=.4'><a class='sighting-item-link' href='"+json[i]["url"]+"' target='_new'>More details<img src='images/icons/external_link.png' height='10px' width='10px' style='border: none;padding-left:2px;'></a></div></div>";
 
                 $("#sighting-list").append("<li>"+thisSightingHTML+"</li>");
 				
@@ -738,8 +585,10 @@ function displayDetails(data){
 }
 
 function displayDayDetails(data, day){
-
-        var json = JSON.parse(data);
+		Object.keys(stateSightings).length = 0; //Clear the stateSightings Object
+        stateSightings = {"":""};
+		
+		var json = JSON.parse(data);
         var selectedDetails = []; // this is the JSON object that will feed the map
 
         for (var i = 0; i < json.length; i++) {
@@ -762,12 +611,19 @@ function displayDayDetails(data, day){
                         thisSightingHTML += "</div>";
 
                         $("#sighting-list").append("<li>"+thisSightingHTML+"</li>");
-
+						
+						if($.inArray(json[i]["state"], stateList) !== -1){
+							if(json[i]["state"] in stateSightings){
+								stateSightings[json[i]["state"]]++;
+							} else{
+								stateSightings[json[i]["state"]] = 1;
+							}
+						}
 
                 }
         }
 
-        mapData(selectedDetails);
+        redoMapData(data);
 
 }
 
@@ -914,42 +770,9 @@ function graphMonthData(data){
                                 success: function(data) {
                                         displayDayDetailsHeader(d.year, d.month, d.day, d.sightings); 
                                         displayDayDetails(data, d.day);
-
-
-
-
-
                                 },
                                 error: function(e){console.log("error: " + e);}
                         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 })        
 
 
@@ -1001,18 +824,12 @@ function graphMonthData(data){
             })
         .transition()
         .attr({
-
-
-
-
-                "height": function(d, i) {
-                            return yScale(d.sightings);
-                        },
-                        "y": function(d, i) {
-                                return h - 35 - yScale(d.sightings);
-
-
-                        }       
+            "height": function(d, i) {
+                    return yScale(d.sightings);
+                },
+                "y": function(d, i) {
+                        return h - 35 - yScale(d.sightings);
+                }       
             })
         .duration(500)        
 
@@ -1096,513 +913,6 @@ function mapData(data){
 	});	
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Ashley: Method to redraw the Map on click of rect in main bar graph
 function redoMapData(data){
 	stateColor.setMap(null);
@@ -1611,52 +921,46 @@ function redoMapData(data){
 		sightingsNumbers = [],
 		mapOptions = {
 			zoom: 4,
-
 			center: new google.maps.LatLng(37.09024, -95.712891),
 			mapTypeId: google.maps.MapTypeId.ROADMAP
-
 		};
 		var map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
 
 	
-
 	var json = JSON.parse( data );
 	for(var key in stateSightings){
 		sightingsNumbers.push(stateSightings[key]);
 	}
+	
 	maxValue = Math.max.apply(Math,sightingsNumbers);
 	minValue = Math.min.apply(Math,sightingsNumbers);
 	
-
-
-
-
-
-
 	for(var key in stateSightings){
 		stateSightings[key] = ((stateSightings[key] - minValue)/(maxValue - minValue))*.9;
 	}
 
 	$.getJSON( "documents/stateBoundaries.json", function( data ) {
 		$.each( data, function( key, value ) {
-		var color = "#" + Math.floor(Math.random()*16777215).toString(16);
-		for (var i = 0; i < value.length; i++){
-			var coords = new google.maps.LatLng(value[i][0], value[i][1]);
-			tempPolygonCoords.push(coords);
-		}
-		stateColor = new google.maps.Polygon({
-			paths: tempPolygonCoords,
-			strokeColor: "#333",
-			strokeOpacity: 0.8,
-			strokeWeight: 1,
-			fillColor: "#b34100",
-			fillOpacity: stateSightings[stateMapper[key]]
-		});	
-		stateColor.setMap(map);
-		stateObject[key] = tempPolygonCoords;
-		polygonCoords.push(tempPolygonCoords);
-		tempPolygonCoords = [];
-
+			if(stateMapper[key] in stateSightings){
+				var color = "#" + Math.floor(Math.random()*16777215).toString(16);
+				for (var i = 0; i < value.length; i++){
+					var coords = new google.maps.LatLng(value[i][0], value[i][1]);
+					tempPolygonCoords.push(coords);
+				}
+				stateColor = new google.maps.Polygon({
+					paths: tempPolygonCoords,
+					strokeColor: "#333",
+					strokeOpacity: 0.8,
+					strokeWeight: 1,
+					fillColor: "#b34100",
+					fillOpacity: stateSightings[stateMapper[key]]
+				});	
+				stateColor.setMap(map);
+				stateObject[key] = tempPolygonCoords;
+				polygonCoords.push(tempPolygonCoords);
+				tempPolygonCoords = [];
+			}
 		});	
 	});	
 }
+
