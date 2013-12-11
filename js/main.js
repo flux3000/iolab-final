@@ -36,13 +36,9 @@ map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
 
 $(document).ready(function(){
         $("#start-year").text(startYear);
-<<<<<<< HEAD
-				
-=======
         // show the loading animation while the main chart loads
         $("#loading-chart").show();
         $("#beam_wrapper").animate({"height":"33px"},3000);
->>>>>>> 4c6eafe035813a8ba82e15c27b96dd4773815a8e
         $.ajax({
                 url: "http://ufo.quast.li/backend/graph.php",
                 success: function(data) {
