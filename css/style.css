@@ -281,7 +281,7 @@ section {
 #map {
 	float: left;
 	width: 800px;
-	height: 570px;
+	height: 600px;
 	background-color: #FFF; 
 	border-radius: 6px; 
 	padding: 6px; 
@@ -309,6 +309,17 @@ section {
 	background: linear-gradient(to right, rgba(179,65,0,1) 0%,rgba(125,185,232,0) 100%);
 	border: 1px solid black;
 }
+#map-container-header{
+	text-align: center;
+	font-weight: bold;
+	font-size: 12pt;
+	background: #fcfcfc;
+	border-radius: 4px; 
+	padding: 10px;
+	margin-bottom: 8px; 
+	border: 1px solid #e3e3e3;
+}
+
 
 /* Sidebar contains month report details, displayed when user clicks on a bar */
 
