@@ -489,7 +489,8 @@ a.sighting-item-link:active {text-decoration: underline; color: #000;}
 #loading-chart {
 	width: 1220px;
 	height: 200px;	
-	margin: 100px auto;
+	margin: 50px auto;
+	padding-top: 50px;
 	text-align: center;
 	font-size: 12pt;
 	background: #fff;
