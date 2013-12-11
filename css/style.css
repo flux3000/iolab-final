@@ -36,12 +36,15 @@ table{border-collapse:collapse;}
 	left: 89px;
 }
 
+
 #beam_wrapper {
-	height: 0px;
+	opacity: 0;
+
+	
 }
 
 #i {
-    height:0px;
+	height: 0px;
     width:12px;
 	position: relative;
 	top: -58px; 
