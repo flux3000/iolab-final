@@ -12,7 +12,13 @@ table{border-collapse:collapse;}
 #header {
 	width:140px;
 	max-width:140px;
+	height:41px;
 	display: inline-block;
+	float: left;
+	width: 1220px;
+	margin-top: 4px;
+	font-size: 16pt;
+	font-weight: bold;
 }
 
 #logo {
@@ -26,7 +32,7 @@ table{border-collapse:collapse;}
 	-o-transition: opacity 2s;
 	transition: opacity 10s;
 	position: relative;
-	top: -38px; 
+	top: -52px; 
 	left: 89px;
 }
 
@@ -38,7 +44,7 @@ table{border-collapse:collapse;}
     height:0px;
     width:12px;
 	position: relative;
-	top: -38px; 
+	top: -58px; 
 	left: 96px;
 }
 
@@ -98,13 +104,6 @@ section {
 	width:1250px;
 }
 
-#header{
-	float: left;
-	width: 1220px;
-	margin-top: 4px; 
-	font-size: 16pt;
-	font-weight: bold;
-}
 
 /* chart is the main bar chart with our results */
 
