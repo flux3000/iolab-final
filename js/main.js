@@ -54,7 +54,7 @@ $(document).ready(function(){
                 error: function(e){console.log("error: " + e);}
         });
 		$("#saucer2").animate({"opacity":"1"},1000);
-		$("#beam_wrapper").delay(3000).animate({"opacity":"1"},100);
+		$("#beam_wrapper").delay(50).animate({"opacity":"1"},100);
 		$("#i").delay(3000).animate({"height":"33px"},4000);
 });
 
