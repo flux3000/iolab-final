@@ -22,9 +22,9 @@ elseif(isset($_GET['month'])){
 	$month = $_GET['month'];
 	$year = $_GET['year'];
 	
-	$stmt = $mysqli->prepare("SELECT `id`,`date`,`url`,`city`,`state`,`shape`,`duration`,`summary` FROM `ufos` where `date` between '" . $year . "-" . $month . "-01' and '" . $year . "-" . $month . "-31' ORDER BY  `date`");
+	$stmt = $mysqli->prepare("SELECT ufos.id, ufos.date, ufos.url, ufos.city, ufos.state, ufos.shape, ufos.duration, ufos.summary, cities.lat, cities.lng FROM ufos LEFT JOIN cities ON ufos.city = cities.name where `date` between '" . $year . "-" . $month . "-01' and '" . $year . "-" . $month . "-31' ORDER BY  `date`");
 	$stmt->execute();
-	$stmt->bind_result($id,$date,$url,$city,$state,$shape,$duration,$summary);
+	$stmt->bind_result($id,$date,$url,$city,$state,$shape,$duration,$summary,$lat,$lng);
 	
 	$res = '[';
 	while($stmt->fetch()){
@@ -32,7 +32,7 @@ elseif(isset($_GET['month'])){
 		if(!in_array($state, $states)){ //if the state string is not in the stateArray ignore
 		}
 		else{ 
-			$res .= '{"id":' . json_encode($id) . ',"lat":' . json_encode("37.8714319") . ',"lng":' . json_encode("-122.2584987") . ', "date":' . json_encode($date) . ', "url":' . json_encode($url) . ', "city":' . json_encode($city) . ', "state":' . json_encode($state) . ', "shape":' . json_encode($shape) . ',"duration":' . json_encode($duration) . ',"summary":' . json_encode(str_replace("&quot;", '"', $summary)) . '},';
+			$res .= '{"id":' . json_encode($id) . ',"lat":' . json_encode($lat) . ',"lng":' . json_encode($lng) . ', "date":' . json_encode($date) . ', "url":' . json_encode($url) . ', "city":' . json_encode($city) . ', "state":' . json_encode($state) . ', "shape":' . json_encode($shape) . ',"duration":' . json_encode($duration) . ',"summary":' . json_encode(str_replace("&quot;", '"', $summary)) . '},';
 		}
 	}
 	$res = trim($res, ',');
