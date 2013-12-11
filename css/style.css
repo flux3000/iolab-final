@@ -110,6 +110,7 @@ section {
 #chart {
 	float: left;
 	width: 1220px;
+	height: 400px;	
 	background-color: #FFF;
 	margin: 10px 0px; 
 	border-radius: 6px; 
@@ -129,6 +130,10 @@ section {
 	border: 1px solid #f8f8f8; /* #e3e3e3 */
 }
 
+#chart-visualization {
+
+}
+
 /* timeline is displayed beneath bar chart, and contains both an event div and a infobar div */
 
 #timeline {
@@ -143,7 +148,7 @@ section {
 	margin-bottom: 8px;
 	background-color: #fcfcfc; 
 	border: 1px solid #e3e3e3;
-	overflow: visible;	
+	overflow: visible;
 }
 
 #timeline-events {
@@ -153,7 +158,6 @@ section {
 	height: 40px;
 	padding: 10px;
 	overflow: visible;	
-
 }
 
 /* timeline-infobar is within the timeline div, displayed beneath the icons */
@@ -359,16 +363,40 @@ section {
 	padding: 4px 0px;
 	border-bottom: 1px dotted #cfcfcf;
 	margin-bottom: 3px;
+	overflow: auto;
 }
 
 .sighting-item .title {
 	font-weight: bold;
 	margin-bottom: 4px;
+	float: left;
+	width: 100%;
 }
 
 .sighting-item .description {
 	font-size: 8pt;
+	float: left;
+	width: 100%;
+
 }
+
+.sighting-item .link {
+	float: right;
+	opacity: .4;
+	padding: 2px 4px 4px 2px;	
+}
+
+a.sighting-item-link {
+	font-size: 7pt;
+	text-align: right;
+
+	float: right;
+}
+a.sighting-item-link:link {text-decoration: none; color: #000;}
+a.sighting-item-link:visited {text-decoration: none; color: #000;}
+a.sighting-item-link:hover {text-decoration: underline; color: #000;}
+a.sighting-item-link:active {text-decoration: underline; color: #000;}
+
 
 #footer {
 	float: left;
@@ -393,6 +421,24 @@ footertext {
 	color: #b8b8b8;
 	font-size: 8pt;
 }
+
+
+#loading-chart {
+	width: 1220px;
+	height: 200px;	
+	margin: 100px auto;
+	text-align: center;
+	font-size: 12pt;
+	background: #fff;
+	opacity: .8;
+}
+
+#loading-sidebar {
+	margin: 40px auto;
+	font-size: 12pt;
+	display: none;
+}
+
 
 /* svg styles */
 
@@ -479,6 +525,7 @@ svg {
 .sidebar-info .description{
 	font-size: 7pt;
 }
+
 .month-marker-container{
 	height: 0px;
 }
@@ -527,16 +574,6 @@ h1 span {
 	display:block;
 	font-size: 60%;
 }
-
-.bar {
-
-}
-
-.selected {
-	/* style for the bar in the chart that the user clicked on */
-	fill: red !important;
-}
-
 .infoHeader {
 	position: absolute;
 	top: 66px;

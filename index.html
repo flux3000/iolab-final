@@ -33,8 +33,11 @@
 			<div class="month-marker"></div>
 		</div>
 		<div id="chart-header">Reported UFO Sightings - <span id="start-year">1980</span>-2012</div>
-		<svg id="visualization" xmlns="http://www.w3.org/2000/svg" version="1.1">
-		</svg>
+		<div id="chart-visualization">
+			<div id="loading-chart"><img src="images/icons/ajax-loader.gif"><br><br>Loading Report Data...</div>
+			<svg id="visualization" xmlns="http://www.w3.org/2000/svg" version="1.1">
+			</svg>
+		</div>
 		<div id="timeline">
 			<span class='event-icon-up-pointer'></span><span class='event-icon-pointer'></span>
 			<div id="timeline-events">
@@ -49,6 +52,7 @@
 		<div class="sidebar-info"></div>
 		<div id="sidebar-content-header">Click on a bar or icon for details</div>
 		<div id="sidebar-month-visualization">
+			<div id="loading-sidebar"><img src="images/icons/ajax-loader.gif"><br><br>Loading Report Data...</div>
 			<svg id="month-visualization" xmlns="http://www.w3.org/2000/svg" version="1.1">
 			</svg>
 		</div>
@@ -75,7 +79,7 @@
 
 			UC Berkeley School of Information<br>
 			Information Organization Lab - Fall 2013<br>
-			Ryan Baker, Ashley DeSouza, Victor Starostenko, Tom Quast
+			Ryan Baker, Ashley DeSouza, Tom Quast, Victor Starostenko
 		</div>
 
 	</div>
