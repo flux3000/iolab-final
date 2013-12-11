@@ -495,9 +495,9 @@ function graphData(data){
                         //Setting the info-text
                         var txt = $(this).attr("desc");
                         //var left = $(this).position().left - 60;
-                        var left = (event.pageX + 4) + "px";  
+                        var left = (event.pageX - 110) + "px";  
                         //var top = h - 50;
-                        var top = (event.pageY - 70) + "px"; 
+                        var top = (event.pageY - 40) + "px"; 
                         $(".info").html(txt).css({"left" : left, "top" : top}).show();
                 }, 
                 function() {
