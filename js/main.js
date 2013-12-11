@@ -23,8 +23,10 @@ var myUFOs = [],
 	stateObject = {}, //Ashley: New Object to store the State information
 	stateList = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"], //Ashley: New Array of the abbreviated list of States
 	stateMapper = {"Alabama": "AL","Alaska": "AK","Arizona": "AZ","Arkansas": "AR","California": "CA","Colorado": "CO","Connecticut": "CT","Delaware": "DE","WashingtonDC": "DC","Florida": "FL","Georgia": "GA","Hawaii": "HI","Idaho": "ID","Illinois": "IL","Indiana": "IN","Iowa": "IA","Kansas": "KS","Kentucky": "KY","Louisiana": "LA","Maine": "ME","Maryland": "MD","Massachusetts": "MA","Michigan": "MI","Minnesota": "MN","Mississippi": "MS","Missouri": "MO","Montana": "MT","Nebraska": "NE","Nevada": "NV","New Hampshire": "NH","New Jersey": "NJ","New Mexico": "NM","New York": "NY","North Carolina": "NC","North Dakota": "ND","Ohio": "OH","Oklahoma": "OK","Oregon": "OR","Pennsylvania": "PA","Rhode Island": "RI","South Carolina": "SC","South Dakota": "SD","Tennessee": "TN","Texas": "TX","Utah": "UT","Vermont": "VT","Virginia": "VA","Washington": "WA","West Virginia": "WV","Wisconsin": "WI","Wyoming": "WY"}, //Ashley: New Object to map the abbreviated State Name with the Long Name.
-	stateColor, //Ashley: New Variable to store the state color on the map
+	stateColor,//Ashley: New Variable to store the state color on the map 
+	markers,//Ashley: New Variable to store the markers on the map
 	stateSightings = {}, //Ashley: New Object to store the State and Sightings information.
+	daySightingsLatLng = [],
 	mapOptions = {
 		zoom: 4,
 		center: new google.maps.LatLng(37.09024, -95.712891),
@@ -463,7 +465,7 @@ function graphData(data){
 
         //Animating the rects of the diagrams on hover
         $(".bar").hover(
-                function() {
+                function(event) {
                         var y = parseFloat($(this).attr("y")) + 0;
                         $(this).css("opacity", "0.6").attr("y", y);
                         
@@ -528,7 +530,6 @@ function displayDayDetailsHeader(year, month, day, sightings){
 function displayDetails(data){
 		Object.keys(stateSightings).length = 0; //Clear the stateSightings Object
         var json = JSON.parse(data);
-        //console.log(json);
         
         for (var i = 0; i < json.length; i++) {
                 thisSightingDateArr = json[i]["date"].split("-");
@@ -559,19 +560,20 @@ function displayDetails(data){
 function displayDayDetails(data, day){
 		Object.keys(stateSightings).length = 0; //Clear the stateSightings Object
         stateSightings = {"":""};
+		daySightingsLatLng = [];
+		var tempDaySightingsArray = [];
 		
 		var json = JSON.parse(data);
         var selectedDetails = []; // this is the JSON object that will feed the map
 
         for (var i = 0; i < json.length; i++) {
-
+				tempDaySightingsArray = [];
                 thisSightingDateArr = json[i]["date"].split("-");
                 thisSightingYear = thisSightingDateArr[0];
                 thisSightingMonth = thisSightingDateArr[1];
                 thisSightingDay = thisSightingDateArr[2];
 
                 if (thisSightingDay == day) {
-
                         selectedDetails.push(json[i]); // add this result to the JSON that will feed the map
 
                         var a = moment([thisSightingYear, thisSightingMonth-1, thisSightingDay])
@@ -591,11 +593,13 @@ function displayDayDetails(data, day){
 								stateSightings[json[i]["state"]] = 1;
 							}
 						}
-
+							tempDaySightingsArray.push(json[i]["lat"]);
+							tempDaySightingsArray.push(json[i]["lng"]);
+							tempDaySightingsArray.push("<strong>Shape:</strong> " + json[i]["shape"] + "&nbsp;&nbsp;<strong>Duration:</strong> " + json[i]["duration"] + "<br><br>" + json[i]["summary"]);
+							daySightingsLatLng.push(tempDaySightingsArray);
                 }
         }
-
-        redoMapData(data);
+        redoMapData(data, day);
 
 }
 
@@ -872,20 +876,73 @@ function mapData(data){
 }
 
 //Ashley: Method to redraw the Map on click of rect in main bar graph
-function redoMapData(data){
+function redoMapData(data, day){
 	stateColor.setMap(null);
 	var maxValue = 0,
 		minValue = 0,
 		sightingsNumbers = [],
+		
 		mapOptions = {
 			zoom: 4,
 			center: new google.maps.LatLng(37.09024, -95.712891),
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
-		var map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
-
+	var map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
 	
 	var json = JSON.parse( data );
+
+	if(day == undefined){
+		for(var key in json){
+			var lat = json[key]["lat"];
+			var long = json[key]["lng"];
+			var text = "<strong>Shape:</strong> " + json[key]["shape"] + "&nbsp;&nbsp;<strong>Duration:</strong> " + json[key]["duration"] + "<br><br>" + json[key]["summary"];
+			if(lat != null && long != null){			
+				var loc = new google.maps.LatLng(lat, long);
+				var latLng = new google.maps.LatLng(lat, long);
+				var infoWindow = new google.maps.InfoWindow({
+						maxWidth: 300
+				});
+				var marker = new google.maps.Marker({
+						position: latLng,
+						map: map
+				});
+				google.maps.event.addListener(marker,'click', (function(marker,content,infoWindow){ 
+					return function() {
+						infoWindow.setContent(content);
+						infoWindow.open(map,marker);
+					};
+				})(marker,text,infoWindow));
+			}
+		}
+	}
+	else{
+		for(var i = 0; i < daySightingsLatLng.length; i++){
+				console.log(daySightingsLatLng[i][0] + " uuuu");
+				console.log(daySightingsLatLng[i][1] + " VVVV");
+				console.log(daySightingsLatLng[i][2] + " wwww");
+				var lat = daySightingsLatLng[i][0];
+				var long = daySightingsLatLng[i][1];
+				var text = daySightingsLatLng[i][2];
+				if(lat != null && long != null){					
+					var loc = new google.maps.LatLng(lat, long);
+					var latLng = new google.maps.LatLng(lat, long);
+					var infoWindow = new google.maps.InfoWindow({
+						maxWidth: 300
+					});
+					var marker = new google.maps.Marker({
+						position: latLng,
+						map: map
+					});					
+					google.maps.event.addListener(marker,'click', (function(marker,content,infoWindow){ 
+						return function() {
+							infoWindow.setContent(content);
+							infoWindow.open(map,marker);
+						};
+					})(marker,text,infoWindow));			
+				}
+			}
+		}
+		
 	for(var key in stateSightings){
 		sightingsNumbers.push(stateSightings[key]);
 	}
