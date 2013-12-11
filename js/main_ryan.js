@@ -581,8 +581,10 @@ function displayDetails(data){
 }
 
 function displayDayDetails(data, day){
-
-        var json = JSON.parse(data);
+		Object.keys(stateSightings).length = 0; //Clear the stateSightings Object
+        stateSightings = {"":""};
+		
+		var json = JSON.parse(data);
         var selectedDetails = []; // this is the JSON object that will feed the map
 
         for (var i = 0; i < json.length; i++) {
@@ -605,12 +607,19 @@ function displayDayDetails(data, day){
                         thisSightingHTML += "</div>";
 
                         $("#sighting-list").append("<li>"+thisSightingHTML+"</li>");
-
+						
+						if($.inArray(json[i]["state"], stateList) !== -1){
+							if(json[i]["state"] in stateSightings){
+								stateSightings[json[i]["state"]]++;
+							} else{
+								stateSightings[json[i]["state"]] = 1;
+							}
+						}
 
                 }
         }
 
-        mapData(selectedDetails);
+        redoMapData(data);
 
 }
 
@@ -908,46 +917,46 @@ function redoMapData(data){
 		sightingsNumbers = [],
 		mapOptions = {
 			zoom: 4,
-
 			center: new google.maps.LatLng(37.09024, -95.712891),
 			mapTypeId: google.maps.MapTypeId.ROADMAP
-
 		};
 		var map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
 
 	
-
 	var json = JSON.parse( data );
 	for(var key in stateSightings){
 		sightingsNumbers.push(stateSightings[key]);
 	}
+	
 	maxValue = Math.max.apply(Math,sightingsNumbers);
 	minValue = Math.min.apply(Math,sightingsNumbers);
-
+	
 	for(var key in stateSightings){
 		stateSightings[key] = ((stateSightings[key] - minValue)/(maxValue - minValue))*.9;
 	}
 
 	$.getJSON( "documents/stateBoundaries.json", function( data ) {
 		$.each( data, function( key, value ) {
-		var color = "#" + Math.floor(Math.random()*16777215).toString(16);
-		for (var i = 0; i < value.length; i++){
-			var coords = new google.maps.LatLng(value[i][0], value[i][1]);
-			tempPolygonCoords.push(coords);
-		}
-		stateColor = new google.maps.Polygon({
-			paths: tempPolygonCoords,
-			strokeColor: "#333",
-			strokeOpacity: 0.8,
-			strokeWeight: 1,
-			fillColor: "#b34100",
-			fillOpacity: stateSightings[stateMapper[key]]
-		});	
-		stateColor.setMap(map);
-		stateObject[key] = tempPolygonCoords;
-		polygonCoords.push(tempPolygonCoords);
-		tempPolygonCoords = [];
-
+			if(stateMapper[key] in stateSightings){
+				var color = "#" + Math.floor(Math.random()*16777215).toString(16);
+				for (var i = 0; i < value.length; i++){
+					var coords = new google.maps.LatLng(value[i][0], value[i][1]);
+					tempPolygonCoords.push(coords);
+				}
+				stateColor = new google.maps.Polygon({
+					paths: tempPolygonCoords,
+					strokeColor: "#333",
+					strokeOpacity: 0.8,
+					strokeWeight: 1,
+					fillColor: "#b34100",
+					fillOpacity: stateSightings[stateMapper[key]]
+				});	
+				stateColor.setMap(map);
+				stateObject[key] = tempPolygonCoords;
+				polygonCoords.push(tempPolygonCoords);
+				tempPolygonCoords = [];
+			}
 		});	
 	});	
 }
+
