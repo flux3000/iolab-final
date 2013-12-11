@@ -30,6 +30,7 @@ Known bugs
 ------------
 - The dataset we scraped is dirty, all data is entered through text-fields, so was no validation is done. This led to a number of challenges, especially when trying to locate the cities. We used Mapquests best guess for the data, it returned something for >99,9 of the cases, but it might be off.
 - If the user clicks on several timeline items in succession, the code which highlights the corresponding svg bar and places the marker does not work for some reason. Upon page refresh it begins working again.
+- In Safari, the page does not display centered in the browser.
 
 Credits
 ------------
